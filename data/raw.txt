@@ -1659,7 +1659,7 @@ dictionaries-language|Free Dictionary API|https://dictionaryapi.dev/|https://dic
 dictionaries-language|Merriam-Webster API|https://dictionaryapi.com/|https://dictionaryapi.com/products/index|key|freemium|Dictionary and thesaurus API.
 dictionaries-language|WordsAPI|https://www.wordsapi.com/|https://www.wordsapi.com/docs/|key|freemium|Word data API.
 education|Wiktionary API|https://en.wiktionary.org/api/rest_v1/|https://en.wiktionary.org/api/rest_v1/|none|free|Open dictionary via Wikimedia REST API.
-education|Open Educational Resources Commons|https://www.oercommons.org/|https://www.oercommons.org/api|none|free|Open educational resources.
+education|Open Educational Resources Commons|https://www.oercommons.org/|http://docs.oercommons.org/api/|none|free|Open educational resources.
 education|MIT OpenCourseWare|https://ocw.mit.edu/|https://ocw.mit.edu/about/|none|free|Free MIT course materials.
 education|Coursera Catalog API|https://dev.coursera.com/get-started|https://dev.coursera.com/get-started|none|free|Course catalog API.
 education|edX|https://www.edx.org/|https://openedx.org/|none|free|Online courses; Open edX platform is open source.
@@ -1954,7 +1954,7 @@ captcha-bot-protection|CapMonster Cloud|https://capmonster.cloud/|https://docs.c
 captcha-bot-protection|DeathByCaptcha|https://deathbycaptcha.com/|https://deathbycaptcha.com/api|key|paid|Long-running human and OCR captcha solving.
 captcha-bot-protection|SolveCaptcha|https://solvecaptcha.com/|https://solvecaptcha.com/captcha-solver-api|key|paid|Captcha solving API supporting reCAPTCHA and hCaptcha.
 captcha-bot-protection|CaptchaAI|https://captchaai.com/|https://captchaai.com/api-docs|key|paid|Captcha solving service with an API.
-captcha-bot-protection|SadCaptcha|https://www.sadcaptcha.com/|https://www.sadcaptcha.com/api|key|paid|Captcha solving for social platform challenges.
+captcha-bot-protection|SadCaptcha|https://www.sadcaptcha.com/|https://www.sadcaptcha.com/api/v1/swagger-ui/index.html|key|paid|Captcha solving for social platform challenges.
 captcha-bot-protection|AZCaptcha|https://azcaptcha.com/|https://azcaptcha.com/|key|paid|Low-cost captcha solving API.
 captcha-bot-protection|2Captcha Python SDK|https://github.com/2captcha/2captcha-python|https://github.com/2captcha/2captcha-python|key|free|Official Python client for 2Captcha.
 captcha-bot-protection|CapMonster Cloud Python Client|https://github.com/ZennoLab/capmonstercloud-client-python|https://github.com/ZennoLab/capmonstercloud-client-python|key|free|Official Python client for CapMonster Cloud.
@@ -3054,7 +3054,7 @@ newsletters|Ghost Admin API|https://ghost.org/docs/admin-api/|https://ghost.org/
 newsletters|Customer.io|https://customer.io/|https://customer.io/docs/api/|key|paid|Messaging automation.
 newsletters|ConvertKit v4 API|https://developers.kit.com/|https://developers.kit.com/v4|oauth|freemium|Creator email API.
 newsletters|Campaign Monitor|https://www.campaignmonitor.com/|https://www.campaignmonitor.com/api/v3-3/|key|paid|Email marketing API.
-newsletters|Moosend|https://moosend.com/|https://developers.moosend.com/|key|paid|Email marketing.
+newsletters|Moosend|https://moosend.com/|https://docs.moosend.com/api-documentation/articles/KnowledgeBase/54561-Introduction-to-the-Moosend-API?lang=en_US|key|paid|Email marketing.
 newsletters|Mautic|https://www.mautic.org/|https://developer.mautic.org/|key|free|Open-source marketing automation.
 music-apis|Tidal API|https://developer.tidal.com/|https://developer.tidal.com/documentation|oauth|free|Tidal catalog and playback.
 music-apis|YouTube Music (ytmusicapi)|https://github.com/sigma67/ytmusicapi|https://ytmusicapi.readthedocs.io/|none|free|Unofficial YouTube Music API.
@@ -3445,7 +3445,7 @@ rss-feeds|Folo|https://folo.is/|https://folo.is/|none|free|AI RSS reader.
 patents|Espacenet OPS|https://developers.epo.org/|https://www.epo.org/en/searching-for-patents/data/web-services/ops|key|free|EPO services.
 patents|J-PlatPat|https://www.j-platpat.inpit.go.jp/|https://www.j-platpat.inpit.go.jp/|none|free|Japan patents.
 visual-agent-builders|Make AI Agents|https://www.make.com/en/ai-agents|https://www.make.com/en/help|key|paid|Visual agents.
-visual-agent-builders|OpenAI AgentKit|https://openai.com/agentkit/|https://platform.openai.com/docs/guides/agent-builder|key|paid|Agent Builder.
+visual-agent-builders|OpenAI AgentKit|https://openai.com/index/introducing-agentkit/|https://platform.openai.com/docs/guides/agent-builder|key|paid|Agent Builder.
 company-registries|Companies House Streaming|https://developer-specs.company-information.service.gov.uk/|https://developer-specs.company-information.service.gov.uk/streaming-api/reference|key|free|UK stream.
 company-registries|Open Ownership|https://www.openownership.org/|https://bods-data.openownership.org/|none|free|Beneficial ownership.
 company-registries|Dun & Bradstreet D&B Direct|https://www.dnb.com/|https://directplus.documentation.dnb.com/|key|paid|Business data.

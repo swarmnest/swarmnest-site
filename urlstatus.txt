@@ -2008,7 +2008,7 @@
 200 https://open.gsa.gov/api/get-opportunities-public-api/
 200 https://open.gsa.gov/api/regulationsgov/
 200 https://openaccess-api.clevelandart.org/
-403 https://openai.com/agentkit/
+403 https://openai.com/index/introducing-agentkit/
 403 https://openai.com/api/
 403 https://openai.com/codex/
 403 https://openai.com/index/introducing-deep-research/
