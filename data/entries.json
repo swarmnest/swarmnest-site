@@ -58002,5 +58002,20 @@
   "status": "active",
   "os": [],
   "open_source": false
+ },
+ {
+  "name": "HOL Guard",
+  "slug": "hol-guard",
+  "category": "security-guardrails",
+  "description": "Local runtime control for AI coding agents such as Claude Code, Codex and Cursor that checks shell commands, secret access, MCP calls and package installs before they run. Free and open source under Apache-2.0, installed with pipx, with an optional paid Guard Cloud add-on.",
+  "url": "https://hol.org/guard",
+  "docs_url": "https://hol.org/guard/docs",
+  "auth": "none",
+  "pricing": "freemium",
+  "http_status": 200,
+  "last_checked_at": "2026-10-14",
+  "status": "active",
+  "os": [],
+  "open_source": true
  }
 ]

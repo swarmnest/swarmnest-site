@@ -16,9 +16,29 @@
       "dueAt": "2026-10-24T12:00:00-07:00",
       "link": "https://swarmnest.ai/marketplace/agent-eval-guardrails-pack/",
       "text": "Test your agent before you trust it. The Agent Eval & Guardrails Pack: 70 test cases, rubrics, judge prompts and guardrail prompts, with a runner that scores most of them automatically.\n\nhttps://swarmnest.ai/marketplace/agent-eval-guardrails-pack/"
+    },
+    {
+      "date": "2026-10-25",
+      "source": "plan post 9 (Voice Agents, spare; schedule starts Oct 26)",
+      "bufferPostId": "6ade29a18b3d437ddc1715bc",
+      "status": "scheduled",
+      "dueAt": "2026-10-25T12:00:00-07:00",
+      "link": "https://swarmnest.ai/directory/voice-agents/",
+      "text": "Building a voice agent? Vapi, Retell AI, LiveKit, Pipecat, Ultravox, Hume EVI and the OpenAI Realtime API, all in one list:\n\nhttps://swarmnest.ai/directory/voice-agents/"
+    },
+    {
+      "date": "2026-10-26",
+      "source": "plan post 1 (MCP Servers; schedule day 1)",
+      "bufferPostId": "6adf7c09193f91a89c019c5c",
+      "status": "scheduled",
+      "dueAt": "2026-10-26T12:00:00-07:00",
+      "link": "https://swarmnest.ai/directory/mcp-servers/",
+      "text": "Looking for an MCP server for your agent? Swarmnest lists MCP servers from GitHub, Playwright, Context7, Stripe, Notion, Linear and more, each with pricing, auth and docs links.\n\nhttps://swarmnest.ai/directory/mcp-servers/"
     }
   ],
   "planPostsUsed": [
+    1,
+    9,
     13
   ]
 }
