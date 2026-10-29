@@ -3796,3 +3796,5 @@
 200 https://hypergsc.com
 200 https://dchub.cloud/
 200 https://hol.org/guard
+200 https://omophub.com/
+200 https://inkroom.ai/en

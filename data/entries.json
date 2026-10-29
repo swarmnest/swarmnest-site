@@ -58017,5 +58017,35 @@
   "status": "active",
   "os": [],
   "open_source": true
+ },
+ {
+  "name": "OMOPHub",
+  "slug": "omophub",
+  "category": "medical-data-apis",
+  "description": "Hosted API and MCP server for the OHDSI OMOP vocabularies that lets agents search, map and resolve 11M+ medical concepts across SNOMED CT, ICD-10, LOINC and RxNorm, including FHIR code resolution. Free plan with 3,000 calls a month; paid plans from $39 a month.",
+  "url": "https://omophub.com/",
+  "docs_url": "https://docs.omophub.com/",
+  "auth": "key",
+  "pricing": "freemium",
+  "http_status": 200,
+  "last_checked_at": "2026-10-14",
+  "status": "active",
+  "os": [],
+  "open_source": false
+ },
+ {
+  "name": "InkRoom",
+  "slug": "inkroom",
+  "category": "image-generation",
+  "description": "AI image studio with a hosted remote MCP server that lets agents generate, batch-generate, reference-edit and upscale images, aimed at e-commerce product photos. Shows estimated credits before each job and also offers OpenAI- and Gemini-compatible image APIs.",
+  "url": "https://inkroom.ai/en",
+  "docs_url": "https://inkroom.ai/en/docs",
+  "auth": "key",
+  "pricing": "freemium",
+  "http_status": 200,
+  "last_checked_at": "2026-10-14",
+  "status": "active",
+  "os": [],
+  "open_source": false
  }
 ]

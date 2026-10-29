@@ -34,10 +34,33 @@
       "dueAt": "2026-10-26T12:00:00-07:00",
       "link": "https://swarmnest.ai/directory/mcp-servers/",
       "text": "Looking for an MCP server for your agent? Swarmnest lists MCP servers from GitHub, Playwright, Context7, Stripe, Notion, Linear and more, each with pricing, auth and docs links.\n\nhttps://swarmnest.ai/directory/mcp-servers/"
+    },
+    {
+      "date": "2026-10-27",
+      "source": "plan post 2 (Agent Skills; schedule day 2)",
+      "bufferPostId": "6ae0cadec689d991f0b903af",
+      "status": "sent",
+      "dueAt": "2026-10-27T12:00:00-07:00",
+      "link": "https://swarmnest.ai/agent-skills/",
+      "text": "500+ Agent Skills in one place: skills, plugin bundles, Cursor rules and AGENTS file templates.\n\nFilter by Claude Code, Cursor, Codex, Gemini CLI and more, and see at a glance which skills run scripts and which are instructions only.\n\nhttps://swarmnest.ai/agent-skills/",
+      "note": "SKILL.md / AGENTS.md wording dropped because X auto-links .md names as URLs and pushes the post over 280.",
+      "xUrl": "https://x.com/Swarmnest_ai/status/2115156789356306804"
+    },
+    {
+      "date": "2026-10-28",
+      "source": "plan post 3 (Browser Automation; schedule day 4, pulled forward for the Oct 28 catch-up because day 3 is Thread 1 + Show HN, which need the user)",
+      "bufferPostId": "6ae2a464411377cb91ae7c45",
+      "status": "scheduled",
+      "dueAt": "2026-10-28T21:00:00-07:00",
+      "link": "https://swarmnest.ai/directory/browser-automation/",
+      "text": "Your agent needs a browser. Compare Browserbase, Browser Use, Stagehand, Playwright, Steel, Hyperbrowser and more, with pricing and auth for each.\n\nhttps://swarmnest.ai/directory/browser-automation/",
+      "note": "Catch-up after the usage outage; the 12 PM slot was missed. Thread 1 (The Agent Stack) and the Show HN are still unused and waiting on the user."
     }
   ],
   "planPostsUsed": [
     1,
+    2,
+    3,
     9,
     13
   ]
