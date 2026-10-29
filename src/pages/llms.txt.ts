@@ -29,6 +29,7 @@ ${GUIDES.map(g=>`- [${g.title}](${SITE}/agent-skills/guides/${g.slug}/): ${g.blu
 - [Submit a skill](${SITE}/agent-skills/submit/)
 
 ## Pages
+- [Smithery Alternatives](${SITE}/smithery-alternatives/): what changes when Smithery's hosted MCP proxy, CLI and API end on Oct 31, 2026, how to migrate, and MCP registries and hosts compared
 - [About](${SITE}/about/)
 - [Submit a tool](${SITE}/submit/): email hello@swarmnest.ai
 - [Terms](${SITE}/terms/)

@@ -7,7 +7,7 @@ import { CATEGORIES } from './skills';
 import { PRODUCTS, USECASES, TEMPLATES } from './content';
 type Topic = { dir?: string[]; skills?: string[]; products?: string[]; usecases?: string[]; templates?: string[]; hub?: [string, string][] };
 const TOPICS: Topic[] = [
-  { dir: ['mcp-servers', 'macos-mcp-servers', 'mcp-directories', 'agent-protocols'], skills: ['mcp-building-skills'], products: ['mcp-server-starter-kit'] },
+  { dir: ['mcp-servers', 'mcp-sdks-dev-tools', 'ai-tool-directories', 'macos-mcp-servers', 'mcp-directories', 'agent-protocols'], skills: ['mcp-building-skills'], products: ['mcp-server-starter-kit'], hub: [['/smithery-alternatives/', 'Smithery Alternatives']] },
   { dir: ['macos-mcp-servers', 'mac-ai-agent-apps', 'mac-computer-use', 'mac-local-llm-runners'], skills: ['apple-macos-skills', 'mac-automation-skills', 'mac-admin-skills', 'mac-computer-use-skills', 'swift-swiftui-and-xcode-skills', 'homebrew-skills'], products: ['macos-app-dev-skills-pack'], usecases: ['build-and-ship-a-mac-app', 'automate-your-mac'], templates: ['mac-app-developer', 'mac-automation-assistant'], hub: [['/macos/', 'macOS Hub']] },
   { skills: ['apple-ios-skills', 'swift-swiftui-and-xcode-skills', 'app-store-connect-skills'], products: ['macos-app-dev-skills-pack'], hub: [['/macos/', 'macOS Hub']] },
   { dir: ['ai-coding-assistants', 'code-execution', 'developer-tools', 'cloud-dev-environments', 'code-security'], skills: ['code-review-skills', 'debugging-skills', 'software-engineering-skills', 'testing-skills', 'git-workflow-skills', 'cursor-rules'], products: ['coding-agent-skills-pack', 'project-memory-kit'], usecases: ['diagnose-deploy-failures'], templates: ['devops-helper'] },

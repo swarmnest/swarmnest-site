@@ -1,0 +1,124 @@
+---
+import Crumbs from '../../components/Crumbs.astro';
+import Base from '../../layouts/Base.astro';
+import Related from '../../components/Related.astro';
+import { ALL, SITE } from '../../lib/data';
+const path = '/smithery-alternatives/';
+const UPDATED = '2026-10-29';
+const entry = (slug: string) => { const e = ALL.find(x => x.slug === slug); return e ? `/directory/${e.category}/${e.slug}/` : null; };
+type Alt = { name: string; url: string; slug?: string; what: string; hosting: string; free: string; auth: string };
+const registries: Alt[] = [
+ { name:'Official MCP Registry', url:'https://registry.modelcontextprotocol.io/', slug:'official-mcp-registry', what:'The open, community-run registry of public MCP servers, with a REST API that clients and other directories read from. It stores metadata only and points to npm, PyPI or Docker packages and remote URLs. In preview.', hosting:'No (metadata only)', free:'Free', auth:'None to browse. Publishers sign in with GitHub or verify their domain.' },
+ { name:'Glama', url:'https://glama.ai/mcp/servers', slug:'glama-mcp-directory', what:'A large MCP registry that grades each server for license, quality and maintenance, with a browser inspector and a gateway.', hosting:'Yes, paid (one-click deploy)', free:'Free to browse and run servers yourself. Hosting is paid.', auth:'Gateway manages OAuth 2.1 credentials and per-tool access.' },
+ { name:'PulseMCP', url:'https://www.pulsemcp.com/', slug:'pulsemcp', what:'A directory of MCP servers and clients, plus MCP news and use cases.', hosting:'No', free:'Free', auth:'None to browse' },
+ { name:'mcp.so', url:'https://mcp.so/', slug:'mcpso', what:'A community directory of MCP servers with remote endpoints and setup guides for Claude, Cursor and other clients.', hosting:'No', free:'Free', auth:'None to browse' },
+ { name:'mcpservers.org', url:'https://mcpservers.org/', slug:'mcpserversorg', what:'The "Awesome MCP Servers" directory of official and community servers, sorted by category.', hosting:'No', free:'Free', auth:'None to browse' },
+ { name:'Docker MCP Catalog', url:'https://hub.docker.com/mcp', slug:'docker-mcp-catalog', what:'300+ verified MCP servers packaged as container images with versioning and security updates.', hosting:'No (runs on your machine)', free:'Free', auth:'Set per server. The Docker MCP Toolkit stores credentials for you.' },
+];
+const hosts: Alt[] = [
+ { name:'Cloudflare Remote MCP', url:'https://developers.cloudflare.com/agents/model-context-protocol/guides/remote-mcp-server/', slug:'cloudflare-remote-mcp-hosting', what:'Deploy your own remote MCP server on Cloudflare Workers from a template, over Streamable HTTP.', hosting:'Yes (your own code)', free:'Workers Free plan: 100,000 requests a day', auth:'Open, or OAuth sign-in with the Workers OAuth Provider' },
+ { name:'Composio', url:'https://composio.dev/', slug:'composio-mcp', what:'Managed tool platform with 1,500+ toolkits, triggers, and your own tools and MCP servers alongside the catalog.', hosting:'Yes (managed)', free:'Hobby plan: $0, 100,000 tool calls a month. Pro: $29 a month.', auth:'Composio API key; OAuth for each connected account is managed for you.' },
+ { name:'Pipedream MCP', url:'https://mcp.pipedream.com/', slug:'pipedream-mcp', what:'Hosted MCP servers for 3,000+ apps and 10,000+ pre-built tools, powered by Pipedream Connect.', hosting:'Yes (managed)', free:'Free for your own use; free in development mode for apps you build', auth:'Fully managed OAuth; credentials are never sent to the model.' },
+ { name:'Arcade.dev', url:'https://www.arcade.dev/', slug:'arcadedev', what:'A tool-calling runtime with ready-made tools for apps like Gmail and Slack. Smithery is now part of Arcade.', hosting:'Yes (managed, VPC on Enterprise)', free:'Free plan: 2,000 tool calls a month. Team: $25 a month plus $0.01 a call.', auth:'Users authorize with OAuth; agents act on their behalf.' },
+ { name:'Zapier MCP', url:'https://zapier.com/mcp', slug:'zapier-mcp', what:'Connects Claude, ChatGPT, Cursor and other clients to 9,000+ apps through one MCP connection.', hosting:'Yes (managed)', free:'Included in every Zapier plan. Each tool call uses 2 tasks from your quota.', auth:'Zapier manages app credentials, with app- and action-level controls.' },
+ { name:'Docker MCP Toolkit and Gateway', url:'https://docs.docker.com/ai/mcp-catalog-and-toolkit/', slug:'docker-mcp-toolkit', what:'Run catalog servers in containers and connect Claude Code, Cursor, Zed and other clients to them through one gateway, set up once.', hosting:'No (local; the gateway is open source)', free:'Free (Docker Desktop terms apply)', auth:'The gateway handles authentication for the servers in your profile.' },
+];
+const faqs: [string, string][] = [
+ ['When does Smithery shut down its hosted MCP servers?', "Smithery says its MCP proxy and managed identity services shut down on October 31, 2026. Server URLs on run.tools and server.smithery.ai, the Smithery API, Connect, Toolbox, accounts, API keys, the CLI and the SDKs stop working on that date."],
+ ['Is smithery.ai going away?', "No. Smithery says smithery.ai stays as a public, non-proxied directory of MCP servers, now powered by Arcade.dev. Verified servers' pages will show the vendor's direct MCP URL, such as mcp.linear.app/mcp."],
+ ['How do I find the official URL for a server I used through Smithery?', "Smithery says the official URL is on the server's page on smithery.ai. You can also check the vendor's own docs, the Official MCP Registry, or search the Swarmnest directory, which lists each server's site and docs."],
+ ['What replaces the Smithery CLI?', "For a server with an official remote URL, add that URL straight to your client, for example with claude mcp add --transport http. For a local server, run the vendor's own package with npx, uvx or Docker, or manage containers with the Docker MCP Toolkit."],
+ ['Is there a free Smithery alternative for hosting?', "Yes, within limits. Cloudflare Workers' free plan covers 100,000 requests a day for a server you build, Pipedream MCP is free for your own use, Composio's Hobby plan includes 100,000 tool calls a month, and Arcade's free plan includes 2,000 tool calls a month. Check each provider's pricing page, since limits change."],
+ ['What happens to my Smithery paid plan?', "Smithery says it is refunding every charge since August 5 and cancelling subscriptions going forward, and that refunds usually arrive within 5 to 10 business days."],
+];
+const ld = [
+ {'@context':'https://schema.org','@type':'BreadcrumbList',itemListElement:[{'@type':'ListItem',position:1,name:'Home',item:SITE+'/'},{'@type':'ListItem',position:2,name:'Smithery Alternatives',item:SITE+path}]},
+ {'@context':'https://schema.org','@type':'Article',headline:'Smithery Alternatives: Where to Move Your MCP Servers',description:'Smithery ends its hosted MCP proxy on Oct 31, 2026. What changes, who is affected, how to migrate, and a comparison of MCP registries and hosting options.',dateModified:UPDATED,datePublished:UPDATED,author:{'@type':'Organization',name:'Swarmnest'},mainEntityOfPage:SITE+path},
+ {'@context':'https://schema.org','@type':'FAQPage',mainEntity:faqs.map(([q,a])=>({'@type':'Question',name:q,acceptedAnswer:{'@type':'Answer',text:a}}))},
+];
+const grep = `grep -rnE "run\\.tools|server\\.smithery\\.ai|@smithery/cli" \\
+  ~/.cursor ~/.codex ~/.claude.json ~/.codeium .cursor .vscode \\
+  "$HOME/Library/Application Support/Claude" 2>/dev/null`;
+---
+<Base title="Smithery Alternatives: Where to Move Your MCP Servers (Oct 31, 2026) | Swarmnest" description="Smithery ends its hosted MCP proxy, CLI and API on Oct 31, 2026. What changes, who is affected, how to migrate, and MCP registries and hosts compared." path={path} jsonld={ld} type="article">
+<Crumbs items={[['Home','/'],['Smithery Alternatives']]} />
+<h1>Smithery Alternatives: Where to Move Your MCP Servers</h1>
+<p class="lead">Smithery is ending its hosted MCP proxy and connection services on October 31, 2026. Here is what changes, who needs to act, how to move each server, and the registries and hosts you can use instead.</p>
+<p class="small">Updated Oct 29, 2026. Facts about Smithery come from <a href="https://www.smithery.ai/future" rel="noopener nofollow">Smithery's own notice</a>. Prices and limits come from each provider's site on the same day and can change.</p>
+
+<div class="notice"><strong>Key Date: Oct 31, 2026.</strong> Smithery URLs on <code>run.tools</code> and <code>server.smithery.ai</code> stop working, along with Smithery accounts, API keys, the API, Connect, Toolbox, the CLI and the SDKs. smithery.ai stays online as a public directory.</div>
+
+<h2 id="whats-changing">What's Changing at Smithery and When</h2>
+<p>In its notice, Smithery says that on October 31, 2026 it is shutting down its connection management services, its MCP proxy and its managed identity. Smithery says it is now part of Arcade.</p>
+<table class="sm-kv">
+<tr><th>Stays</th><td>smithery.ai as a public directory of MCP servers, now powered by Arcade.dev, without proxying. A curated set of verified servers whose pages show direct MCP URLs, for example <code>mcp.linear.app/mcp</code> instead of <code>linear.run.tools</code> or <code>server.smithery.ai/linear</code>.</td></tr>
+<tr><th>Stops on Oct 31</th><td>Server URLs on run.tools and server.smithery.ai. The Smithery API, Connect and Toolbox. Smithery accounts and API keys. The Smithery CLI and SDKs, whose current versions are being marked deprecated.</td></tr>
+<tr><th>Paid plans</th><td>Smithery says it is refunding every charge since August 5 and cancelling subscriptions. Refunds usually arrive within 5 to 10 business days.</td></tr>
+</table>
+
+<h2 id="who-is-affected">Who's Affected</h2>
+<ul>
+<li><strong>Anyone using a hosted or remote server through Smithery.</strong> If a client config points at a <code>run.tools</code> or <code>server.smithery.ai</code> URL, that server stops responding on October 31.</li>
+<li><strong>Smithery CLI users.</strong> The CLI is being deprecated. Any config entry that the CLI wrote, or that runs servers through the CLI or a Smithery key, needs replacing.</li>
+<li><strong>Apps built on Smithery Connect, Toolbox, the API or SDKs.</strong> If you manage MCP connections for your own users through Smithery, Smithery says you need a replacement before October 31.</li>
+<li><strong>Registry users.</strong> You can still browse smithery.ai to find servers. Connecting through Smithery will not be possible after October 31, so use the direct URL from the server's page.</li>
+</ul>
+
+<h2 id="how-to-migrate">How to Migrate</h2>
+<ol>
+<li><strong>Find every Smithery reference.</strong> Search your MCP client configs for Smithery URLs and CLI calls. On macOS or Linux:
+<div class="install"><pre>{grep}</pre></div>
+Also check project files, CI secrets and environment variables for Smithery API keys.</li>
+<li><strong>Look up each server's official URL or package.</strong> Smithery says verified server pages on smithery.ai now show the direct URL. You can also check the vendor's docs, the <a href="https://registry.modelcontextprotocol.io/" rel="noopener">Official MCP Registry</a>, or search <a href="/directory/mcp-servers/">MCP servers on Swarmnest</a>.</li>
+<li><strong>If the vendor runs a remote server, connect to it directly.</strong> Replace the Smithery URL with the vendor's URL, then sign in again when your client prompts you (most official remote servers use OAuth). In Claude Code: <code>claude mcp add --transport http linear https://mcp.linear.app/mcp</code>.</li>
+<li><strong>If there is no official remote server, run it locally.</strong> Use the vendor's own package with <code>npx</code>, <code>uvx</code> or its Docker image, or pick it from the <a href="https://hub.docker.com/mcp" rel="noopener">Docker MCP Catalog</a> and run it with the Docker MCP Toolkit. Prefer packages published by the vendor over unknown wrappers.</li>
+<li><strong>If you need it hosted, self-host or move to another host.</strong> Deploy your own server on <a href="https://developers.cloudflare.com/agents/model-context-protocol/guides/remote-mcp-server/" rel="noopener">Cloudflare Workers</a>, deploy an open-source server on <a href="https://glama.ai/mcp/hosting" rel="noopener">Glama hosting</a>, or use a managed platform such as Composio, Pipedream MCP, Arcade or Zapier MCP for ready-made app integrations.</li>
+<li><strong>If your product used Smithery Connect for your users,</strong> move the per-user auth to a platform built for it, such as <a href="/directory/auth-identity/pipedream-connect/">Pipedream Connect</a>, Composio or Arcade, and test the sign-in flow end to end.</li>
+<li><strong>Test, then clean up.</strong> List tools and make a test call with <a href="https://github.com/modelcontextprotocol/inspector" rel="noopener">MCP Inspector</a> or your client, then remove the old Smithery entries and keys.</li>
+</ol>
+
+<h2 id="alternatives">Smithery Alternatives Compared</h2>
+<p>Smithery did two jobs: it was a <strong>registry</strong> where you found servers, and a <strong>host and proxy</strong> that ran them and handled sign-in. Most alternatives do one of those. Links marked "Swarmnest listing" go to our directory page for that tool.</p>
+<h3>MCP Registries and Directories</h3>
+<table class="cmp">
+<thead><tr><th scope="col">Name</th><th scope="col">What It Is</th><th scope="col">Hosting</th><th scope="col">Free Tier</th><th scope="col">Auth</th></tr></thead>
+<tbody>{registries.map(a=>{ const h = a.slug && entry(a.slug); return <tr><td data-l="Name"><a href={a.url} rel="noopener"><strong>{a.name}</strong></a>{h && <><br><a class="small" href={h}>Swarmnest listing</a></>}</td><td data-l="What It Is">{a.what}</td><td data-l="Hosting">{a.hosting}</td><td data-l="Free Tier">{a.free}</td><td data-l="Auth">{a.auth}</td></tr>; })}</tbody>
+</table>
+<h3>MCP Hosting, Gateways and Managed Tools</h3>
+<table class="cmp">
+<thead><tr><th scope="col">Name</th><th scope="col">What It Is</th><th scope="col">Hosting</th><th scope="col">Free Tier</th><th scope="col">Auth</th></tr></thead>
+<tbody>{hosts.map(a=>{ const h = a.slug && entry(a.slug); return <tr><td data-l="Name"><a href={a.url} rel="noopener"><strong>{a.name}</strong></a>{h && <><br><a class="small" href={h}>Swarmnest listing</a></>}</td><td data-l="What It Is">{a.what}</td><td data-l="Hosting">{a.hosting}</td><td data-l="Free Tier">{a.free}</td><td data-l="Auth">{a.auth}</td></tr>; })}</tbody>
+</table>
+<p class="small">Smithery itself stays on this list as a directory: <a href={entry('smithery') || 'https://smithery.ai/'}>Smithery on Swarmnest</a>. Sponsorship never affects which tools appear here or their order.</p>
+
+<h2 id="swarmnest">Find Replacements With Swarmnest</h2>
+<p>Swarmnest keeps a hand-checked directory of <a href="/directory/mcp-servers/">MCP servers</a>, <a href="/directory/mcp-sdks-dev-tools/">MCP SDKs and developer tools</a> and <a href="/directory/ai-tool-directories/">MCP directories</a>, with pricing and auth details for each. To search it from inside your agent, add our free, read-only <a href="/mcp-server/">Swarmnest MCP server</a> at <code>https://swarmnest.ai/mcp</code> (no API key) and ask something like "find the official Linear MCP server".</p>
+
+<h2 id="faq">FAQ</h2>
+{faqs.map(([q,a])=><><h3>{q}</h3><p>{a}</p></>)}
+
+<h2 id="sources">Sources (Checked Oct 29, 2026)</h2>
+<ul>
+<li><a href="https://www.smithery.ai/future" rel="noopener nofollow">Smithery: Smithery's MCP Proxy and managed identity shut down on October 31</a>, for every Smithery date and change on this page.</li>
+<li><a href="https://modelcontextprotocol.io/registry/about" rel="noopener nofollow">MCP Registry: About</a>, which says the registry hosts metadata, not code.</li>
+<li><a href="https://glama.ai/mcp/hosting" rel="noopener nofollow">Glama: MCP Server Hosting</a> and <a href="https://glama.ai/mcp/gateway" rel="noopener nofollow">Glama MCP Gateway</a>.</li>
+<li><a href="https://developers.cloudflare.com/agents/model-context-protocol/guides/remote-mcp-server/" rel="noopener nofollow">Cloudflare: Build a Remote MCP server</a> and <a href="https://developers.cloudflare.com/workers/platform/pricing/" rel="noopener nofollow">Workers pricing</a>.</li>
+<li><a href="https://composio.dev/pricing" rel="noopener nofollow">Composio pricing</a>, <a href="https://pipedream.com/docs/connect/mcp/" rel="noopener nofollow">Pipedream MCP docs</a>, <a href="https://www.arcade.dev/pricing" rel="noopener nofollow">Arcade pricing</a> and <a href="https://zapier.com/mcp" rel="noopener nofollow">Zapier MCP</a>.</li>
+<li><a href="https://docs.docker.com/ai/mcp-catalog-and-toolkit/" rel="noopener nofollow">Docker MCP Catalog and Toolkit docs</a>.</li>
+</ul>
+<p class="small">Not affiliated with Smithery, Arcade or any provider listed. Questions or corrections: <a href="mailto:hello@swarmnest.ai">hello@swarmnest.ai</a>.</p>
+<Related self={path} max={6} />
+<style>
+.cmp,.sm-kv{margin:.6rem 0 1.4rem}.cmp th,.sm-kv th{width:auto}.sm-kv th{white-space:nowrap}
+.cmp td:first-child{min-width:8rem}
+.install pre{white-space:pre-wrap;word-break:break-word}
+@media (max-width:700px){
+ .cmp thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+ .cmp tr{display:block;border:1px solid var(--line);border-radius:10px;padding:6px 4px;margin:0 0 12px;background:var(--card)}
+ .cmp td{display:block;border:0;padding:4px 8px}
+ .cmp td::before{content:attr(data-l);display:block;font-size:.8rem;color:var(--mut)}
+ .cmp td:first-child::before{display:none}
+ .sm-kv tr,.sm-kv th,.sm-kv td{display:block}.sm-kv th{padding-bottom:0;border-bottom:0}
+}
+</style>
+</Base>

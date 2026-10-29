@@ -12,7 +12,7 @@
       "date": "2026-10-24",
       "source": "plan post 13 (Agent Eval & Guardrails Pack, spare; schedule starts Oct 26)",
       "bufferPostId": "6adcd8098b3d437ddcc9865a",
-      "status": "scheduled",
+      "status": "sent",
       "dueAt": "2026-10-24T12:00:00-07:00",
       "link": "https://swarmnest.ai/marketplace/agent-eval-guardrails-pack/",
       "text": "Test your agent before you trust it. The Agent Eval & Guardrails Pack: 70 test cases, rubrics, judge prompts and guardrail prompts, with a runner that scores most of them automatically.\n\nhttps://swarmnest.ai/marketplace/agent-eval-guardrails-pack/"
@@ -21,7 +21,7 @@
       "date": "2026-10-25",
       "source": "plan post 9 (Voice Agents, spare; schedule starts Oct 26)",
       "bufferPostId": "6ade29a18b3d437ddc1715bc",
-      "status": "scheduled",
+      "status": "sent",
       "dueAt": "2026-10-25T12:00:00-07:00",
       "link": "https://swarmnest.ai/directory/voice-agents/",
       "text": "Building a voice agent? Vapi, Retell AI, LiveKit, Pipecat, Ultravox, Hume EVI and the OpenAI Realtime API, all in one list:\n\nhttps://swarmnest.ai/directory/voice-agents/"
@@ -30,7 +30,7 @@
       "date": "2026-10-26",
       "source": "plan post 1 (MCP Servers; schedule day 1)",
       "bufferPostId": "6adf7c09193f91a89c019c5c",
-      "status": "scheduled",
+      "status": "sent",
       "dueAt": "2026-10-26T12:00:00-07:00",
       "link": "https://swarmnest.ai/directory/mcp-servers/",
       "text": "Looking for an MCP server for your agent? Swarmnest lists MCP servers from GitHub, Playwright, Context7, Stripe, Notion, Linear and more, each with pricing, auth and docs links.\n\nhttps://swarmnest.ai/directory/mcp-servers/"
@@ -50,17 +50,27 @@
       "date": "2026-10-28",
       "source": "plan post 3 (Browser Automation; schedule day 4, pulled forward for the Oct 28 catch-up because day 3 is Thread 1 + Show HN, which need the user)",
       "bufferPostId": "6ae2a464411377cb91ae7c45",
-      "status": "scheduled",
+      "status": "sent",
       "dueAt": "2026-10-28T21:00:00-07:00",
       "link": "https://swarmnest.ai/directory/browser-automation/",
       "text": "Your agent needs a browser. Compare Browserbase, Browser Use, Stagehand, Playwright, Steel, Hyperbrowser and more, with pricing and auth for each.\n\nhttps://swarmnest.ai/directory/browser-automation/",
       "note": "Catch-up after the usage outage; the 12 PM slot was missed. Thread 1 (The Agent Stack) and the Show HN are still unused and waiting on the user."
+    },
+    {
+      "date": "2026-10-29",
+      "source": "plan post 4 (Agent Memory; schedule day 5, pulled forward one day since post 3 went out Oct 28)",
+      "bufferPostId": "6ae36ec41b42fad16d90e888",
+      "status": "scheduled",
+      "dueAt": "2026-10-29T12:00:00-07:00",
+      "link": "https://swarmnest.ai/directory/agent-memory/",
+      "text": "Give your agent a long-term memory. Mem0, Zep, Cognee, Graphiti, Supermemory, MemGPT and other memory layers, side by side:\n\nhttps://swarmnest.ai/directory/agent-memory/"
     }
   ],
   "planPostsUsed": [
     1,
     2,
     3,
+    4,
     9,
     13
   ]
