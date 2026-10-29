@@ -58047,5 +58047,20 @@
   "status": "active",
   "os": [],
   "open_source": false
+ },
+ {
+  "name": "SpicyAPI",
+  "slug": "spicyapi",
+  "category": "model-hosting-inference",
+  "description": "Pay-as-you-go API for 220+ image, video, audio and chat models, including LoRA-tuned editions and models without a platform content filter, all under one OpenAI-compatible key. An MCP server and Agent Skill let coding agents browse models, confirm the price and run jobs. Billed from a prepaid US dollar balance with no subscription.",
+  "url": "https://spicyapi.ai/",
+  "docs_url": "https://docs.spicyapi.ai/docs/api-reference",
+  "auth": "key",
+  "pricing": "paid",
+  "http_status": 200,
+  "last_checked_at": "2026-10-14",
+  "status": "active",
+  "os": [],
+  "open_source": false
  }
 ]
