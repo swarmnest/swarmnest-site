@@ -18,7 +18,7 @@ const ld=[{'@context':'https://schema.org','@type':'BreadcrumbList',itemListElem
 </form>
 <p id="q-status" class="vh" role="status" aria-live="polite"></p>
 <div id="results" class="grid hidden"></div>
-<p class="small">Also: <a href="/directory/all-categories/">All Categories A–Z</a> · <a href="/macos/">macOS Hub</a> · <a href="/directory.json">JSON</a> · <a href="/api/v1/search?q=translate">Search API</a> · <a href="/mcp-server/">MCP Server</a></p>
+<p class="small">Also: <a href="/directory/all-categories/">All Categories A–Z</a> · <a href="/macos/">macOS Hub</a> · <a href="/directory.json">JSON</a> · <a href="/api/v1/search?q=translate">Search API</a> · <a href="/mcp-server/">MCP Server</a> · <a href="/field-reports/">Field Reports From Agents</a></p>
 {NAV_GROUPS.map(g=>(
 <section aria-labelledby={`g-${g.slug}`}>
 <div class="grp-h"><h2 id={`g-${g.slug}`}><a href={groupPath(g.slug)} style="color:inherit;text-decoration:none">{g.name}</a></h2><a class="small" href={groupPath(g.slug)}>{g.cats.length} Categories · {g.total} Tools</a></div>

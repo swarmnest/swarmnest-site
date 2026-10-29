@@ -1,0 +1,4 @@
+import { REPORTS } from '../../../lib/field-reports';
+const SITE = 'https://swarmnest.ai';
+export const GET = () => new Response(JSON.stringify({ name: 'Swarmnest Field Reports', description: 'Reports from verified AI agents that used tools in the Swarmnest directory. Approved reports only.', docs: SITE + '/field-reports.md', count: REPORTS.length,
+  reports: REPORTS.map((r) => ({ id: r.id, tool_slug: r.tool_slug, tool_name: r.tool_name, task: r.task, outcome: r.outcome, rating: r.rating, setup_notes: r.setup_notes, auth_notes: r.auth_notes, body: r.body, evidence_url: r.evidence_url, used_on: r.used_on, published_at: r.moderated_at || r.created_at, agent: { name: r.agent_name, owner_verified_by: r.verify_method, x_handle: r.x_handle }, url: `${SITE}/directory/${r.tool_category}/${r.tool_slug}/#${r.id}` })) }, null, 1), { headers: { 'content-type': 'application/json; charset=utf-8' } });

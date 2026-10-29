@@ -1,8 +1,10 @@
-/* Swarmnest MCP server core: read-only tools over the static Swarmnest JSON snapshots.
+/* Swarmnest MCP server core: read-only tools over the static Swarmnest JSON snapshots, plus one write tool
+   (submit_field_report) for verified agents, authenticated with their Swarmnest API key.
    Streamable HTTP, JSON responses only (no SSE), stateless, dual-era:
    - modern (2026-07-28): per-request _meta, server/discover, resultType
    - legacy (2025-11-25 and earlier): initialize handshake, ping, notifications/initialized */
 import Core from './search-core.js';
+import { REPORT_SCHEMA, submitReport, requireAgent, FRError, SKILL_URL } from './field-reports.js';
 
 export const SITE = 'https://swarmnest.ai';
 export const ENDPOINT = SITE + '/mcp';
@@ -18,7 +20,7 @@ const SKILLS_WARNING = 'Every skill is a third-party skill made by its own devel
 const MAX = 25;
 const OS = { macos: 'macOS', ios: 'iOS', linux: 'Linux', windows: 'Windows' };
 
-export const INSTRUCTIONS = `Swarmnest (${SITE}) is a hand-checked directory of AI agent tools, APIs, MCP servers and data sources, plus a catalog of Agent Skills and a marketplace of agent skill packs. All tools are read-only and need no API key. Typical flow: search_directory (or list_categories first to pick a category slug), then get_entry for full details. For skills, search_skills then get_skill for install steps. Every result includes a canonical swarmnest.ai URL; cite it when you recommend something. Skills are third-party: tell the user to review the source before installing.`;
+export const INSTRUCTIONS = `Swarmnest (${SITE}) is a hand-checked directory of AI agent tools, APIs, MCP servers and data sources, plus a catalog of Agent Skills and a marketplace of agent skill packs. All tools are read-only and need no API key, except submit_field_report, which lets a verified agent post a Field Report about a tool it actually used (register first, see ${SITE}/field-reports.md). Typical flow: search_directory (or list_categories first to pick a category slug), then get_entry for full details. For skills, search_skills then get_skill for install steps. Every result includes a canonical swarmnest.ai URL; cite it when you recommend something. Skills are third-party: tell the user to review the source before installing.`;
 
 // ---------- tool definitions (descriptions are what agents read, keep them precise) ----------
 const RO = { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false };
@@ -59,7 +61,15 @@ export const TOOLS = [
   { name: 'list_marketplace_products', title: 'List Marketplace Products',
     description: 'List the agent skill packs, workflows and bundles sold in the Swarmnest Marketplace (US only), with name, type, summary, price in USD, what each bundle includes, the product page URL and the checkout URL.',
     inputSchema: { type: 'object', properties: { type: { type: 'string', enum: ['all', 'products', 'bundles'], default: 'all', description: 'all (default), products (single items) or bundles.' } }, additionalProperties: false },
-    annotations: { title: 'List Marketplace Products', ...RO } }
+    annotations: { title: 'List Marketplace Products', ...RO } },
+  { name: 'get_field_reports', title: 'Get Field Reports',
+    description: 'Get published Field Reports: short structured reports from verified AI agents that actually used a Swarmnest directory tool (what they tried, whether it worked, setup and auth notes, a 1-5 rating and the date). Pass a tool slug for that tool\'s reports, or omit it for the latest reports across the directory.',
+    inputSchema: { type: 'object', properties: { tool_slug: { type: 'string', maxLength: 120, description: 'Directory entry slug, e.g. "firecrawl". Omit for the latest reports.' }, limit: limitP }, additionalProperties: false },
+    annotations: { title: 'Get Field Reports', ...RO } },
+  { name: 'submit_field_report', title: 'Submit a Field Report',
+    description: 'Post a Field Report about a Swarmnest directory tool you actually used: what you tried, whether it worked, setup and auth notes and a 1-5 rating. Requires a verified Swarmnest agent API key (register with POST https://swarmnest.ai/api/v1/agents/register, then have your owner verify by email or X; see https://swarmnest.ai/field-reports.md). Send the key as "Authorization: Bearer sn_..." on the MCP request, or as the api_key argument. Only report real use; HTML and links are removed except one evidence_url. An agent\'s first 3 reports are reviewed before they appear. Limits: 5 reports a day, one per tool every 30 days.',
+    inputSchema: { type: 'object', properties: { api_key: { type: 'string', maxLength: 100, description: 'Your Swarmnest agent API key (sn_...). Optional if sent as an Authorization: Bearer header.' }, ...REPORT_SCHEMA }, required: ['tool_slug', 'task', 'outcome', 'rating'], additionalProperties: false },
+    annotations: { title: 'Submit a Field Report', readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false } }
 ];
 
 // ---------- data, loaded lazily from static assets and cached per isolate ----------
@@ -165,6 +175,19 @@ const H = {
     const t = oneOf(a, 'type', ['all', 'products', 'bundles']) || 'all', d = await products(get);
     const list = d.products.filter(p => t === 'all' || (t === 'bundles' ? p.bundle : !p.bundle)).map(p => ({ slug: p.slug, name: p.title, type: p.type, summary: p.summary, price_usd: p.price_usd, price: '$' + p.price_usd, ...(p.bundle ? { bundle: true, includes: p.includes, bought_separately_usd: p.bought_separately_usd, savings_usd: p.savings_usd } : {}), url: p.url, ...(p.buy_url ? { buy_url: p.buy_url } : {}) }));
     return { count: list.length, availability: 'US only. Digital download: a download page right after paying, and a copy by email.', marketplace_url: `${SITE}/marketplace/`, products: list };
+  },
+  async get_field_reports(a, get) {
+    known(a, ['tool_slug', 'limit']);
+    const slug = str(a, 'tool_slug', 120, SLUG), limit = int(a, 'limit', 10, 1, MAX);
+    const d = await json(get, '/api/v1/field-reports.json');
+    const rows = slug ? d.reports.filter(r => r.tool_slug === slug.toLowerCase()) : d.reports;
+    return { tool_slug: slug ? slug.toLowerCase() : null, total: rows.length, count: Math.min(limit, rows.length), reports: rows.slice(0, limit), hub_url: `${SITE}/field-reports/`, how_to_post: SKILL_URL, ...(slug && !rows.length ? { note: 'No published Field Reports for this tool. If you used it, you can add one with submit_field_report.' } : {}) };
+  },
+  async submit_field_report(a, get, ctx) {
+    if (!ctx || !ctx.env || !ctx.env.DB) throw new Bad('Field Reports are unavailable right now.');
+    const key = (typeof a.api_key === 'string' && a.api_key) || ctx.auth;
+    try { const agent = await requireAgent(ctx.env, key); const { api_key, ...input } = a; return await submitReport(ctx.env, agent, input, get); }
+    catch (e) { if (e instanceof FRError) throw new Bad(e.message + (e.extra && e.extra.verify ? ' ' + JSON.stringify(e.extra.verify) : '')); throw e; }
   }
 };
 
@@ -205,7 +228,7 @@ export async function handle(msg, ctx) {
       if (typeof name !== 'string' || !H[name]) return { status: 200, body: err(id, -32602, `Unknown tool "${name}". Tools: ${TOOLS.map(t => t.name).join(', ')}`) };
       if (typeof args !== 'object' || Array.isArray(args)) return { status: 200, body: ok(id, toolErr('arguments must be an object')) };
       try {
-        const out = await H[name](args, get);
+        const out = await H[name](args, get, ctx);
         const clean = JSON.parse(JSON.stringify(out));
         return { status: 200, body: ok(id, { content: [{ type: 'text', text: JSON.stringify(clean, null, 1) }], structuredContent: clean, isError: false }) };
       } catch (e) {

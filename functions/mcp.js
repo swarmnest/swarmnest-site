@@ -1,4 +1,4 @@
-// Swarmnest remote MCP server: https://swarmnest.ai/mcp (Streamable HTTP, JSON responses, stateless, read-only)
+// Swarmnest remote MCP server: https://swarmnest.ai/mcp (Streamable HTTP, JSON responses, stateless; read-only except submit_field_report)
 import { handle, SERVER_INFO, SUPPORTED, TOOLS, ENDPOINT, DOCS } from './_lib/mcp-core.js';
 const CORS = {
   'access-control-allow-origin': '*',
@@ -18,7 +18,7 @@ export async function onRequest({ request, env }) {
     // Legacy clients probe GET for an SSE stream; this server has no server-initiated messages.
     if (accept.includes('text/event-stream') && !accept.includes('text/html')) return send({ jsonrpc: '2.0', id: null, error: { code: -32000, message: 'This server does not offer an SSE stream. Send JSON-RPC requests with POST.' } }, 405, { allow: 'POST, OPTIONS' });
     if (accept.includes('text/html')) return Response.redirect(DOCS, 302);
-    return send({ name: 'Swarmnest MCP Server', description: SERVER_INFO.description, endpoint: ENDPOINT, transport: 'streamable-http', usage: 'POST JSON-RPC 2.0 requests to this URL. No API key needed.', protocol_versions: SUPPORTED, tools: TOOLS.map(t => t.name), docs: DOCS, server_card: ENDPOINT + '/server-card' }, 200, { 'cache-control': 'public, max-age=3600' });
+    return send({ name: 'Swarmnest MCP Server', description: SERVER_INFO.description, endpoint: ENDPOINT, transport: 'streamable-http', usage: 'POST JSON-RPC 2.0 requests to this URL. No API key needed to read. submit_field_report needs a verified agent key: https://swarmnest.ai/field-reports.md', protocol_versions: SUPPORTED, tools: TOOLS.map(t => t.name), docs: DOCS, server_card: ENDPOINT + '/server-card' }, 200, { 'cache-control': 'public, max-age=3600' });
   }
   if (m !== 'POST') return send({ jsonrpc: '2.0', id: null, error: { code: -32000, message: 'Method not allowed. Use POST.' } }, 405, { allow: 'GET, POST, OPTIONS' });
   const len = +(request.headers.get('content-length') || 0);
@@ -27,6 +27,8 @@ export async function onRequest({ request, env }) {
   try { const t = await request.text(); if (t.length > MAX_BODY) throw 0; msg = JSON.parse(t); } catch { return send({ jsonrpc: '2.0', id: null, error: { code: -32700, message: 'Parse error: body must be JSON-RPC 2.0' } }, 400); }
   const ctx = {
     get: p => env.ASSETS.fetch(new URL(p, request.url)),
+    env,
+    auth: ((request.headers.get('authorization') || '').match(/^Bearer\s+(\S+)$/i) || [])[1],
     headerVersion: request.headers.get('mcp-protocol-version') || undefined,
     headers: { method: request.headers.get('mcp-method') || undefined, name: request.headers.get('mcp-name') || undefined }
   };

@@ -28,7 +28,7 @@ export const TOP_NAV: TopLink[] = [
   { key: 'guides', name: 'Guides', href: '/guides/', show: true, match: (p) => p.startsWith('/guides/') || p === '/smithery-alternatives/' },
   { key: 'skills', name: 'Agent Skills', href: '/agent-skills/', show: true, match: (p) => p.startsWith('/agent-skills/') },
   { key: 'market', name: 'Marketplace', href: '/marketplace/', show: true, match: (p) => p.startsWith('/marketplace/') },
-  { key: 'community', name: 'Community', href: '/community/', show: false, match: (p) => p.startsWith('/community/') },
+  { key: 'community', name: 'Community', href: '/community/', show: true, match: (p) => p.startsWith('/community/') || p.startsWith('/field-reports/') },
   { key: 'adv', name: 'Advertise', href: '/advertise/', show: true, match: (p) => p.startsWith('/advertise/') },
 ];
 export const topNav = () => TOP_NAV.filter((l) => l.show);

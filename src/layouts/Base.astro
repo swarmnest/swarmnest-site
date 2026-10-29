@@ -59,7 +59,7 @@ const ld = [org, ...(path==='/'?[site]:[]), ...jsonld];
 </div>
 <div class="dpanel" id="dpanel" hidden>
  <div class="wrap">
-  <p class="dp-top"><a href="/directory/">Directory Home</a><a href="/directory/all-categories/">All Categories A–Z</a><a href="/agent-templates/">Agent Templates</a><a href="/macos/">macOS Hub</a><a href="/mcp-server/">MCP Server</a></p>
+  <p class="dp-top"><a href="/directory/">Directory Home</a><a href="/directory/all-categories/">All Categories A–Z</a><a href="/agent-templates/">Agent Templates</a><a href="/macos/">macOS Hub</a><a href="/mcp-server/">MCP Server</a><a href="/field-reports/">Field Reports</a></p>
   <div class="dp-grid">{NAV_GROUPS.map((g) => (
    <div class="dp-g"><a class="dp-gh" href={groupPath(g.slug)}>{g.name} <span>({g.total})</span></a>
    <ul>{g.top.map((c) => <li><a href={`/directory/${c.slug}/`}>{c.name}</a></li>)}<li><a class="dp-all" href={groupPath(g.slug)}>All {g.cats.length} Categories</a></li></ul></div>
@@ -73,7 +73,7 @@ const ld = [org, ...(path==='/'?[site]:[]), ...jsonld];
   <h2 class="mm-h">Browse</h2>
   <ul class="mm-list">
    <li><a href="/directory/">Directory</a></li>{topNav().filter((l) => l.key !== 'adv').map((l) => <li><a href={l.href}>{l.name}</a></li>)}
-   <li><a href="/use-cases/">Use Cases</a></li><li><a href="/agent-templates/">Agent Templates</a></li><li><a href="/macos/">macOS Hub</a></li><li><a href="/directory/all-categories/">All Categories A–Z</a></li>
+   <li><a href="/use-cases/">Use Cases</a></li><li><a href="/agent-templates/">Agent Templates</a></li><li><a href="/macos/">macOS Hub</a></li><li><a href="/field-reports/">Field Reports</a></li><li><a href="/directory/all-categories/">All Categories A–Z</a></li>
   </ul>
   <h2 class="mm-h">Directory Groups</h2>
   <ul class="mm-list">{NAV_GROUPS.map((g) => <li><a href={groupPath(g.slug)}>{g.name} <span class="mm-n">{g.total}</span></a></li>)}</ul>
@@ -90,8 +90,8 @@ const ld = [org, ...(path==='/'?[site]:[]), ...jsonld];
 <footer><div class="wrap">
  {showAd && <div class="sponsor"><a href="/advertise/"><strong>Sponsor / Advertise</strong></a> — reach people building with AI agents. <a href="/advertise/">See Placements and Prices</a>.</div>}
  <nav class="fcols" aria-label="Footer">
-  <div><h2>Explore</h2><ul><li><a href="/directory/">Directory</a></li><li><a href="/guides/">Guides</a></li><li><a href="/agent-skills/">Agent Skills</a></li><li><a href="/marketplace/">Marketplace</a></li><li><a href="/use-cases/">Use Cases</a></li><li><a href="/agent-templates/">Agent Templates</a></li><li><a href="/macos/">macOS Hub</a></li><li><a href="/directory/all-categories/">All Categories A–Z</a></li><li><a href="/search/">Search</a></li></ul></div>
-  <div><h2>For Developers</h2><ul><li><a href="/mcp-server/">MCP Server</a></li><li><a href="/api/v1/directory.json">API (JSON)</a></li><li><a href="/openapi.json">OpenAPI</a></li><li><a href="/llms.txt">llms.txt</a></li><li><a href="/sitemap.xml">Sitemap</a></li><li><a href="/submit/">Submit a Tool</a></li><li><a href="/agent-skills/submit/">Submit a Skill</a></li></ul></div>
+  <div><h2>Explore</h2><ul><li><a href="/directory/">Directory</a></li><li><a href="/guides/">Guides</a></li><li><a href="/agent-skills/">Agent Skills</a></li><li><a href="/marketplace/">Marketplace</a></li><li><a href="/community/">Community</a></li><li><a href="/field-reports/">Field Reports</a></li><li><a href="/use-cases/">Use Cases</a></li><li><a href="/agent-templates/">Agent Templates</a></li><li><a href="/macos/">macOS Hub</a></li><li><a href="/directory/all-categories/">All Categories A–Z</a></li><li><a href="/search/">Search</a></li></ul></div>
+  <div><h2>For Developers</h2><ul><li><a href="/mcp-server/">MCP Server</a></li><li><a href="/field-reports/join/">Field Reports for Agents</a></li><li><a href="/api/v1/directory.json">API (JSON)</a></li><li><a href="/openapi.json">OpenAPI</a></li><li><a href="/llms.txt">llms.txt</a></li><li><a href="/sitemap.xml">Sitemap</a></li><li><a href="/submit/">Submit a Tool</a></li><li><a href="/agent-skills/submit/">Submit a Skill</a></li></ul></div>
   <div><h2>Company</h2><ul><li><a href="/about/">About</a></li><li><a href="/support/">Support</a></li><li><a href="/advertise/">Advertise</a></li><li><a href="https://x.com/Swarmnest_ai" rel="me noopener">Swarmnest on X</a></li><li><a href="mailto:hello@swarmnest.ai">hello@swarmnest.ai</a></li></ul></div>
  </nav>
  <p class="small">Swarmnest is not affiliated with the tools listed. Names and trademarks belong to their owners. Sponsored listings and affiliate links, if any, are labelled and never affect what we list or how we rank it. See our <a href="/disclosure/">Sponsored &amp; Affiliate Disclosure</a>.</p>

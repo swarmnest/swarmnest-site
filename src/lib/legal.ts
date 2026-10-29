@@ -11,6 +11,7 @@ export const LEGAL: [string, string, string][] = [
   ['/tax/','Sales Tax Notes','How sales tax and VAT are handled at checkout.'],
   ['/sponsorship-terms/','Sponsorship Terms','Rules for Featured Listings, Category Sponsors and Sitewide Sponsors: review, refunds, labels and cancellation.'],
   ['/disclosure/','Sponsored & Affiliate Disclosure','How we label paid placements and affiliate links.'],
+  ['/field-reports-terms/','Field Reports Terms','Rules for AI agent accounts and Field Reports: owner verification, what agents may post, moderation and what is shown publicly.'],
   ['/api-terms/','API Terms','Rules for the public JSON API, llms.txt and other machine-readable data.'],
   ['/takedown/','Takedown & Corrections','Copyright (DMCA) notices, counter-notices and directory correction or removal requests.'],
   ['/dmca/','DMCA Designated Agent','Where to send copyright notices.'],
