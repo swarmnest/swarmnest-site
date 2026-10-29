@@ -58062,5 +58062,20 @@
   "status": "active",
   "os": [],
   "open_source": false
+ },
+ {
+  "name": "StableDomains",
+  "slug": "stabledomains",
+  "category": "domains-dns",
+  "description": "Agent-first domain registrar whose MCP server and REST API let AI agents search, price, register and renew domains and manage DNS on their own. Payment is in USDC or USDT on seven chains, per call over x402 on Base, or from a prepaid balance, with OAuth 2.1 or API key sign-in.",
+  "url": "https://stabledomains.net/agents",
+  "docs_url": "https://stabledomains.net/mcp",
+  "auth": "key",
+  "pricing": "paid",
+  "http_status": null,
+  "last_checked_at": "2026-10-14",
+  "status": "active",
+  "os": [],
+  "open_source": false
  }
 ]
