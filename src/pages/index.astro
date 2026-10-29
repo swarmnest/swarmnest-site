@@ -7,6 +7,11 @@ import Signup from '../components/Signup.astro';
 import Base from '../layouts/Base.astro';
 import { ALL, CATS } from '../lib/data';
 import { NAV_GROUPS, POPULAR_CATS, CHIPS, groupPath } from '../lib/nav';
+import { ALL_GUIDES } from '../lib/guides';
+// Deadline callouts: wording switches to past tense the day after each date (pages rebuild daily).
+const today = new Date().toISOString().slice(0, 10);
+const smitheryPast = today > '2026-10-31'; const builderPast = today > '2026-11-30';
+const homeGuides = ALL_GUIDES.slice(0, 6);
 const nProducts = PRODUCTS.filter(p=>!p.bundle).length;
 const minPrice = Math.min(...PRODUCTS.map(p=>p.cents))/100;
 const featured = ['openai-api','anthropic-api','firecrawl','tavily','github-mcp-server','langgraph','qdrant','stripe'].map(s=>ALL.find(e=>e.slug===s)!).filter(Boolean);
@@ -25,6 +30,10 @@ const featured = ['openai-api','anthropic-api','firecrawl','tavily','github-mcp-
 <h2 class="vh">Popular</h2>
 <ul class="chips" aria-label="Popular Categories">{CHIPS.map(c=><li><a href={c.href}>{c.name}</a></li>)}</ul>
 </section>
+<aside class="callout" aria-label="Deadlines">
+<p><strong>{smitheryPast ? 'Smithery shut down its hosted MCP proxy on Oct 31.' : 'Smithery shuts down its hosted MCP proxy on Oct 31.'}</strong> <a href="/smithery-alternatives/">See Smithery Alternatives and How to Migrate</a></p>
+<p><strong>{builderPast ? 'OpenAI Agent Builder shut down on Nov 30.' : 'OpenAI Agent Builder shuts down on Nov 30.'}</strong> <a href="/guides/openai-agent-builder-alternatives/">See Agent Builder Alternatives</a></p>
+</aside>
 <h2>Start Here</h2>
 <div class="tiles">
 <a class="tile" href="/directory/"><strong>Directory</strong><span>{ALL.length.toLocaleString('en-US')} tools in {CATS.length} categories</span></a>
@@ -32,6 +41,8 @@ const featured = ['openai-api','anthropic-api','firecrawl','tavily','github-mcp-
 <a class="tile" href="/marketplace/"><strong>Marketplace</strong><span>{nProducts} tested packs{LAUNCH ? `, from $${minPrice}` : ''}</span></a>
 <a class="tile" href="/use-cases/"><strong>Use Cases</strong><span>{USECASES.length} jobs for agents, with {TEMPLATES.length} templates</span></a>
 </div>
+<div class="grp-h"><h2>Guides and Comparisons</h2><a class="small" href="/guides/">All Guides</a></div>
+<div class="grid">{homeGuides.map((g)=><a class="card" href={g.path}><h3>{g.short}</h3><p>{g.blurb}</p>{g.badge && <span class="badge">{g.badge}</span>}</a>)}</div>
 <h2>Popular Categories</h2>
 <ul class="catlist">{POPULAR_CATS.map(c=><li><a href={c.href}><span>{c.name}</span><span class="n">{c.count}</span></a></li>)}</ul>
 <div class="grp-h"><h2>Browse by Group</h2><a class="small" href="/directory/all-categories/">All Categories A–Z</a></div>

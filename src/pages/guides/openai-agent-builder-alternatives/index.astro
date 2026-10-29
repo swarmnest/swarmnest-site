@@ -1,0 +1,61 @@
+---
+import GuidePage from '../../../components/GuidePage.astro';
+import CmpTable from '../../../components/CmpTable.astro';
+const path = '/guides/openai-agent-builder-alternatives/';
+const openai = [
+ { name:'OpenAI Agents SDK', url:'https://github.com/openai/openai-agents-python', slug:'openai-agents-sdk', 'Type':'Code SDK', 'Open Source':'Yes, MIT (Python and TypeScript)', 'Self-Host':'Yes, runs in your app', 'Good For':'Keeping an exported Agent Builder workflow as code. This is the export target.' },
+ { name:'ChatGPT Workspace Agents', url:'https://developers.openai.com/api/docs/guides/agent-builder/migrate-from-agent-builder', 'Type':'Agents built in ChatGPT with natural language', 'Open Source':'No', 'Self-Host':'No', 'Good For':'Internal team agents in a ChatGPT Business, Enterprise or Edu workspace' },
+ { name:'ChatKit', url:'https://developers.openai.com/api/docs/guides/chatkit', 'Type':'Embeddable chat UI toolkit', 'Open Source':'Yes, Apache-2.0 (chatkit-js)', 'Self-Host':'Yes, with your own server', 'Good For':'Keeping your chat front end. OpenAI says ChatKit stays available.' },
+];
+const visual = [
+ { name:'n8n', url:'https://n8n.io/ai/', slug:'n8n-ai-agents', 'Type':'Visual workflows with AI agent nodes', 'Open Source':'Fair-code (Sustainable Use License)', 'Self-Host':'Yes', 'Good For':'Agent workflows that also touch hundreds of apps' },
+ { name:'Dify', url:'https://github.com/langgenius/dify', slug:'dify', 'Type':'Visual agent and RAG workflow builder', 'Open Source':'Source available under its own license based on Apache-2.0', 'Self-Host':'Yes', 'Good For':'Chat apps, RAG and agent workflows with a built-in UI' },
+ { name:'Langflow', url:'https://github.com/langflow-ai/langflow', slug:'langflow', 'Type':'Visual flow builder for agents', 'Open Source':'Yes, MIT', 'Self-Host':'Yes', 'Good For':'A drag-and-drop canvas closest to Agent Builder, which you can also run as an API' },
+ { name:'Flowise', url:'https://flowiseai.com/', slug:'flowise', 'Type':'Drag-and-drop LLM and agent flows', 'Open Source':'Source on GitHub', 'Self-Host':'Yes', 'Good For':'Quick visual prototypes and embedded chatbots' },
+ { name:'Gumloop', url:'https://www.gumloop.com/', slug:'gumloop', 'Type':'No-code AI workflow builder', 'Open Source':'No', 'Self-Host':'No', 'Good For':'Non-developers automating work with AI' },
+ { name:'Zapier Agents', url:'https://zapier.com/agents', slug:'zapier-agents', 'Type':'Hosted agent builder', 'Open Source':'No', 'Self-Host':'No', 'Good For':'Teams already on Zapier' },
+ { name:'Microsoft Copilot Studio', url:'https://www.microsoft.com/microsoft-copilot/microsoft-copilot-studio', slug:'copilot-studio', 'Type':'Hosted agent builder', 'Open Source':'No', 'Self-Host':'No', 'Good For':'Microsoft 365 and Teams organizations' },
+ { name:'Lindy', url:'https://www.lindy.ai/', slug:'lindy', 'Type':'No-code AI agents and automations', 'Open Source':'No', 'Self-Host':'No', 'Good For':'Assistant-style agents for email, meetings and sales' },
+];
+const code = [
+ { name:'LangGraph', url:'https://www.langchain.com/langgraph', slug:'langgraph', 'Type':'Graph-based agent framework', 'Open Source':'Yes, MIT', 'Self-Host':'Yes', 'Good For':'Graph workflows like Agent Builder, with saved state and human approval' },
+ { name:'CrewAI', url:'https://www.crewai.com/', slug:'crewai', 'Type':'Multi-agent framework with a visual Studio', 'Open Source':'Yes, MIT', 'Self-Host':'Yes', 'Good For':'Role-based agent teams; Studio offers a visual editor' },
+ { name:'Vercel AI SDK', url:'https://ai-sdk.dev/docs/agents/overview', slug:'vercel-ai-sdk-agents', 'Type':'TypeScript agent building blocks', 'Open Source':'Yes', 'Self-Host':'Yes', 'Good For':'Agents inside a Next.js or TypeScript app' },
+];
+const faqs: [string, string][] = [
+ ['When does OpenAI Agent Builder shut down?', 'OpenAI says Agent Builder is scheduled to shut down on November 30, 2026. OpenAI announced the deprecation on June 3, 2026, and existing users can keep using it until then. ChatKit remains available.'],
+ ['What happens to my Agent Builder workflows?', 'After November 30, 2026 they will no longer be available on the OpenAI platform. Before then, export each workflow as Agents SDK code in Python or TypeScript and run it yourself, or rebuild it as a ChatGPT Workspace Agent.'],
+ ['How do I export a workflow from Agent Builder?', "Open the workflow in Agent Builder and use the Code option to export it as Agents SDK code in TypeScript or Python. OpenAI notes that the export does not convert your workflow graph or guarantee every behavior transfers unchanged, so test control flow, tools, authentication and permissions."],
+ ['Is OpenAI Evals also shutting down?', 'OpenAI says it is winding down the Agent Builder and Evals products, and both will no longer be available on the OpenAI platform from November 30, 2026.'],
+ ['What is the closest visual alternative to Agent Builder?', 'Langflow, n8n, Dify and Flowise all give you a drag-and-drop canvas for agent workflows and can be self-hosted. For a hosted, no-code tool, look at Gumloop, Zapier Agents, Copilot Studio or Lindy.'],
+ ['Do I still need ChatKit?', 'Only if you embedded the Agent Builder chat UI. OpenAI says ChatKit stays available, and for new work it recommends running ChatKit with your own server-side agent, for example one built with the Agents SDK.'],
+];
+const sources: [string, string][] = [
+ ['OpenAI: Agent Builder guide (deprecation notice)', 'https://developers.openai.com/api/docs/guides/agent-builder'],
+ ['OpenAI: Deprecations', 'https://developers.openai.com/api/docs/deprecations'],
+ ['OpenAI: Migrate from Agent Builder', 'https://developers.openai.com/api/docs/guides/agent-builder/migrate-from-agent-builder'],
+ ['OpenAI: Introducing AgentKit (Jun 3, 2026 update)', 'https://openai.com/index/introducing-agentkit/'],
+ ['OpenAI: ChatKit', 'https://developers.openai.com/api/docs/guides/chatkit'],
+ ['OpenAI Agents SDK (Python)', 'https://github.com/openai/openai-agents-python'], ['OpenAI Agents SDK (TypeScript)', 'https://github.com/openai/openai-agents-js'],
+ ['Langflow on GitHub', 'https://github.com/langflow-ai/langflow'], ['Dify on GitHub', 'https://github.com/langgenius/dify'], ['n8n on GitHub', 'https://github.com/n8n-io/n8n'],
+];
+---
+<GuidePage path={path} title="OpenAI Agent Builder Alternatives: Shuts Down Nov 30, 2026 | Swarmnest" description="OpenAI Agent Builder shuts down Nov 30, 2026. How to export workflows to the Agents SDK, and the best visual builders and frameworks to move to." faqs={faqs} sources={sources}>
+<p class="lead">OpenAI is retiring Agent Builder, the visual canvas from AgentKit. Here is what changes, how to get your workflows out, and where to rebuild them, checked against OpenAI's docs on Oct 29, 2026.</p>
+<div class="notice"><strong>Key Date: Nov 30, 2026.</strong> OpenAI says Agent Builder is scheduled to shut down on November 30, 2026, along with OpenAI Evals. ChatKit stays available.</div>
+<h2 id="how-to-migrate">How to Migrate</h2>
+<ol>
+<li><strong>List your workflows.</strong> Note each workflow's tools, connectors, guardrails and where it is embedded with ChatKit.</li>
+<li><strong>Export each one as code.</strong> In Agent Builder, use Code to export the workflow as Agents SDK code in Python or TypeScript.</li>
+<li><strong>Choose where it runs.</strong> Keep it as code in your own app with the Agents SDK, rebuild it as a ChatGPT Workspace Agent for internal teams, or rebuild it on another platform below.</li>
+<li><strong>Test before you switch.</strong> OpenAI says the export does not convert the graph or guarantee identical behavior. Check control flow, tool calls, sign-in and permissions with real inputs.</li>
+<li><strong>Move your chat UI.</strong> If you used ChatKit with a hosted workflow, point ChatKit at your own server-side agent.</li>
+</ol>
+<h2 id="openai-paths">OpenAI's Own Replacement Paths</h2>
+<CmpTable cols={['Type','Open Source','Self-Host','Good For']} rows={openai} />
+<h2 id="visual">Visual Agent Builder Alternatives</h2>
+<CmpTable cols={['Type','Open Source','Self-Host','Good For']} rows={visual} />
+<h2 id="code">Code-First Alternatives</h2>
+<CmpTable cols={['Type','Open Source','Self-Host','Good For']} rows={code} />
+<p>Compare frameworks in <a href="/guides/crewai-vs-langgraph-vs-autogen/">CrewAI vs LangGraph vs AutoGen</a>, or browse every <a href="/directory/visual-agent-builders/">Visual Agent Builder</a> and <a href="/directory/agent-frameworks/">Agent Framework</a> in the directory.</p>
+</GuidePage>

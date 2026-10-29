@@ -1,0 +1,54 @@
+---
+import GuidePage from '../../../components/GuidePage.astro';
+import CmpTable from '../../../components/CmpTable.astro';
+const path = '/guides/crewai-vs-langgraph-vs-autogen/';
+const main = [
+ { name:'CrewAI', url:'https://www.crewai.com/', slug:'crewai', 'Approach':'Role-based teams of agents (Crews) plus event-driven, step-by-step workflows (Flows) that can call Crews', 'Languages':'Python', 'License':'MIT', 'Status':'Active', 'Hosted Option':'CrewAI AMP. Basic plan is free with 50 workflow executions a month; Enterprise is custom.', 'Best For':'Getting a team of specialist agents working fast' },
+ { name:'LangGraph', url:'https://www.langchain.com/langgraph', slug:'langgraph', 'Approach':'Low-level graph of nodes and edges with shared state, checkpoints and human-in-the-loop interrupts', 'Languages':'Python and JavaScript/TypeScript', 'License':'MIT', 'Status':'Active, version 1.0 since Oct 2025', 'Hosted Option':'LangSmith Deployment (formerly LangGraph Platform)', 'Best For':'Long-running production agents that need precise control and durable state' },
+ { name:'AutoGen', url:'https://github.com/microsoft/autogen', slug:'autogen', 'Approach':'Agents that talk to each other in conversations and group chats, on an event-driven core', 'Languages':'Python and .NET', 'License':'MIT (code)', 'Status':'Maintenance mode: bug fixes and security patches only', 'Hosted Option':'None', 'Best For':'Existing AutoGen projects. New projects should look at Microsoft Agent Framework.' },
+];
+const others = [
+ { name:'Microsoft Agent Framework', url:'https://github.com/microsoft/agent-framework', 'What It Is':'The successor to AutoGen and Semantic Kernel, with graph-based workflows, MCP and A2A support. MIT, Python and .NET.', 'Pick It If':'You are moving off AutoGen or work in the Microsoft stack' },
+ { name:'OpenAI Agents SDK', url:'https://github.com/openai/openai-agents-python', slug:'openai-agents-sdk', 'What It Is':'Lightweight SDK with agents, handoffs, guardrails and tracing. MIT, Python and TypeScript.', 'Pick It If':'You want a small API, or you are leaving OpenAI Agent Builder' },
+ { name:'Google Agent Development Kit', url:'https://github.com/google/adk-python', slug:'google-agent-development-kit', 'What It Is':"Google's open-source toolkit for building, evaluating and deploying agents", 'Pick It If':'You deploy on Google Cloud or use Gemini' },
+ { name:'Pydantic AI', url:'https://ai.pydantic.dev/', slug:'pydantic-ai', 'What It Is':'Type-safe Python agent framework from the Pydantic team. MIT.', 'Pick It If':'You want typed, validated outputs and plain Python' },
+ { name:'Mastra', url:'https://mastra.ai/', slug:'mastra', 'What It Is':'TypeScript framework for agents, workflows, memory and evals', 'Pick It If':'Your stack is TypeScript' },
+ { name:'smolagents', url:'https://github.com/huggingface/smolagents', slug:'hugging-face-smolagents', 'What It Is':'Minimal Hugging Face library where agents write and run Python code. Apache-2.0.', 'Pick It If':'You want something tiny and hackable' },
+];
+const faqs: [string, string][] = [
+ ['Is AutoGen still maintained?', 'AutoGen is in maintenance mode. Microsoft says it will get bug fixes and security patches but no new features, and it is now community managed. Microsoft recommends Microsoft Agent Framework, which merges AutoGen and Semantic Kernel, for new projects and publishes a migration guide.'],
+ ['Is CrewAI better than LangGraph?', 'They aim at different needs. CrewAI is quicker to start with: you describe agents by role and goal and let them work as a crew, and Flows add step-by-step control. LangGraph is lower level: you define the graph and state yourself, which takes more code but gives finer control, checkpoints and human approval steps for long-running agents.'],
+ ['Does CrewAI use LangChain?', 'No. CrewAI says it is built from scratch and is independent of LangChain and other agent frameworks.'],
+ ['Is LangGraph free?', 'Yes. LangGraph is open source under the MIT license. LangSmith Deployment, the managed service for running LangGraph agents, is a paid LangSmith feature.'],
+ ['Which framework supports TypeScript?', 'LangGraph has Python and JavaScript/TypeScript versions. CrewAI is Python only, and AutoGen is Python and .NET. For TypeScript-first work, also look at Mastra, the Vercel AI SDK and the OpenAI Agents SDK.'],
+ ['Can these frameworks use MCP servers?', 'Yes. All three can call tools from MCP servers, and Microsoft Agent Framework supports MCP and A2A directly. Search the Swarmnest MCP server directory for servers to plug in.'],
+];
+const sources: [string, string][] = [
+ ['CrewAI README', 'https://github.com/crewAIInc/crewAI'], ['CrewAI pricing', 'https://crewai.com/pricing'],
+ ['LangChain: LangChain and LangGraph 1.0', 'https://www.langchain.com/blog/langchain-langgraph-1dot0'], ['LangSmith Deployment', 'https://www.langchain.com/langsmith/deployment'],
+ ['AutoGen README (maintenance mode)', 'https://github.com/microsoft/autogen'], ['AutoGen to Microsoft Agent Framework migration guide', 'https://learn.microsoft.com/en-us/agent-framework/migration-guide/from-autogen/'],
+ ['Microsoft Agent Framework on GitHub', 'https://github.com/microsoft/agent-framework'],
+];
+---
+<GuidePage path={path} title="CrewAI vs LangGraph vs AutoGen (2026): Which Agent Framework? | Swarmnest" description="CrewAI, LangGraph and AutoGen compared: approach, languages, license, hosting and status. AutoGen is in maintenance mode; here is what to use instead." faqs={faqs} sources={sources}>
+<p class="lead">CrewAI, LangGraph and AutoGen are the three best-known open-source frameworks for multi-agent systems. A lot changed in the past year: LangGraph reached 1.0, and AutoGen moved to maintenance mode. Here is how they compare now, checked Oct 29, 2026.</p>
+<div class="notice"><strong>AutoGen Is in Maintenance Mode.</strong> Microsoft says AutoGen gets bug fixes and security patches only. New projects should use <a href="https://github.com/microsoft/agent-framework" rel="noopener">Microsoft Agent Framework</a>, its successor.</div>
+<h2 id="short-answer">The Short Answer</h2>
+<ul>
+<li><strong>Pick CrewAI</strong> to get a team of role-based agents running quickly in Python, with Flows when you need fixed steps.</li>
+<li><strong>Pick LangGraph</strong> for production agents that run for a long time, need saved state, retries and human approval, or need TypeScript.</li>
+<li><strong>Skip AutoGen for new work.</strong> Use Microsoft Agent Framework instead, and migrate existing AutoGen code with Microsoft's guide.</li>
+</ul>
+<h2 id="compared">CrewAI vs LangGraph vs AutoGen Compared</h2>
+<CmpTable cols={['Approach','Languages','License','Status','Hosted Option','Best For']} rows={main} />
+<h2 id="how-they-differ">How They Differ</h2>
+<h3>Level of Control</h3>
+<p>CrewAI is high level: you give each agent a role, goal and tools, and the crew splits the work. LangGraph is low level: you draw the graph of steps yourself and decide exactly what state moves between them. AutoGen sits between, with agents that solve tasks by messaging each other.</p>
+<h3>Production Features</h3>
+<p>LangGraph's main draw is durable execution: state is saved at each step, so a run can pause for human review or survive a restart and pick up where it stopped. CrewAI Flows add deterministic, event-driven steps and state, and CrewAI AMP adds tracing and deployment.</p>
+<h3>Where AutoGen Went</h3>
+<p>In October 2025 Microsoft merged AutoGen and Semantic Kernel into Microsoft Agent Framework. Its single-agent interface is close to AutoGen's, and multi-agent work moves to a graph-based workflow API.</p>
+<h2 id="others">Other Frameworks Worth a Look</h2>
+<CmpTable cols={['What It Is','Pick It If']} rows={others} />
+<p>See all of them in the <a href="/directory/agent-frameworks/">Agent Frameworks directory</a>. To give an agent memory, see <a href="/guides/mem0-vs-zep-vs-letta/">Mem0 vs Zep vs Letta</a>; for tools, see <a href="/guides/best-mcp-servers-for-claude-code-and-cursor/">Best MCP Servers for Claude Code and Cursor</a>.</p>
+</GuidePage>

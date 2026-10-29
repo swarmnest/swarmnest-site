@@ -5,9 +5,10 @@ import Crumbs from '../../../components/Crumbs.astro';
 import Related from '../../../components/Related.astro';
 import DirFilters from '../../../components/DirFilters.astro';
 import { groupForCat, groupPath } from '../../../lib/nav';
+import { guidesForCat } from '../../../lib/guides';
 import { CATS, byCat, SITE, authLabel, priceLabel } from '../../../lib/data';
 export function getStaticPaths(){ return CATS.map(c=>({params:{category:c.slug},props:{c}})); }
-const { c } = Astro.props; const list = byCat(c.slug);
+const { c } = Astro.props; const list = byCat(c.slug); const gds = guidesForCat(c.slug);
 const grp = groupForCat(c.slug); const sib = grp ? grp.cats.filter(x=>x.slug!==c.slug) : [];
 const ld=[{'@context':'https://schema.org','@type':'BreadcrumbList',itemListElement:[{'@type':'ListItem',position:1,name:'Home',item:SITE+'/'},{'@type':'ListItem',position:2,name:'Directory',item:SITE+'/directory/'},...(grp?[{'@type':'ListItem',position:3,name:grp.name,item:SITE+groupPath(grp.slug)}]:[]),{'@type':'ListItem',position:grp?4:3,name:c.name,item:`${SITE}/directory/${c.slug}/`}]},
 {'@context':'https://schema.org','@type':'ItemList',name:c.name,itemListElement:list.map((e,i)=>({'@type':'ListItem',position:i+1,url:`${SITE}/directory/${c.slug}/${e.slug}/`,name:e.name}))}];
@@ -15,7 +16,8 @@ const ld=[{'@context':'https://schema.org','@type':'BreadcrumbList',itemListElem
 <Base title={/\bagent/i.test(c.name) ? `${c.name} — ${list.length} Tools | Swarmnest` : `${c.name} for AI Agents — ${list.length} Tools | Swarmnest`} description={`${c.blurb} ${list.length} hand-checked entries with pricing and auth details.`} path={`/directory/${c.slug}/`} jsonld={ld}>
 <Crumbs items={[['Home','/'],['Directory','/directory/'],...(grp?[[grp.name,groupPath(grp.slug)]]:[]),[c.name]] as [string,string?][]} />
 <h1>{c.name}</h1><p class="lead">{c.blurb}</p>
-<p class="small">JSON: <a href={`/api/v1/directory.json`}>/api/v1/directory.json</a> (filter on <code>category={c.slug}</code>) · Agents can search it with the <a href="/mcp-server/">Swarmnest MCP Server</a>{['mcp-servers','mcp-sdks-dev-tools','ai-tool-directories'].includes(c.slug) && <> · Moving off Smithery? See <a href="/smithery-alternatives/">Smithery Alternatives</a></>}</p>
+<p class="small">JSON: <a href={`/api/v1/directory.json`}>/api/v1/directory.json</a> (filter on <code>category={c.slug}</code>) · Agents can search it with the <a href="/mcp-server/">Swarmnest MCP Server</a></p>
+{gds.length>0 && <p class="cat-guides"><strong>Guides:</strong> {gds.map((g,i)=><>{i>0 && ' · '}<a href={g.path}>{g.short}</a></>)} · <a href="/guides/">All Guides</a></p>}
 <SponsorSlot key={`directory/${c.slug}`} />
 <DirFilters entries={list} label="Search This Category" placeholder={`Search ${c.name}…`} />
 <h2 class="vh">{c.name}</h2>

@@ -19,3 +19,16 @@ export const CHIPS = [
   { name: 'Browser Automation', href: '/directory/browser-automation/' },
   { name: 'Vector Databases', href: '/directory/vector-databases/' },
 ];
+// Top-level header links (after the Directory dropdown), shared by the desktop bar and the mobile Menu sheet.
+// `match` decides which section is highlighted. The Community slot is reserved for Field Reports:
+// set show: true (and point href at the live page) when it ships. Keep this list short: the desktop bar
+// fits six items from 820px up (tighter spacing applies between 820px and 1000px, see styles.css).
+export type TopLink = { key: string; name: string; href: string; show: boolean; match: (path: string) => boolean };
+export const TOP_NAV: TopLink[] = [
+  { key: 'guides', name: 'Guides', href: '/guides/', show: true, match: (p) => p.startsWith('/guides/') || p === '/smithery-alternatives/' },
+  { key: 'skills', name: 'Agent Skills', href: '/agent-skills/', show: true, match: (p) => p.startsWith('/agent-skills/') },
+  { key: 'market', name: 'Marketplace', href: '/marketplace/', show: true, match: (p) => p.startsWith('/marketplace/') },
+  { key: 'community', name: 'Community', href: '/community/', show: false, match: (p) => p.startsWith('/community/') },
+  { key: 'adv', name: 'Advertise', href: '/advertise/', show: true, match: (p) => p.startsWith('/advertise/') },
+];
+export const topNav = () => TOP_NAV.filter((l) => l.show);

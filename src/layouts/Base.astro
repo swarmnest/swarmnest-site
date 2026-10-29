@@ -2,7 +2,7 @@
 import '../styles.css';
 import { SITE } from '../lib/data';
 import { LEGAL } from '../lib/legal';
-import { NAV_GROUPS, groupPath } from '../lib/nav';
+import { NAV_GROUPS, groupPath, topNav } from '../lib/nav';
 interface Props { title: string; description: string; path: string; jsonld?: object[]; type?: string; noindex?: boolean; }
 const { title, description, path, jsonld = [], type = 'website', noindex = false } = Astro.props;
 const canonical = SITE + path;
@@ -53,9 +53,7 @@ const ld = [org, ...(path==='/'?[site]:[]), ...jsonld];
  <nav class="mainnav" aria-label="Main">
   <a class="nl nojs-only" href="/directory/" aria-current={cur('dir')}>Directory</a>
   <button type="button" class="nl js-only dir-btn" id="dir-btn" aria-expanded="false" aria-controls="dpanel" aria-current={cur('dir') ? 'true' : undefined}>Directory <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="2"/></svg></button>
-  <a class="nl" href="/agent-skills/" aria-current={cur('skills')}>Agent Skills</a>
-  <a class="nl" href="/marketplace/" aria-current={cur('market')}>Marketplace</a>
-  <a class="nl" href="/advertise/" aria-current={cur('adv')}>Advertise</a>
+  {topNav().map((l) => <a class="nl" href={l.href} aria-current={l.match(path) ? 'page' : undefined}>{l.name}</a>)}
  </nav>
  <a class="search-btn" href="/search/" aria-current={path === '/search/' ? 'page' : undefined}><svg width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M13 13l4.5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Search</span></a>
 </div>
@@ -74,7 +72,7 @@ const ld = [org, ...(path==='/'?[site]:[]), ...jsonld];
   <nav aria-label="Menu">
   <h2 class="mm-h">Browse</h2>
   <ul class="mm-list">
-   <li><a href="/directory/">Directory</a></li><li><a href="/agent-skills/">Agent Skills</a></li><li><a href="/marketplace/">Marketplace</a></li>
+   <li><a href="/directory/">Directory</a></li>{topNav().filter((l) => l.key !== 'adv').map((l) => <li><a href={l.href}>{l.name}</a></li>)}
    <li><a href="/use-cases/">Use Cases</a></li><li><a href="/agent-templates/">Agent Templates</a></li><li><a href="/macos/">macOS Hub</a></li><li><a href="/directory/all-categories/">All Categories A–Z</a></li>
   </ul>
   <h2 class="mm-h">Directory Groups</h2>
@@ -92,7 +90,7 @@ const ld = [org, ...(path==='/'?[site]:[]), ...jsonld];
 <footer><div class="wrap">
  {showAd && <div class="sponsor"><a href="/advertise/"><strong>Sponsor / Advertise</strong></a> — reach people building with AI agents. <a href="/advertise/">See Placements and Prices</a>.</div>}
  <nav class="fcols" aria-label="Footer">
-  <div><h2>Explore</h2><ul><li><a href="/directory/">Directory</a></li><li><a href="/agent-skills/">Agent Skills</a></li><li><a href="/marketplace/">Marketplace</a></li><li><a href="/use-cases/">Use Cases</a></li><li><a href="/agent-templates/">Agent Templates</a></li><li><a href="/macos/">macOS Hub</a></li><li><a href="/directory/all-categories/">All Categories A–Z</a></li><li><a href="/search/">Search</a></li></ul></div>
+  <div><h2>Explore</h2><ul><li><a href="/directory/">Directory</a></li><li><a href="/guides/">Guides</a></li><li><a href="/agent-skills/">Agent Skills</a></li><li><a href="/marketplace/">Marketplace</a></li><li><a href="/use-cases/">Use Cases</a></li><li><a href="/agent-templates/">Agent Templates</a></li><li><a href="/macos/">macOS Hub</a></li><li><a href="/directory/all-categories/">All Categories A–Z</a></li><li><a href="/search/">Search</a></li></ul></div>
   <div><h2>For Developers</h2><ul><li><a href="/mcp-server/">MCP Server</a></li><li><a href="/api/v1/directory.json">API (JSON)</a></li><li><a href="/openapi.json">OpenAPI</a></li><li><a href="/llms.txt">llms.txt</a></li><li><a href="/sitemap.xml">Sitemap</a></li><li><a href="/submit/">Submit a Tool</a></li><li><a href="/agent-skills/submit/">Submit a Skill</a></li></ul></div>
   <div><h2>Company</h2><ul><li><a href="/about/">About</a></li><li><a href="/support/">Support</a></li><li><a href="/advertise/">Advertise</a></li><li><a href="https://x.com/Swarmnest_ai" rel="me noopener">Swarmnest on X</a></li><li><a href="mailto:hello@swarmnest.ai">hello@swarmnest.ai</a></li></ul></div>
  </nav>

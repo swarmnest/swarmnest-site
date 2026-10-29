@@ -1,0 +1,63 @@
+---
+import GuidePage from '../../../components/GuidePage.astro';
+import CmpTable from '../../../components/CmpTable.astro';
+const path = '/guides/browser-automation-tools-for-ai-agents/';
+const libs = [
+ { name:'Playwright', url:'https://playwright.dev/', slug:'playwright', 'Type':'Code library', 'Open Source':'Yes, Apache-2.0', 'How the Agent Drives It':'Your code or the model writes Playwright calls', 'Price':'Free', 'Best For':'Fast, reliable scripted steps; the base most other tools build on' },
+ { name:'Browser Use', url:'https://browser-use.com/', slug:'browser-use', 'Type':'Agent library plus cloud', 'Open Source':'Yes, MIT', 'How the Agent Drives It':'Give it a task in plain language and an LLM clicks and types', 'Price':'Library free. Cloud is pay as you go: $0.02 a browser hour, plus model use.', 'Best For':'Open-ended tasks on sites you do not control' },
+ { name:'Stagehand', url:'https://www.stagehand.dev/', slug:'stagehand', 'Type':'SDK built on Playwright', 'Open Source':'Yes, MIT', 'How the Agent Drives It':'Mix plain-language act, extract and observe calls with normal code', 'Price':'Free SDK; runs locally or on Browserbase', 'Best For':'Workflows that are mostly fixed but need AI for the fiddly steps' },
+ { name:'Skyvern', url:'https://www.skyvern.com/', slug:'skyvern', 'Type':'Agent plus cloud', 'Open Source':'Yes, AGPL-3.0', 'How the Agent Drives It':'LLMs plus computer vision read the page and act', 'Price':'Open source is free; also offered as a hosted cloud', 'Best For':'Form filling and repetitive workflows across many sites' },
+];
+const clouds = [
+ { name:'Browserbase', url:'https://www.browserbase.com/', slug:'browserbase', 'Free Start':'Free: 3 concurrent browsers, 1 browser hour', 'Paid From':'$20 a month, 100 browser hours', 'Notable':'Made by the Stagehand team; session recordings, search and fetch APIs' },
+ { name:'Steel', url:'https://steel.dev/', slug:'steel', 'Free Start':'$30 of one-time credits, 10 concurrent sessions', 'Paid From':'Usage at $0.10 a browser hour; Scale plan $250 a month', 'Notable':'Open-source browser API (Apache-2.0) you can self-host' },
+ { name:'Hyperbrowser', url:'https://www.hyperbrowser.ai/', slug:'hyperbrowser', 'Free Start':'5,000 credits, 1 concurrent session', 'Paid From':'$30 a month; browsers $0.10 an hour', 'Notable':'Browsers, sandboxes and web data APIs on one credit balance' },
+ { name:'Kernel', url:'https://www.kernel.sh/', slug:'kernel', 'Free Start':'$5 a month of free usage, 5 concurrent browsers', 'Paid From':'$30 a month plus usage', 'Notable':'Proxies and captcha solving included in usage, managed auth' },
+ { name:'Browser Use Cloud', url:'https://browser-use.com/pricing', slug:'browser-use', 'Free Start':'$1 of free credit', 'Paid From':'Pay as you go, no subscription', 'Notable':'Hosted Browser Use agents and browsers' },
+ { name:'Browserless', url:'https://www.browserless.io/', slug:'browserless', 'Free Start':'Free plan: 2 concurrent browsers, no card needed', 'Paid From':'$25 a month billed yearly (Prototyping)', 'Notable':'Connect over MCP, Puppeteer or Playwright; BrowserQL' },
+];
+const mcps = [
+ { name:'Playwright MCP', url:'https://github.com/microsoft/playwright-mcp', slug:'playwright-mcp', 'Setup':'<code>npx @playwright/mcp@latest</code>', 'Notable':'Uses accessibility snapshots instead of screenshots, so it is fast and cheap on tokens' },
+ { name:'Chrome DevTools MCP', url:'https://github.com/ChromeDevTools/chrome-devtools-mcp', slug:'chrome-devtools-mcp', 'Setup':'<code>npx -y chrome-devtools-mcp@latest</code>', 'Notable':'Official Chrome server for debugging, network inspection and performance traces' },
+ { name:'Browserbase MCP Server', url:'https://github.com/browserbase/mcp-server-browserbase', slug:'browserbase-mcp-server', 'Setup':'See the README', 'Notable':'Drives Browserbase cloud browsers with Stagehand' },
+];
+const faqs: [string, string][] = [
+ ['What is the best browser automation tool for AI agents?', 'It depends on the job. For fixed, repeatable steps, Playwright is fastest and most reliable. For open-ended tasks on unfamiliar sites, an agent library such as Browser Use works from plain-language goals. Stagehand mixes both. For coding agents, Playwright MCP or Chrome DevTools MCP gives Claude Code or Cursor a browser in one line of config.'],
+ ['Do I need a cloud browser?', 'Not to start. Playwright, Browser Use and Stagehand all run a local browser. Cloud browsers such as Browserbase, Steel, Hyperbrowser and Kernel help when you need many sessions at once, proxies, captcha handling, session recordings, or a browser that runs while your laptop is off.'],
+ ['Is Browser Use free?', 'The Browser Use library is open source under the MIT license and free to run. Browser Use Cloud is pay as you go with no subscription, starting with $1 of free credit; cloud browsers cost $0.02 an hour plus model use.'],
+ ['What is the difference between Stagehand and Browserbase?', 'Stagehand is an open-source SDK that adds plain-language actions to Playwright. Browserbase is the company that makes it and sells hosted browsers. Stagehand can run locally or on Browserbase.'],
+ ['Which browser MCP server should I use with Claude Code or Cursor?', 'Playwright MCP is the most common choice for letting an agent browse and test pages. Chrome DevTools MCP is better for debugging a live page, reading network requests and running performance traces. Both are free and open source.'],
+ ['Can agents control a whole desktop, not just a browser?', 'Yes. Computer-use tools such as Cua give agents sandboxed macOS and Linux machines with a desktop driver. Browser tools are still faster and more reliable for web-only work.'],
+];
+const sources: [string, string][] = [
+ ['Browser Use pricing', 'https://browser-use.com/pricing'], ['Browserbase pricing', 'https://www.browserbase.com/pricing'], ['Steel pricing', 'https://steel.dev/pricing'],
+ ['Hyperbrowser pricing', 'https://www.hyperbrowser.ai/pricing'], ['Kernel pricing', 'https://www.kernel.sh/pricing'], ['Browserless pricing', 'https://www.browserless.io/pricing'],
+ ['Playwright MCP README', 'https://github.com/microsoft/playwright-mcp'], ['Chrome DevTools MCP README', 'https://github.com/ChromeDevTools/chrome-devtools-mcp'],
+ ['Browser Use on GitHub', 'https://github.com/browser-use/browser-use'], ['Stagehand on GitHub', 'https://github.com/browserbase/stagehand'], ['Skyvern on GitHub', 'https://github.com/Skyvern-AI/skyvern'],
+];
+---
+<GuidePage path={path} title="Browser Automation Tools for AI Agents Compared (2026) | Swarmnest" description="Playwright, Browser Use, Stagehand, Skyvern, Browserbase, Steel, Hyperbrowser, Kernel and browser MCP servers compared, with free tiers and prices." faqs={faqs} sources={sources}>
+<p class="lead">AI agents use the web through three kinds of tools: code libraries that drive a browser, cloud services that host browsers for them, and MCP servers that hand a browser to Claude, Cursor or another client. Here is how the main options compare, with prices checked Oct 29, 2026.</p>
+<h2 id="short-answer">The Short Answer</h2>
+<ul>
+<li><strong>Coding agent that needs a browser:</strong> add <a href="/directory/mcp-servers/playwright-mcp/">Playwright MCP</a> or <a href="/directory/mcp-servers/chrome-devtools-mcp/">Chrome DevTools MCP</a>.</li>
+<li><strong>Fixed, repeatable steps:</strong> plain <a href="/directory/browser-automation/playwright/">Playwright</a>, or <a href="/directory/browser-automation/stagehand/">Stagehand</a> when some steps need AI.</li>
+<li><strong>Open-ended tasks:</strong> <a href="/directory/browser-automation/browser-use/">Browser Use</a>.</li>
+<li><strong>Many sessions, proxies or recordings:</strong> a cloud browser such as Browserbase, Steel, Hyperbrowser or Kernel.</li>
+</ul>
+<h2 id="libraries">Libraries and Agents</h2>
+<CmpTable cols={['Type','Open Source','How the Agent Drives It','Price','Best For']} rows={libs} />
+<h2 id="cloud-browsers">Cloud Browsers for Agents</h2>
+<CmpTable cols={['Free Start','Paid From','Notable']} rows={clouds} />
+<h2 id="mcp">Browser MCP Servers</h2>
+<CmpTable cols={['Setup','Notable']} rows={mcps} />
+<p>In Claude Code: <code>claude mcp add playwright npx @playwright/mcp@latest</code>. In Cursor, add the same command to <code>.cursor/mcp.json</code>. More servers are in <a href="/guides/best-mcp-servers-for-claude-code-and-cursor/">Best MCP Servers for Claude Code and Cursor</a>.</p>
+<h2 id="choose">How to Choose</h2>
+<ol>
+<li><strong>Start with code when you can.</strong> If the steps are the same every time, a Playwright script is faster, cheaper and easier to debug than an LLM clicking around.</li>
+<li><strong>Add AI only for the parts that change.</strong> Stagehand and Browser Use shine on pages whose layout you cannot predict.</li>
+<li><strong>Move to a cloud browser when you scale.</strong> Compare concurrency, browser-hour price, proxy cost and how long recordings are kept.</li>
+<li><strong>Respect site terms.</strong> Check each site's terms and robots rules, and prefer an official API when one exists. See <a href="/directory/web-scraping-apis/">Web Scraping APIs</a> for alternatives.</li>
+</ol>
+<p>Browse all tools in the <a href="/directory/browser-automation/">Browser Automation directory</a>. For whole-desktop control, see <a href="/directory/mac-ai-agent-apps/cua/">Cua</a>.</p>
+</GuidePage>

@@ -1,0 +1,52 @@
+---
+import GuidePage from '../../../components/GuidePage.astro';
+import CmpTable from '../../../components/CmpTable.astro';
+const path = '/guides/mem0-vs-zep-vs-letta/';
+const main = [
+ { name:'Mem0', url:'https://mem0.ai/', slug:'mem0', 'What It Is':'A memory layer you add to any agent. It extracts facts and preferences from conversations and returns the relevant ones on each turn.', 'Design':'Fact extraction plus vector search. Graph memory (entity linking) is on custom plans.', 'Open Source':'Yes, Apache-2.0 library (<code>mem0ai/mem0</code>), plus a managed platform', 'Self-Host':'Yes, with the open-source library', 'Free Start':'Free plan: 10,000 adds and 1,000 retrievals a month for 30 days, then 50,000 adds and 10,000 retrievals a month with your own LLM key', 'Best For':'Adding user memory to an app you already have' },
+ { name:'Zep', url:'https://www.getzep.com/', slug:'zep', 'What It Is':'A managed context and memory service that turns chats, documents and business data into a temporal context graph.', 'Design':'Temporal knowledge graph built on Graphiti, so facts carry when they were true', 'Open Source':'The engine, Graphiti, is Apache-2.0. Zep Cloud is closed, and Zep Community Edition is no longer supported.', 'Self-Host':'Graphiti yes. Zep itself runs in Zep Cloud or, on Enterprise, in your VPC.', 'Free Start':'Free: 10,000 credits a month. Flex: $125 a month for 50,000 credits.', 'Best For':'Enterprise agents that need facts that change over time' },
+ { name:'Letta', url:'https://www.letta.com/', slug:'letta', 'What It Is':'A platform for stateful agents that manage their own memory, from the team behind the MemGPT research project.', 'Design':'The agent edits its own memory blocks and archival memory with tools, so memory lives inside the agent', 'Open Source':'Yes, Apache-2.0 (<code>letta-ai/letta</code>)', 'Self-Host':'Yes, run the Letta server yourself', 'Free Start':'Free plan with limited agents and your own API keys. Pro: $20 a month. API plans are usage-based.', 'Best For':'Long-running agents whose memory is part of the agent itself' },
+];
+const others = [
+ { name:'Graphiti', url:'https://github.com/getzep/graphiti', slug:'graphiti', 'What It Is':"Zep's open-source temporal knowledge graph framework (Apache-2.0)", 'Pick It If':'You want Zep-style graph memory and will run the database yourself' },
+ { name:'Cognee', url:'https://www.cognee.ai/', slug:'cognee', 'What It Is':'Open-source (Apache-2.0) memory built on knowledge graphs', 'Pick It If':'You want to turn documents and data into a graph your agent can query' },
+ { name:'Supermemory', url:'https://supermemory.ai/', slug:'supermemory', 'What It Is':'Memory and context engine for agents, with an MIT-licensed repo', 'Pick It If':'You want a hosted memory API with connectors to your apps' },
+ { name:'LangMem', url:'https://langchain-ai.github.io/langmem/', slug:'langmem', 'What It Is':"LangChain's library for long-term agent memory", 'Pick It If':'You already build with LangGraph' },
+ { name:'OpenMemory', url:'https://mem0.ai/openmemory', slug:'openmemory', 'What It Is':'Local memory MCP server from Mem0', 'Pick It If':'You want shared memory across Claude, Cursor and other MCP clients on one machine' },
+ { name:'Redis Agent Memory Server', url:'https://github.com/redis/agent-memory-server', slug:'redis-agent-memory-server', 'What It Is':'Redis-backed short- and long-term memory with REST and MCP interfaces', 'Pick It If':'Redis is already in your stack' },
+];
+const faqs: [string, string][] = [
+ ['What is the difference between Mem0, Zep and Letta?', 'Mem0 is a memory layer you bolt onto any agent: it extracts facts from conversations and retrieves them later. Zep is a managed context service built on a temporal knowledge graph, so it tracks how facts change over time. Letta is a full platform for stateful agents, where the agent manages its own memory with tools.'],
+ ['Which agent memory tool is open source?', 'Mem0 (Apache-2.0) and Letta (Apache-2.0) are open source and can be self-hosted. Zep Cloud is closed, but its graph engine Graphiti is open source under Apache-2.0. Zep Community Edition is no longer supported.'],
+ ['Is Mem0 free?', 'Mem0 has a free plan. For the first 30 days it includes 10,000 adds and 1,000 retrievals a month with model calls paid by Mem0. After that, connecting your own LLM key raises the limits to 50,000 adds and 10,000 retrievals a month. The open-source library is free to run yourself.'],
+ ['How much does Zep cost?', 'Zep has a free tier of 10,000 credits a month. The Flex plan is $125 a month with 50,000 credits, and Flex Plus is $375 a month with 200,000 credits. Enterprise is custom. Credits are used when you send data, while retrieval and storage are not metered.'],
+ ['Is Letta the same as MemGPT?', 'Yes. Letta comes from the MemGPT research project on LLM memory management, and the MemGPT repository now points to Letta.'],
+ ['Which memory layer should I use with LangGraph or CrewAI?', 'All three work with common frameworks. Zep publishes integration packages for LangGraph, CrewAI, AutoGen and others, and Mem0 has SDKs for Python and TypeScript. If you use LangGraph, also look at LangMem.'],
+];
+const sources: [string, string][] = [
+ ['Mem0 pricing', 'https://mem0.ai/pricing'], ['Mem0 pricing FAQ', 'https://docs.mem0.ai/platform/pricing'], ['Mem0 on GitHub', 'https://github.com/mem0ai/mem0'],
+ ['Zep pricing', 'https://www.getzep.com/pricing'], ['Zep repository README (Community Edition status)', 'https://github.com/getzep/zep'], ['Graphiti on GitHub', 'https://github.com/getzep/graphiti'],
+ ['Letta pricing', 'https://www.letta.com/pricing'], ['Letta on GitHub', 'https://github.com/letta-ai/letta'],
+];
+---
+<GuidePage path={path} title="Mem0 vs Zep vs Letta: Agent Memory Compared (2026) | Swarmnest" description="Mem0, Zep and Letta compared: how each agent memory layer works, open source and self-hosting, free tiers and prices, and which to pick." faqs={faqs} sources={sources}>
+<p class="lead">Mem0, Zep and Letta are the three names that come up most when you want an AI agent to remember users and facts between sessions. They solve the problem in different ways. Here is how they compare, with prices checked Oct 29, 2026.</p>
+<h2 id="short-answer">The Short Answer</h2>
+<ul>
+<li><strong>Pick Mem0</strong> to add memory to an app you already have, with the least change. It is open source and has a free hosted plan.</li>
+<li><strong>Pick Zep</strong> when facts change over time and you need to know what was true when, or you need enterprise controls such as SOC 2 and a VPC deployment.</li>
+<li><strong>Pick Letta</strong> when you are building long-running agents and want memory to be part of the agent itself, fully open source and self-hostable.</li>
+</ul>
+<h2 id="compared">Mem0 vs Zep vs Letta Compared</h2>
+<CmpTable cols={['What It Is','Design','Open Source','Self-Host','Free Start','Best For']} rows={main} />
+<h2 id="how-they-differ">How They Differ</h2>
+<h3>Memory as a Layer vs Memory Inside the Agent</h3>
+<p>Mem0 and Zep sit beside your agent. You send them conversation turns, and they return relevant memories to put in the prompt. Letta works the other way round: the agent has memory blocks in its context and tools to edit them, so it decides what to remember. That makes Letta more of an agent runtime than a plug-in.</p>
+<h3>Facts vs Facts Over Time</h3>
+<p>Zep and its open-source engine Graphiti store memory as a temporal knowledge graph, where each fact has a time it became true and a time it stopped being true. That helps when a user's plan, address or preferences change. Mem0 focuses on extracting and updating facts, and offers graph memory on custom plans.</p>
+<h3>Open Source and Hosting</h3>
+<p>Mem0 and Letta are Apache-2.0 and run on your own servers. Zep's hosted product is closed, its Community Edition is no longer supported, and Graphiti is the open-source path if you want to run graph memory yourself.</p>
+<h2 id="others">Other Agent Memory Options</h2>
+<CmpTable cols={['What It Is','Pick It If']} rows={others} />
+<p>Browse every option in the <a href="/directory/agent-memory/">Agent Memory directory</a>, or see <a href="/directory/agent-frameworks/">Agent Frameworks</a> for the runtimes these plug into.</p>
+</GuidePage>

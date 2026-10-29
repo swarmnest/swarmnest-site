@@ -1,0 +1,23 @@
+---
+import Base from '../../layouts/Base.astro';
+import Crumbs from '../../components/Crumbs.astro';
+import { SITE } from '../../lib/data';
+import { guidesByTopic, ALL_GUIDES } from '../../lib/guides';
+const topics = guidesByTopic();
+const ld = [
+ { '@context':'https://schema.org','@type':'BreadcrumbList',itemListElement:[{'@type':'ListItem',position:1,name:'Home',item:SITE+'/'},{'@type':'ListItem',position:2,name:'Guides',item:SITE+'/guides/'}] },
+ { '@context':'https://schema.org','@type':'CollectionPage',name:'Swarmnest Guides',url:SITE+'/guides/',hasPart:ALL_GUIDES.map((g)=>({'@type':'Article',headline:g.title,url:SITE+g.path})) },
+];
+---
+<Base title="Guides: AI Agent Tool Comparisons, Alternatives and Best-Of Lists | Swarmnest" description={`${ALL_GUIDES.length} guides for agent builders: MCP servers, agent memory, frameworks, browser automation and Agent Skills compared, plus alternatives when tools shut down.`} path="/guides/" jsonld={ld}>
+<Crumbs items={[['Home','/'],['Guides']]} />
+<h1>Guides</h1>
+<p class="lead">Side-by-side comparisons, best-of lists and migration guides for building with AI agents. Every guide links to hand-checked listings in the <a href="/directory/">Swarmnest directory</a>, with facts and prices checked against each provider's own pages.</p>
+<nav aria-label="Guide Topics"><ul class="chips">{topics.map((t) => <li><a href={`#${t.slug}`}>{t.name}</a></li>)}</ul></nav>
+{topics.map((t) => <section aria-labelledby={`t-${t.slug}`}>
+<h2 id={t.slug}><span id={`t-${t.slug}`}>{t.name}</span></h2>
+<p class="small">{t.blurb}</p>
+<div class="grid">{t.guides.map((g) => <a class="card" href={g.path}><h3>{g.short}</h3><p>{g.blurb}</p>{g.badge && <span class="badge">{g.badge}</span>}</a>)}</div>
+</section>)}
+<p class="small">Want a comparison we have not covered? Email <a href="mailto:hello@swarmnest.ai">hello@swarmnest.ai</a>.</p>
+</Base>

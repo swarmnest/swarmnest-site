@@ -1,0 +1,71 @@
+---
+import GuidePage from '../../../components/GuidePage.astro';
+import CmpTable from '../../../components/CmpTable.astro';
+const path = '/guides/best-mcp-servers-for-claude-code-and-cursor/';
+type R = { name: string; url: string; slug?: string; 'What It Gives Your Agent': string; 'Connect': string; 'Auth': string };
+const groups: [string, string, R[]][] = [
+ ['code', 'Code, Docs and Debugging', [
+  { name:'GitHub MCP Server', url:'https://github.com/github/github-mcp-server', slug:'github-mcp-server', 'What It Gives Your Agent':'Read and manage repos, issues, pull requests and Actions', 'Connect':'Remote: <code>https://api.githubcopilot.com/mcp/</code>, or the Docker image', 'Auth':'OAuth or a GitHub personal access token' },
+  { name:'Context7', url:'https://github.com/upstash/context7', slug:'context7', 'What It Gives Your Agent':'Up-to-date, version-specific library docs, so the agent stops guessing at APIs', 'Connect':'Remote: <code>https://mcp.context7.com/mcp</code>', 'Auth':'Free API key recommended for higher rate limits' },
+  { name:'Sentry MCP', url:'https://github.com/getsentry/sentry-mcp', slug:'sentry-mcp', 'What It Gives Your Agent':'Errors, stack traces and issues from Sentry, to fix bugs with real data', 'Connect':'Remote: <code>https://mcp.sentry.dev/mcp</code>', 'Auth':'OAuth' },
+  { name:'Cloudflare MCP Servers', url:'https://github.com/cloudflare/mcp-server-cloudflare', slug:'cloudflare-mcp-servers', 'What It Gives Your Agent':'Cloudflare docs, Workers bindings, logs and more, as separate servers', 'Connect':'Remote, e.g. <code>https://docs.mcp.cloudflare.com/mcp</code>', 'Auth':'OAuth for account servers' },
+ ]],
+ ['browser', 'Browser and Testing', [
+  { name:'Playwright MCP', url:'https://github.com/microsoft/playwright-mcp', slug:'playwright-mcp', 'What It Gives Your Agent':'A real browser driven through accessibility snapshots, to test and click through pages', 'Connect':'Local: <code>npx @playwright/mcp@latest</code>', 'Auth':'None' },
+  { name:'Chrome DevTools MCP', url:'https://github.com/ChromeDevTools/chrome-devtools-mcp', slug:'chrome-devtools-mcp', 'What It Gives Your Agent':'Inspect a live Chrome page: console, network, performance traces', 'Connect':'Local: <code>npx -y chrome-devtools-mcp@latest</code>', 'Auth':'None' },
+ ]],
+ ['apps', 'Project Tools and Design', [
+  { name:'Linear MCP', url:'https://linear.app/docs/mcp', slug:'linear-mcp', 'What It Gives Your Agent':'Read, create and update Linear issues and projects', 'Connect':'Remote: <code>https://mcp.linear.app/mcp</code>', 'Auth':'OAuth' },
+  { name:'Notion MCP', url:'https://developers.notion.com/docs/mcp', slug:'notion-mcp', 'What It Gives Your Agent':'Search and edit Notion pages and databases, such as specs and docs', 'Connect':'Remote: <code>https://mcp.notion.com/mcp</code>', 'Auth':'OAuth' },
+  { name:'Figma MCP', url:'https://developers.figma.com/docs/figma-mcp-server/', slug:'figma-dev-mode-mcp', 'What It Gives Your Agent':'Design context from Figma frames, to turn designs into code', 'Connect':'Remote: <code>https://mcp.figma.com/mcp</code>, or the desktop app server', 'Auth':'OAuth (Figma account)' },
+ ]],
+ ['data', 'Databases and Payments', [
+  { name:'Supabase MCP', url:'https://github.com/supabase-community/supabase-mcp', slug:'supabase-mcp', 'What It Gives Your Agent':'Manage Supabase projects, tables, migrations and SQL', 'Connect':'Remote: <code>https://mcp.supabase.com/mcp</code>', 'Auth':'OAuth. Use read-only mode and a dev project.' },
+  { name:'Stripe MCP', url:'https://docs.stripe.com/mcp', slug:'stripe-mcp', 'What It Gives Your Agent':'Stripe API actions and a search of the Stripe docs', 'Connect':'Remote: <code>https://mcp.stripe.com</code>', 'Auth':'OAuth or a restricted API key' },
+ ]],
+ ['web', 'Web Search and Research', [
+  { name:'Exa MCP', url:'https://github.com/exa-labs/exa-mcp-server', slug:'exa-mcp', 'What It Gives Your Agent':'Web and code search built for LLMs', 'Connect':'Remote: <code>https://mcp.exa.ai/mcp</code>', 'Auth':'Exa API key' },
+  { name:'Firecrawl MCP', url:'https://github.com/firecrawl/firecrawl-mcp-server', slug:'firecrawl-mcp', 'What It Gives Your Agent':'Scrape, crawl and search the web into clean Markdown', 'Connect':'Local: <code>npx -y firecrawl-mcp</code>', 'Auth':'Firecrawl API key' },
+  { name:'Swarmnest MCP Server', url:'/mcp-server/', 'What It Gives Your Agent':'Search 3,800+ hand-checked agent tools, MCP servers and Agent Skills from inside your agent', 'Connect':'Remote: <code>https://swarmnest.ai/mcp</code>', 'Auth':'None, read-only and free' },
+ ]],
+];
+const count = groups.reduce((n, g) => n + g[2].length, 0);
+const cfg = `{
+  "mcpServers": {
+    "context7": { "url": "https://mcp.context7.com/mcp" },
+    "playwright": { "command": "npx", "args": ["@playwright/mcp@latest"] }
+  }
+}`;
+const faqs: [string, string][] = [
+ ['What are the best MCP servers for Claude Code?', 'For most developers: GitHub for repos and pull requests, Context7 for current library docs, Playwright MCP or Chrome DevTools MCP for a browser, and Sentry for real error data. Then add the servers for the tools your team already uses, such as Linear, Notion, Figma, Supabase or Stripe.'],
+ ['How do I add an MCP server to Claude Code?', 'For a remote server, run claude mcp add --transport http followed by a name and the server URL, for example claude mcp add --transport http linear https://mcp.linear.app/mcp. For a local server, put the command after the name, for example claude mcp add playwright npx @playwright/mcp@latest.'],
+ ['How do I add an MCP server to Cursor?', 'Add it to .cursor/mcp.json in your project, or ~/.cursor/mcp.json for every project, under mcpServers. Remote servers use a url field and local servers use command and args.'],
+ ['How many MCP servers should I install?', 'Only the ones you use. Every server adds tool descriptions to the context window, and too many tools make the agent slower and more likely to pick the wrong one. Most people do well with three to six.'],
+ ['Are MCP servers safe?', 'Prefer official servers from the vendor, like the ones on this page. Use OAuth or least-privilege keys, read-only modes where offered, and development projects rather than production data. Treat content a server returns, such as web pages or issues, as untrusted input.'],
+ ['Where did Smithery-hosted servers go?', "Smithery's hosted proxy and CLI stop working on October 31, 2026. Connect to each vendor's official URL instead. See our Smithery Alternatives guide for steps."],
+];
+const sources: [string, string][] = [
+ ['GitHub MCP Server README', 'https://github.com/github/github-mcp-server'], ['Context7 README', 'https://github.com/upstash/context7'], ['Sentry MCP README', 'https://github.com/getsentry/sentry-mcp'],
+ ['Cloudflare MCP servers README', 'https://github.com/cloudflare/mcp-server-cloudflare'], ['Playwright MCP README', 'https://github.com/microsoft/playwright-mcp'], ['Chrome DevTools MCP README', 'https://github.com/ChromeDevTools/chrome-devtools-mcp'],
+ ['Linear MCP docs', 'https://linear.app/docs/mcp'], ['Notion MCP docs', 'https://developers.notion.com/docs/mcp'], ['Figma MCP server docs', 'https://developers.figma.com/docs/figma-mcp-server/'],
+ ['Supabase MCP README', 'https://github.com/supabase-community/supabase-mcp'], ['Stripe MCP docs', 'https://docs.stripe.com/mcp'], ['Exa MCP README', 'https://github.com/exa-labs/exa-mcp-server'], ['Firecrawl MCP README', 'https://github.com/firecrawl/firecrawl-mcp-server'],
+ ['Cursor MCP docs', 'https://cursor.com/docs/context/mcp'],
+];
+---
+<GuidePage path={path} title={`Best MCP Servers for Claude Code and Cursor (2026): ${count} Picks | Swarmnest`} description={`${count} official MCP servers worth adding to Claude Code and Cursor: GitHub, Context7, Playwright, Sentry, Linear, Notion, Figma, Supabase and more, with setup for each.`} faqs={faqs} sources={sources}>
+<p class="lead">These are {count} MCP servers that make coding agents like Claude Code and Cursor more useful. Each one is official or maintained by the vendor, and each row shows exactly how to connect it. Checked Oct 29, 2026.</p>
+<h2 id="quick-setup">Quick Setup</h2>
+<p><strong>Claude Code, remote server:</strong> <code>claude mcp add --transport http linear https://mcp.linear.app/mcp</code></p>
+<p><strong>Claude Code, local server:</strong> <code>claude mcp add playwright npx @playwright/mcp@latest</code></p>
+<p><strong>Cursor:</strong> add servers to <code>.cursor/mcp.json</code> in your project, or <code>~/.cursor/mcp.json</code> for all projects:</p>
+<div class="install"><pre>{cfg}</pre></div>
+<p>Remote servers that use OAuth open a browser to sign in the first time you use them.</p>
+{groups.map(([id, name, rows]) => <><h2 id={id}>{name}</h2><CmpTable cols={['What It Gives Your Agent','Connect','Auth']} rows={rows} /></>)}
+<h2 id="tips">Tips</h2>
+<ul>
+<li><strong>Keep the list short.</strong> Each server adds tools to the agent's context. Turn off servers you are not using.</li>
+<li><strong>Use least privilege.</strong> Prefer OAuth, restricted keys and read-only modes, and point database servers at development data.</li>
+<li><strong>Prefer official servers.</strong> Vendor-run remote servers get fixes first and handle sign-in for you.</li>
+</ul>
+<p>Find more in the <a href="/directory/mcp-servers/">MCP Servers directory</a>, or add the <a href="/mcp-server/">Swarmnest MCP server</a> and ask your agent to search it. Moving off Smithery? See <a href="/smithery-alternatives/">Smithery Alternatives</a>.</p>
+</GuidePage>

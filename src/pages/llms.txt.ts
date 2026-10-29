@@ -1,3 +1,4 @@
+import { ALL_GUIDES } from '../lib/guides';
 import { LAUNCH } from '../lib/config';
 import { TEMPLATES, USECASES, PRODUCTS } from '../lib/content';
 import { ALL, CATS, GROUPS, byCat, SITE } from '../lib/data';
@@ -29,7 +30,8 @@ ${GUIDES.map(g=>`- [${g.title}](${SITE}/agent-skills/guides/${g.slug}/): ${g.blu
 - [Submit a skill](${SITE}/agent-skills/submit/)
 
 ## Pages
-- [Smithery Alternatives](${SITE}/smithery-alternatives/): what changes when Smithery's hosted MCP proxy, CLI and API end on Oct 31, 2026, how to migrate, and MCP registries and hosts compared
+- [Guides](${SITE}/guides/): comparisons, best-of lists and migration guides, grouped by topic
+${ALL_GUIDES.filter(g=>!g.path.startsWith('/agent-skills/')).map(g=>`- [${g.short}](${SITE}${g.path}): ${g.blurb}`).join('\n')}
 - [About](${SITE}/about/)
 - [Submit a tool](${SITE}/submit/): email hello@swarmnest.ai
 - [Terms](${SITE}/terms/)

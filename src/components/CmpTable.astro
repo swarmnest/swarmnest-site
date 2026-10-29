@@ -1,0 +1,12 @@
+---
+// Comparison table that stacks into cards on phones. rows: objects keyed by column label; the first column holds the name.
+// Each row may carry `url` (official site) and `slug` (Swarmnest directory entry) for the name cell.
+import { ALL } from '../lib/data';
+interface Row { name: string; url?: string; slug?: string; [k: string]: string | undefined }
+const { cols, rows } = Astro.props as { cols: string[]; rows: Row[] };
+const entry = (slug?: string) => { if (!slug) return null; const e = ALL.find((x) => x.slug === slug); return e ? `/directory/${e.category}/${e.slug}/` : null; };
+---
+<table class="cmp">
+<thead><tr><th scope="col">Name</th>{cols.map((c) => <th scope="col">{c}</th>)}</tr></thead>
+<tbody>{rows.map((r) => { const h = entry(r.slug); return <tr><td data-l="Name">{r.url ? <a href={r.url} rel="noopener"><strong>{r.name}</strong></a> : <strong>{r.name}</strong>}{h && <><br><a class="small" href={h}>Swarmnest Listing</a></>}</td>{cols.map((c) => <td data-l={c} set:html={r[c] || '—'} />)}</tr>; })}</tbody>
+</table>
