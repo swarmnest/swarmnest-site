@@ -16,7 +16,8 @@ const desc = `${e.name}: ${e.description}`.slice(0,155);
 <h1>{e.name}</h1><p class="lead">{e.description}</p>
 <p><a class="btn" href={e.url} rel="noopener nofollow" target="_blank">Visit {e.name}</a><a class="btn alt" href={e.docs_url} rel="noopener nofollow" target="_blank">Docs</a></p>
 {(e.slug==='agent-skills'||e.slug==='agent-skills-specification')&&<p><a class="btn" href="/agent-skills/">Browse Agent Skills</a></p>}
-<table>
+<table class="facts">
+<tbody>
 <tr><th>Category</th><td><a href={`/directory/${e.category}/`}>{cn}</a></td></tr>
 <tr><th>Authentication</th><td>{authLabel[e.auth]}</td></tr>
 <tr><th>Pricing</th><td>{priceLabel[e.pricing]}</td></tr>
@@ -26,8 +27,9 @@ const desc = `${e.name}: ${e.description}`.slice(0,155);
 <tr><th>Docs</th><td><a href={e.docs_url} rel="noopener nofollow">{e.docs_url}</a></td></tr>
 <tr><th>Last checked</th><td>{e.last_checked_at}</td></tr>
 <tr><th>As JSON</th><td><a href={`/api/v1/directory/${e.slug}.json`}>/api/v1/directory/{e.slug}.json</a></td></tr>
+</tbody>
 </table>
-<p class="small">Information is summarised in our own words and may be out of date; check the vendor's site for current terms and prices. Not affiliated with {e.name}. <a href="mailto:hello@swarmnest.ai?subject=Correction%3A%20{encodeURIComponent(e.name)}">Suggest a correction</a>.</p>
+<p class="small">Information is summarised in our own words and may be out of date; check the vendor's site for current terms and prices. Not affiliated with {e.name}. <a href={`mailto:hello@swarmnest.ai?subject=${encodeURIComponent("Correction: " + e.name)}`}>Suggest a correction</a>.</p>
 <FieldReports slug={e.slug} name={e.name} />
 <h2>More in {cn}</h2>
 <div class="grid">{related.map(r=><a class="card" href={`/directory/${r.category}/${r.slug}/`}><h3>{r.name}</h3><p>{r.description}</p></a>)}</div>

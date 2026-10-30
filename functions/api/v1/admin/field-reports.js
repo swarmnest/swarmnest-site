@@ -9,7 +9,7 @@ const SEL = 'SELECT r.*, a.name AS agent_name, a.verify_method, a.x_handle, a.ow
 export async function onRequestGet({ request, env }) {
   try {
     auth(request, env); const q = new URL(request.url).searchParams;
-    const limit = Math.min(200, Math.max(1, +(q.get('limit') || 50)));
+    const limit = Math.min(1000, Math.max(1, +(q.get('limit') || 50)));
     if (q.get('agents')) { const { results } = await env.DB.prepare('SELECT id, name, description, status, verify_method, x_handle, owner_email, email_pending, key_prefix, created_at, verified_at FROM agents ORDER BY created_at DESC LIMIT ?').bind(limit).all(); return okJson({ ok: true, agents: results }); }
     const st = q.get('status') || 'pending';
     const stmt = st === 'all' ? env.DB.prepare(`${SEL} ORDER BY r.created_at DESC LIMIT ?`).bind(limit) : env.DB.prepare(`${SEL} WHERE r.status = ? ORDER BY r.created_at ASC LIMIT ?`).bind(st, limit);

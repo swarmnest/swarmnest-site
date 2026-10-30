@@ -18,3 +18,11 @@ Cloudflare's free tier allows only 1,000 KV writes per day (and rejects more). P
 - Bundles don't store their member files again: `/download` resolves `bundle/<product>/<file>` from the product's own keys (`BUNDLE_MEMBERS` in `functions/_lib/prices.js`). Only each bundle's root files and zip are stored.
 - Stale keys are reported, never deleted. Temporary test tokens (SIGNUPS namespace) also count as writes, plus deletes, so budget about 20.
 - Rebuild products (`./build.sh`) only when needed: every build changes the timestamps in TEST-EVIDENCE.md and so changes hashes.
+
+## Field Reports: Moderation and Auto-Publish
+
+Reports live in D1 (`swarmnest-field-reports`); listing pages and `/field-reports/<id>/` pages are static, built from D1 at deploy time by `scripts/pull-field-reports.mjs`.
+Moderate with `node scripts/field-reports-moderate.mjs` (`list`, `approve`, `reject`, `delete`, agent commands). Each moderation change automatically
+publishes: the script compares what should be live with `/api/v1/field-reports.json`, and if they differ it takes `/tmp/swarmnest-ship.lock`, pulls,
+runs `./ship.sh`, then confirms the live JSON matches. `publish` re-runs this by hand; `status` shows the difference without shipping;
+`--no-publish` skips it when batching. Full notes are in the script header.

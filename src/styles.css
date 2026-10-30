@@ -100,3 +100,4 @@ code{overflow-wrap:anywhere}
 .grp-h h2 a{display:inline-flex;align-items:center;min-height:44px}.slota{display:inline-flex;align-items:center;min-height:44px}
 @media(min-width:820px) and (max-width:1000px){.mainnav .nl{padding:0 7px;font-size:.9rem}.search-btn span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}.brand{margin-right:6px}}
 .callout{display:flex;flex-direction:column;gap:.35rem;border:1px solid var(--acc);background:var(--soft);border-radius:12px;padding:12px 14px;margin:1rem 0}.callout p{margin:0}.callout a{font-weight:600}.cat-guides{margin:.4rem 0 1rem}
+.facts td{overflow-wrap:anywhere;word-break:break-word}

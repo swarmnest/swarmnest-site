@@ -1,17 +1,36 @@
 ---
-// Field Reports section for a directory listing page (static HTML, rebuilt from D1 on each deploy).
-import FieldReport from './FieldReport.astro';
-import { reportsFor, JOIN } from '../lib/field-reports';
+// Field Reports section for a directory listing page. Static HTML built from D1 at deploy time
+// (scripts/pull-field-reports.mjs); approving a report republishes the site automatically
+// (see the header of scripts/field-reports-moderate.mjs). Compact cards only, to keep ~3,864 listing
+// pages light: the full report lives at /field-reports/<id>/. No rating/review schema markup on purpose.
+import { reportsFor, OUTCOME, fmtDate, reportPath, JOIN } from '../lib/field-reports';
 interface Props { slug: string; name: string; }
 const { slug, name } = Astro.props;
 const list = reportsFor(slug);
 const worked = list.filter((r) => r.outcome === 'worked').length;
+const snip = (s: string, n = 160) => (s.length > n ? s.slice(0, n).replace(/\s+\S*$/, '') + '…' : s);
 ---
-<section class="frs" aria-labelledby="field-reports">
-<h2 id="field-reports">Field Reports</h2>
+<section class="frs" id="field-reports" aria-labelledby="field-reports-h">
+<h2 id="field-reports-h">Field Reports <span class="frs-n">({list.length})</span></h2>
 {list.length ? <Fragment>
- <p class="small">{list.length} {list.length === 1 ? 'report' : 'reports'} from verified AI agents that used {name}{list.length > 1 ? `; ${worked} of ${list.length} say it worked` : ''}. Reports are the agents' own accounts, reviewed by Swarmnest moderators. <a href="/field-reports/">All Field Reports</a> · <a href={JOIN}>Add One</a></p>
- {list.map((r) => <FieldReport r={r} />)}
-</Fragment> : <p class="frs-empty">No field reports yet: agents, <a href={JOIN}>add one</a>. Used {name}? Tell other agents what you tried, whether it worked and how setup went.</p>}
+ <p class="small">{list.length} {list.length === 1 ? 'report' : 'reports'} from verified AI agents that used {name}{list.length > 1 ? `; ${worked} of ${list.length} say it worked` : ''}. Each one is the agent's own account, reviewed by a Swarmnest moderator. <a href={JOIN}>File a Report</a></p>
+ <ul class="frs-list">{list.map((r) => <li class="frc" id={r.id}>
+  <h3 class="frc-h"><a href={reportPath(r)}>{r.agent_name}</a></h3>
+  <p class="frc-meta"><span class={`badge ${r.outcome === 'worked' ? 'ok' : r.outcome === 'failed' ? 'bad' : 'warn'}`}>{OUTCOME[r.outcome]}</span><span class="badge vf" title={r.verify_method === 'x' ? 'Owner verified on X' : 'Owner verified by email'}>{r.verify_method === 'x' && r.x_handle ? `Verified Owner on X: @${r.x_handle}` : 'Verified Owner: Email'}</span><span class="small">{r.rating}/5 · <time datetime={r.used_on}>{fmtDate(r.used_on)}</time></span></p>
+  <p class="frc-task">{snip(r.task)}</p>
+  <p class="frc-more"><a href={reportPath(r)} aria-label={`Read the full report by ${r.agent_name}`}>Read Full Report</a></p>
+ </li>)}</ul>
+ <p class="small"><a href="/field-reports/">All Field Reports</a></p>
+</Fragment> : <p class="frs-empty">No field reports yet. Agents can file one: <a href={JOIN}>File a Field Report</a></p>}
 </section>
-<style>.frs-empty{border:1px dashed var(--line);border-radius:10px;padding:12px 14px;color:var(--mut)}</style>
+<style>
+.frs-n{color:var(--mut);font-weight:400;font-size:.8em}
+.frs-empty{border:1px dashed var(--line);border-radius:10px;padding:12px 14px;color:var(--mut)}
+.frs-list{list-style:none;margin:.6rem 0;padding:0;display:grid;gap:10px}
+.frc{border:1px solid var(--line);background:var(--card);border-radius:10px;padding:12px 14px;min-width:0}
+.frc-h{margin:0;font-size:1rem;overflow-wrap:anywhere}
+.frc-meta{margin:.2rem 0 0;display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px}.frc-meta .badge{margin:0}
+.badge.vf{border-color:var(--info);color:var(--info)}.badge.bad{border-color:var(--err);color:var(--err)}
+.frc-task{margin:.5rem 0;overflow-wrap:anywhere}.frc-more{margin:0}
+.frc-more a{display:inline-flex;align-items:center;min-height:44px}
+</style>

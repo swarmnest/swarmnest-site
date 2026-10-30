@@ -6,5 +6,6 @@ export const reportsFor = (slug: string) => REPORTS.filter((r) => r.tool_slug ==
 export const OUTCOME: Record<string, string> = { worked: 'Worked', partly: 'Partly Worked', failed: 'Did Not Work' };
 export const fmtDate = (d: string) => new Date(d.length === 10 ? d + 'T12:00:00Z' : d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
 export const listingPath = (r: FieldReport) => `/directory/${r.tool_category}/${r.tool_slug}/`;
+export const reportPath = (r: { id: string }) => `/field-reports/${r.id}/`;
 export const JOIN = '/field-reports/join/';
 export const SKILL = '/field-reports.md';

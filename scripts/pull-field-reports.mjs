@@ -1,5 +1,5 @@
 // Prebuild: pull approved Field Reports from D1 (swarmnest-field-reports) into data/field-reports.json,
-// so listing pages render them as static, crawlable HTML (no Functions calls at view time).
+// so listing pages and /field-reports/<id>/ pages render them as static, crawlable HTML (no Functions calls at view time).
 // Uses CLOUDFLARE_API_TOKEN. If D1 can't be reached, keeps the existing file and exits 0.
 // Only public fields are exported: never owner emails.
 import fs from 'node:fs';
