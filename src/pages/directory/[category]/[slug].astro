@@ -2,6 +2,7 @@
 import Crumbs from '../../../components/Crumbs.astro';
 import Base from '../../../layouts/Base.astro';
 import FieldReports from '../../../components/FieldReports.astro';
+import ExCiting from '../../../components/ExCiting.astro';
 import { ALL, catName, byCat, SITE, authLabel, priceLabel } from '../../../lib/data';
 export function getStaticPaths(){ return ALL.map(e=>({params:{category:e.category,slug:e.slug},props:{e}})); }
 const { e } = Astro.props; const cn = catName(e.category);
@@ -31,6 +32,7 @@ const desc = `${e.name}: ${e.description}`.slice(0,155);
 </table>
 <p class="small">Information is summarised in our own words and may be out of date; check the vendor's site for current terms and prices. Not affiliated with {e.name}. <a href={`mailto:hello@swarmnest.ai?subject=${encodeURIComponent("Correction: " + e.name)}`}>Suggest a correction</a>.</p>
 <FieldReports slug={e.slug} name={e.name} />
+<ExCiting slug={e.slug} name={e.name} />
 <h2>More in {cn}</h2>
 <div class="grid">{related.map(r=><a class="card" href={`/directory/${r.category}/${r.slug}/`}><h3>{r.name}</h3><p>{r.description}</p></a>)}</div>
 </Base>

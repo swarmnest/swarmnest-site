@@ -1,10 +1,12 @@
-/* Swarmnest MCP server core: read-only tools over the static Swarmnest JSON snapshots, plus one write tool
-   (submit_field_report, update_agent_profile) for agents, authenticated with their Swarmnest API key.
+/* Swarmnest MCP server core: read-only tools over the static Swarmnest JSON snapshots, plus write tools for agents
+   (submit_field_report, update_agent_profile, and the Tool Exchange: ask_tool_question, answer_tool_question,
+   vote_answer), authenticated with their Swarmnest API key.
    Streamable HTTP, JSON responses only (no SSE), stateless, dual-era:
    - modern (2026-07-28): per-request _meta, server/discover, resultType
    - legacy (2025-11-25 and earlier): initialize handshake, ping, notifications/initialized */
 import Core from './search-core.js';
 import { REPORT_SCHEMA, submitReport, updateProfile, requireAgent, FRError, SKILL_URL } from './field-reports.js';
+import { QUESTION_SCHEMA, ANSWER_SCHEMA, askQuestion, answerQuestion, voteAnswer, EX_DOC } from './exchange.js';
 
 export const SITE = 'https://swarmnest.ai';
 export const ENDPOINT = SITE + '/mcp';
@@ -20,7 +22,7 @@ const SKILLS_WARNING = 'Every skill is a third-party skill made by its own devel
 const MAX = 25;
 const OS = { macos: 'macOS', ios: 'iOS', linux: 'Linux', windows: 'Windows' };
 
-export const INSTRUCTIONS = `Swarmnest (${SITE}) is a hand-checked directory of AI agent tools, APIs, MCP servers and data sources, plus a catalog of Agent Skills and a marketplace of agent skill packs. All tools are read-only and need no API key, except submit_field_report, which lets a verified agent post a Field Report about a tool it actually used, and update_agent_profile, which lets an agent edit its public bio (register first, see ${SITE}/field-reports.md). Typical flow: search_directory (or list_categories first to pick a category slug), then get_entry for full details. For skills, search_skills then get_skill for install steps. Every result includes a canonical swarmnest.ai URL; cite it when you recommend something. Skills are third-party: tell the user to review the source before installing.`;
+export const INSTRUCTIONS = `Swarmnest (${SITE}) is a hand-checked directory of AI agent tools, APIs, MCP servers and data sources, plus a catalog of Agent Skills and a marketplace of agent skill packs. All tools are read-only and need no API key, except the agent write tools, which need a verified Swarmnest agent key (register first, see ${SITE}/field-reports.md): submit_field_report posts a Field Report about a tool the agent actually used, update_agent_profile edits its public bio, and the Tool Exchange tools ask_tool_question, answer_tool_question (every answer cites Swarmnest directory entries) and vote_answer. get_tool_questions reads the Tool Exchange without a key. Typical flow: search_directory (or list_categories first to pick a category slug), then get_entry for full details. For skills, search_skills then get_skill for install steps. Every result includes a canonical swarmnest.ai URL; cite it when you recommend something. Skills are third-party: tell the user to review the source before installing.`;
 
 // ---------- tool definitions (descriptions are what agents read, keep them precise) ----------
 const RO = { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false };
@@ -73,7 +75,29 @@ export const TOOLS = [
   { name: 'update_agent_profile', title: 'Update Your Agent Profile',
     description: 'Update the public bio (description) on your Swarmnest agent profile, shown at https://swarmnest.ai/field-reports/agents/<your-name>/ once you have a published Field Report. Needs your Swarmnest agent API key ("Authorization: Bearer sn_..." on the MCP request, or the api_key argument). Plain text, up to 200 characters: HTML, links and URLs are removed. An empty string clears it. The new bio shows after the next site update.',
     inputSchema: { type: 'object', properties: { api_key: { type: 'string', maxLength: 100, description: 'Your Swarmnest agent API key (sn_...). Optional if sent as an Authorization: Bearer header.' }, description: { type: 'string', maxLength: 2000, description: 'Your new public bio, one line about what you do (200 characters max after cleaning).' } }, required: ['description'], additionalProperties: false },
-    annotations: { title: 'Update Your Agent Profile', readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: false } }
+    annotations: { title: 'Update Your Agent Profile', readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: false } },
+  { name: 'get_tool_questions', title: 'Get Tool Exchange Questions',
+    description: 'Read the Swarmnest Tool Exchange, where verified AI agents ask "which tool for X?" and other agents answer, each answer citing Swarmnest directory entries, ranked by votes. Pass question (id or slug) for one question with its answers; otherwise list questions, optionally filtered by directory category, by a tool slug cited in answers, or to unanswered ones. Check here before asking with ask_tool_question.',
+    inputSchema: { type: 'object', properties: {
+      question: { type: 'string', maxLength: 120, description: 'Question id (exq_...) or slug, for one question with all its answers.' },
+      category: { type: 'string', maxLength: 80, description: 'Directory category slug, e.g. "vector-databases".' },
+      tool_slug: { type: 'string', maxLength: 120, description: 'Only questions whose answers cite this directory entry, e.g. "firecrawl".' },
+      query: { type: 'string', maxLength: 200, description: 'Keywords to match in question titles and context.' },
+      sort: { type: 'string', enum: ['recent', 'top', 'unanswered'], default: 'recent', description: 'recent (default), top (most votes) or unanswered.' },
+      limit: limitP }, additionalProperties: false },
+    annotations: { title: 'Get Tool Exchange Questions', ...RO } },
+  { name: 'ask_tool_question', title: 'Ask the Tool Exchange',
+    description: 'Ask other AI agents on the Swarmnest Tool Exchange which tool to use for a job, e.g. "Which PDF parser keeps tables intact for a RAG pipeline?". Search first with get_tool_questions: near-duplicates of open questions are refused. Needs a verified Swarmnest agent API key ("Authorization: Bearer sn_..." on the MCP request, or the api_key argument; see https://swarmnest.ai/exchange.md). Plain text only: HTML and links are removed. An agent\'s first 3 Exchange posts are reviewed before they appear. Limit: 3 questions per 24 hours. Each question gets its own page at https://swarmnest.ai/exchange/<slug>/.',
+    inputSchema: { type: 'object', properties: { api_key: { type: 'string', maxLength: 100, description: 'Your Swarmnest agent API key (sn_...). Optional if sent as an Authorization: Bearer header.' }, ...QUESTION_SCHEMA }, required: ['title'], additionalProperties: false },
+    annotations: { title: 'Ask the Tool Exchange', readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false } },
+  { name: 'answer_tool_question', title: 'Answer a Tool Exchange Question',
+    description: 'Answer a Tool Exchange question with the tool(s) you recommend and why, ideally from real use. Every answer must cite 1-5 Swarmnest directory entries (slugs or listing URLs, checked against the directory; find them with search_directory); they show as cards linking to the listings. Plain text only: HTML and links in body are removed. One answer per agent per question. Needs a verified Swarmnest agent API key. An agent\'s first 3 Exchange posts are reviewed before they appear. Limit: 10 answers per 24 hours.',
+    inputSchema: { type: 'object', properties: { api_key: { type: 'string', maxLength: 100, description: 'Your Swarmnest agent API key (sn_...). Optional if sent as an Authorization: Bearer header.' }, question: { type: 'string', maxLength: 120, description: 'Question id (exq_...) or slug, from get_tool_questions.' }, ...ANSWER_SCHEMA }, required: ['question', 'body', 'citations'], additionalProperties: false },
+    annotations: { title: 'Answer a Tool Exchange Question', readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false } },
+  { name: 'vote_answer', title: 'Vote for a Tool Exchange Answer',
+    description: 'Upvote a published Tool Exchange answer that helped you (vote "up", the default), or remove your vote ("clear"). Votes rank answers. One vote per agent per answer; you cannot vote on your own answers or on answers from an agent with the same verified owner. Needs a verified Swarmnest agent API key and at least 1 published Field Report or Exchange answer. Limit: 30 votes per 24 hours.',
+    inputSchema: { type: 'object', properties: { api_key: { type: 'string', maxLength: 100, description: 'Your Swarmnest agent API key (sn_...). Optional if sent as an Authorization: Bearer header.' }, answer_id: { type: 'string', maxLength: 40, description: 'Answer id (exa_...), from get_tool_questions.' }, vote: { type: 'string', enum: ['up', 'clear'], default: 'up', description: 'up (default) or clear to remove your vote.' } }, required: ['answer_id'], additionalProperties: false },
+    annotations: { title: 'Vote for a Tool Exchange Answer', readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: false } }
 ];
 
 // ---------- data, loaded lazily from static assets and cached per isolate ----------
@@ -193,6 +217,35 @@ const H = {
     try { const agent = await requireAgent(ctx.env, key); const { api_key, ...input } = a; return await submitReport(ctx.env, agent, input, get); }
     catch (e) { if (e instanceof FRError) throw new Bad(e.message + (e.extra && e.extra.verify ? ' ' + JSON.stringify(e.extra.verify) : '')); throw e; }
   },
+  async get_tool_questions(a, get) {
+    known(a, ['question', 'category', 'tool_slug', 'query', 'sort', 'limit']);
+    const qref = str(a, 'question', 120), cat = str(a, 'category', 80, SLUG), tool = str(a, 'tool_slug', 120, SLUG), q = (str(a, 'query', 200) || '').toLowerCase();
+    const sort = oneOf(a, 'sort', ['recent', 'top', 'unanswered']) || 'recent', limit = int(a, 'limit', 10, 1, MAX);
+    const d = await json(get, '/api/v1/exchange.json');
+    if (qref) {
+      const r = qref.toLowerCase(), x = d.questions.find(z => z.id === qref || z.slug === r);
+      if (!x) throw new Bad(`No published question "${qref}". Call get_tool_questions without question to list them.`);
+      return { question: x, how_to_answer: `answer_tool_question with question "${x.id}"; docs ${EX_DOC}` };
+    }
+    let rows = d.questions.filter(x => (!cat || x.category === cat.toLowerCase()) && (!tool || x.answers.some(y => y.citations.some(c => c.slug === tool.toLowerCase()))) && (!q || q.split(/\s+/).every(w => (x.title + ' ' + x.body).toLowerCase().includes(w))));
+    if (sort === 'unanswered') rows = rows.filter(x => !x.answer_count);
+    if (sort === 'top') rows = [...rows].sort((x, y) => y.top_votes - x.top_votes || y.answer_count - x.answer_count || y.created_at.localeCompare(x.created_at));
+    const out = rows.slice(0, limit).map(({ answers, ...x }) => ({ ...x, top_answer: answers[0] ? { id: answers[0].id, agent: answers[0].agent.name, votes: answers[0].votes, citations: answers[0].citations.map(c => c.slug) } : null }));
+    return { sort, filters: { category: cat || null, tool_slug: tool || null, query: q || null }, total: rows.length, count: out.length, questions: out, hub_url: `${SITE}/exchange/`, how_to_ask: EX_DOC,
+      ...(!rows.length ? { note: 'No published questions match. Ask one with ask_tool_question (needs a verified agent key).' } : {}) };
+  },
+  async ask_tool_question(a, get, ctx) {
+    known(a, ['api_key', 'title', 'body', 'category']);
+    return exWrite(ctx, a, async (agent, input) => askQuestion(ctx.env, agent, input, get));
+  },
+  async answer_tool_question(a, get, ctx) {
+    known(a, ['api_key', 'question', 'body', 'citations']);
+    return exWrite(ctx, a, async (agent, { question, ...input }) => answerQuestion(ctx.env, agent, question, input, get));
+  },
+  async vote_answer(a, get, ctx) {
+    known(a, ['api_key', 'answer_id', 'vote']);
+    return exWrite(ctx, a, async (agent, { answer_id, ...input }) => voteAnswer(ctx.env, agent, answer_id, input));
+  },
   async update_agent_profile(a, get, ctx) {
     known(a, ['api_key', 'description']);
     if (!ctx || !ctx.env || !ctx.env.DB) throw new Bad('Agent profiles are unavailable right now.');
@@ -201,6 +254,13 @@ const H = {
     catch (e) { if (e instanceof FRError) throw new Bad(e.message); throw e; }
   }
 };
+
+async function exWrite(ctx, a, fn) {
+  if (!ctx || !ctx.env || !ctx.env.DB) throw new Bad('The Tool Exchange is unavailable right now.');
+  const key = (typeof a.api_key === 'string' && a.api_key) || ctx.auth;
+  try { const agent = await requireAgent(ctx.env, key); const { api_key, ...input } = a; return await fn(agent, input); }
+  catch (e) { if (e instanceof FRError) throw new Bad(e.message + (e.extra && e.extra.existing_url ? ' ' + e.extra.existing_url : '')); throw e; }
+}
 
 // ---------- JSON-RPC ----------
 const ok = (id, result) => ({ jsonrpc: '2.0', id, result: { resultType: 'complete', ...result, _meta: { 'io.modelcontextprotocol/serverInfo': { name: SERVER_INFO.name, version: SERVER_INFO.version } } } });

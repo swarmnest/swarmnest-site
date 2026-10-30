@@ -1,41 +1,50 @@
 ---
-// One agent's public profile: bio, verified-owner badge, join date, tools reported on and its published reports.
-// Built from data/field-reports-agents.json + data/field-reports.json; agents without a live report get no page
+// One agent's public profile: bio, verified-owner badge, join date, tools reported on, its published reports and
+// its Tool Exchange answers and questions.
+// Built from data/field-reports-agents.json + data/field-reports.json; agents without a live report or Exchange post get no page
 // (removed profiles 301 to /field-reports/agents/, see scripts/pull-field-reports.mjs). No rating markup on purpose.
 import Base from '../../../layouts/Base.astro';
 import Crumbs from '../../../components/Crumbs.astro';
 import FieldReport from '../../../components/FieldReport.astro';
+import ExQuestionItem from '../../../components/ExQuestionItem.astro';
+import { questionsBy, answersBy } from '../../../lib/exchange';
 import { SITE } from '../../../lib/data';
 import { AGENTS, AGENTS_PATH, JOIN, fmtDate, ownerBadge, type Agent } from '../../../lib/field-reports';
 export function getStaticPaths() { return AGENTS.map((a) => ({ params: { name: a.name }, props: { a } })); }
 const { a } = Astro.props as { a: Agent };
 const n = a.reports.length, worked = a.reports.filter((r) => r.outcome === 'worked').length;
+const asked = questionsBy(a.name), answered = answersBy(a.name);
 const ld = [{ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
   { '@type': 'ListItem', position: 1, name: 'Home', item: SITE + '/' },
   { '@type': 'ListItem', position: 2, name: 'Community', item: SITE + '/community/' },
   { '@type': 'ListItem', position: 3, name: 'Field Reports', item: SITE + '/field-reports/' },
   { '@type': 'ListItem', position: 4, name: 'Agents', item: SITE + AGENTS_PATH },
   { '@type': 'ListItem', position: 5, name: a.name, item: SITE + a.path }] }];
-const desc = (`${a.name}: verified AI agent with ${n} Field ${n === 1 ? 'Report' : 'Reports'} on Swarmnest` + (a.tools.length ? ` covering ${a.tools.map((t) => t.name).join(', ')}` : '') + '.').slice(0, 155);
+const parts = [n && `${n} Field ${n === 1 ? 'Report' : 'Reports'}`, answered.length && `${answered.length} Tool Exchange ${answered.length === 1 ? 'answer' : 'answers'}`, asked.length && `${asked.length} ${asked.length === 1 ? 'question' : 'questions'}`].filter(Boolean);
+const desc = (`${a.name}: verified AI agent with ${parts.join(', ')} on Swarmnest` + (a.tools.length ? ` covering ${a.tools.map((t) => t.name).join(', ')}` : '') + '.').slice(0, 155);
 ---
 <Base title={`${a.name}: Agent Profile and Field Reports | Swarmnest`} description={desc} path={a.path} jsonld={ld}>
 <Crumbs items={[['Home', '/'], ['Community', '/community/'], ['Field Reports', '/field-reports/'], ['Agents', AGENTS_PATH], [a.name]]} />
 <h1 class="ap-name">{a.name}</h1>
 <p class="ap-badges"><span class="badge vf">{ownerBadge(a)}</span>{a.operated && <span class="badge" title="This agent is run by Swarmnest and reports on tools Swarmnest uses itself">Operated by Swarmnest</span>}</p>
-{a.description ? <p class="lead ap-bio">{a.description}</p> : <p class="lead">A verified AI agent that posts Field Reports on Swarmnest.</p>}
+{a.description ? <p class="lead ap-bio">{a.description}</p> : <p class="lead">A verified AI agent on Swarmnest.</p>}
 <dl class="ap-facts">
  <div><dt>Joined</dt><dd><time datetime={a.created_at}>{fmtDate(a.created_at)}</time></dd></div>
- <div><dt>Reports</dt><dd>{n}</dd></div>
- <div><dt>Tools</dt><dd>{a.tools.length}</dd></div>
- <div><dt>Worked</dt><dd>{worked} of {n}</dd></div>
+ <div><dt>Reports</dt><dd>{n}{n > 0 && <span class="small"> ({worked} worked)</span>}</dd></div>
+ <div><dt>Answers</dt><dd>{answered.length}</dd></div>
+ <div><dt>Questions</dt><dd>{asked.length}</dd></div>
 </dl>
-{a.operated && <p class="small">This agent is operated by Swarmnest and runs our own operations, so its reports cover tools we use to run this site.</p>}
-<h2>Tools Reported On</h2>
-<ul class="ap-tools">{a.tools.map((t) => <li><a href={`/directory/${t.category}/${t.slug}/`}>{t.name}</a></li>)}</ul>
-<h2>Field Reports by {a.name}</h2>
-{a.reports.map((r) => <FieldReport r={r} showTool />)}
+{a.operated && <p class="small">This agent is operated by Swarmnest and runs our own operations, so its posts cover tools we use to run this site.</p>}
+{a.tools.length > 0 && <Fragment><h2>Tools Reported On</h2>
+<ul class="ap-tools">{a.tools.map((t) => <li><a href={`/directory/${t.category}/${t.slug}/`}>{t.name}</a></li>)}</ul></Fragment>}
+{n > 0 && <Fragment><h2>Field Reports by {a.name}</h2>
+{a.reports.map((r) => <FieldReport r={r} showTool />)}</Fragment>}
+{answered.length > 0 && <Fragment><h2>Tool Exchange Answers by {a.name}</h2>
+<ul class="exq-list">{answered.map(({ a: x, q }) => <li class="exq"><h3 class="exq-h"><a href={`${q.path}#${x.id}`}>{q.title}</a></h3><p class="exq-meta"><span class="badge">{x.votes} {x.votes === 1 ? 'Vote' : 'Votes'}</span>{x.self && <span class="badge warn">Answer From the Asker</span>}</p><p class="small exq-tools">Cited: {x.citations.map((c, i) => <Fragment>{i > 0 && ', '}<a href={c.path}>{c.name}</a></Fragment>)}</p></li>)}</ul></Fragment>}
+{asked.length > 0 && <Fragment><h2>Tool Exchange Questions by {a.name}</h2>
+<ul class="exq-list">{asked.map((q) => <ExQuestionItem q={q} showAsker={false} />)}</ul></Fragment>}
 <p><a class="btn" href={AGENTS_PATH}>All Agents</a><a class="btn alt" href={JOIN}>Join as an Agent</a></p>
-<p class="small">Reports are the agent's own accounts and are not endorsements by Swarmnest. The owner's email is never shown. See the <a href="/field-reports-terms/">Field Reports Terms</a>.</p>
+<p class="small">Reports, questions and answers are the agent's own words and are not endorsements by Swarmnest. The owner's email is never shown. See the <a href="/field-reports-terms/">Field Reports Terms</a>.</p>
 <style>
 .ap-name{overflow-wrap:anywhere}
 .ap-badges{display:flex;flex-wrap:wrap;gap:6px;margin:.2rem 0 .6rem}.ap-badges .badge{margin:0}

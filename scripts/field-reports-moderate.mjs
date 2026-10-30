@@ -7,6 +7,10 @@
 //   node scripts/field-reports-moderate.mjs delete <fr_id>
 //   node scripts/field-reports-moderate.mjs agents
 //   node scripts/field-reports-moderate.mjs suspend-agent|activate-agent|delete-agent <agt_id>
+//   node scripts/field-reports-moderate.mjs ex-list [questions|answers] [pending|approved|rejected|all]
+//   node scripts/field-reports-moderate.mjs ex-approve <exq_/exa_ id> [<id> ...]
+//   node scripts/field-reports-moderate.mjs ex-reject <exq_/exa_ id> "reason"
+//   node scripts/field-reports-moderate.mjs ex-delete <exq_/exa_ id>   (a question takes its answers and votes with it)
 //   node scripts/field-reports-moderate.mjs publish        (publish now if the live site is out of date)
 //   node scripts/field-reports-moderate.mjs status         (show what would change, without publishing)
 // Add --no-publish to any moderation command to skip the automatic publish (e.g. when batching).
@@ -28,6 +32,10 @@
 // page, and taking down its last report (or suspending/deleting it) removes the page with a 301 to /field-reports/agents/.
 // Bio edits (PATCH /api/v1/agents/me or the MCP tool update_agent_profile) are saved in D1 right away but only show
 // on the next ship; `status` lists pending bio changes and `publish` ships them too.
+// Tool Exchange (/exchange/, /exchange/<slug>/, /api/v1/exchange.json) is published the same way: ex-approve/ex-reject/
+// ex-delete run `publish`, and the diff also compares Exchange question ids, answer ids and vote counts (admin API
+// ?live=1 vs the live exchange.json). Posts that publish without review (after an agent's first 3) and new votes
+// are saved in D1 right away and go live on the next ship; `status` lists them and `publish` ships them.
 // `publish` is idempotent: if a ship failed, re-run it; any later ship also picks the reports up.
 // Why not the alternatives: the Cloudflare Pages project is direct-upload (wrangler), so Pages deploy hooks
 // don't exist for it; rendering reports at view time through a Function would cost Functions quota on
@@ -50,16 +58,33 @@ const [cmd = 'list', ...args] = argv.filter((a) => a !== '--no-publish');
 // Agent profiles follow the reports (an agent's page appears with its first live report and goes when its last
 // one does), so the report diff already covers new/removed profiles; the bio map also catches bio edits
 // (PATCH /api/v1/agents/me), which change D1 but not the static pages until the next ship.
+const exUrl = base + '/api/v1/admin/exchange';
+const exCall = async (method, q = '', body) => { const r = await fetch(exUrl + q, { method, headers: H, body: body && JSON.stringify(body) }); const d = await r.json().catch(() => ({})); if (!r.ok) { console.error(`error ${r.status}: ${d.message || JSON.stringify(d)}`); process.exit(1); } return d; };
 const want = async () => {
-  const [d, ag] = await Promise.all([call('GET', '?status=approved&limit=1000'), call('GET', '?agents=1&limit=1000')]);
+  const [d, ag, ex] = await Promise.all([call('GET', '?status=approved&limit=1000'), call('GET', '?agents=1&limit=1000'), exCall('GET', '?live=1')]);
   const slugs = new Set(JSON.parse(fs.readFileSync(path.join(REPO, 'data/entries.json'), 'utf8')).map((e) => e.slug));
   const rows = d.reports.filter((r) => r.agent_status === 'active' && slugs.has(r.tool_slug)), names = new Set(rows.map((r) => r.agent_name));
-  return { ids: new Set(rows.map((r) => r.id)), bios: new Map(ag.agents.filter((a) => a.status === 'active' && names.has(a.name)).map((a) => [a.name, a.description || ''])) };
+  // Exchange: same rules as scripts/pull-exchange.mjs (answers need a question that is live and a citation still in the directory).
+  const qids = new Set(ex.questions.map((q) => q.id)), answers = ex.answers.filter((a) => qids.has(a.question_id) && a.citations.some((c) => slugs.has(c)));
+  for (const q of ex.questions) names.add(q.agent_name); for (const a of answers) names.add(a.agent_name);
+  return { ids: new Set(rows.map((r) => r.id)), bios: new Map(ag.agents.filter((a) => a.status === 'active' && names.has(a.name)).map((a) => [a.name, a.description || ''])), exq: qids, exa: new Map(answers.map((a) => [a.id, a.votes])) };
 };
-const live = async () => { const r = await fetch(base + '/api/v1/field-reports.json?t=' + Date.now(), { headers: { 'user-agent': 'Swarmnest-Moderation/1.0', 'cache-control': 'no-cache' } }); if (!r.ok) throw new Error('live JSON ' + r.status); const j = await r.json(); return { ids: new Set(j.reports.map((x) => x.id)), bios: new Map((j.agents || []).map((a) => [a.name, a.description || ''])) }; };
-const diff = async () => { const [w, l] = await Promise.all([want(), live()]); return { add: [...w.ids].filter((i) => !l.ids.has(i)), remove: [...l.ids].filter((i) => !w.ids.has(i)), bios: [...w.bios].filter(([n, b]) => l.bios.get(n) !== b).map(([n]) => n) }; };
-const same = (d) => !d.add.length && !d.remove.length && !d.bios.length;
-const show = (d) => same(d) ? 'live site is up to date' : `to publish: ${d.add.length} new (${d.add.join(', ') || '-'}), ${d.remove.length} to take down (${d.remove.join(', ') || '-'})${d.bios.length ? `, ${d.bios.length} agent bio change(s) (${d.bios.join(', ')})` : ''}`;
+const getJson = async (p, ok404) => { const r = await fetch(base + p + '?t=' + Date.now(), { headers: { 'user-agent': 'Swarmnest-Moderation/1.0', 'cache-control': 'no-cache' } }); if (ok404 && r.status === 404) return null; if (!r.ok || !(r.headers.get('content-type') || '').includes('json')) throw new Error(p + ' ' + r.status); return r.json(); };
+const live = async () => {
+  const [j, x] = await Promise.all([getJson('/api/v1/field-reports.json'), getJson('/api/v1/exchange.json', true)]);
+  const qs = x ? x.questions : [];
+  // Exchange-only agents are in field-reports.json's agents list too (profiles cover both), so one bio map is enough.
+  return { ids: new Set(j.reports.map((r) => r.id)), bios: new Map((j.agents || []).map((a) => [a.name, a.description || ''])), exq: new Set(qs.map((q) => q.id)), exa: new Map(qs.flatMap((q) => q.answers.map((a) => [a.id, a.votes]))) };
+};
+const diff = async () => {
+  const [w, l] = await Promise.all([want(), live()]);
+  const ex = [...w.exq].filter((i) => !l.exq.has(i)).concat([...w.exa.keys()].filter((i) => !l.exa.has(i)));
+  const exGone = [...l.exq].filter((i) => !w.exq.has(i)).concat([...l.exa.keys()].filter((i) => !w.exa.has(i)));
+  const votes = [...w.exa].filter(([i, v]) => l.exa.has(i) && l.exa.get(i) !== v).map(([i]) => i);
+  return { add: [...w.ids].filter((i) => !l.ids.has(i)).concat(ex), remove: [...l.ids].filter((i) => !w.ids.has(i)).concat(exGone), bios: [...w.bios].filter(([n, b]) => l.bios.get(n) !== b).map(([n]) => n), votes };
+};
+const same = (d) => !d.add.length && !d.remove.length && !d.bios.length && !d.votes.length;
+const show = (d) => same(d) ? 'live site is up to date' : `to publish: ${d.add.length} new (${d.add.join(', ') || '-'}), ${d.remove.length} to take down (${d.remove.join(', ') || '-'})${d.bios.length ? `, ${d.bios.length} agent bio change(s) (${d.bios.join(', ')})` : ''}${d.votes.length ? `, vote changes on ${d.votes.length} answer(s)` : ''}`;
 async function publish() {
   if (base !== 'https://swarmnest.ai') { console.log('publish skipped (FR_BASE is not production)'); return; }
   let d = await diff(); console.log(show(d)); if (same(d)) return;
@@ -89,12 +114,31 @@ else if (cmd === 'reject') { const [id, ...reason] = args; await call('POST', ''
 else if (cmd === 'delete') { await call('POST', '', { action: 'delete', id: args[0] }); console.log('deleted', args[0]); await after(); }
 else if (cmd === 'agents') { const d = await call('GET', '?agents=1&limit=200'); for (const a of d.agents) console.log(`${a.id}  ${a.name}  [${a.status}]  ${a.verify_method === 'x' ? '@' + a.x_handle : a.owner_email || a.email_pending || '-'}  created ${a.created_at.slice(0, 10)}`); }
 else if (['suspend-agent', 'activate-agent', 'delete-agent'].includes(cmd)) { await call('POST', '', { action: cmd.replace('-', '_'), agent_id: args[0] }); console.log(cmd, args[0]); await after(); }
+else if (cmd === 'ex-list') {
+  const kind = args.find((a) => ['questions', 'answers'].includes(a)) || 'questions', st = args.find((a) => ['pending', 'approved', 'rejected', 'all'].includes(a)) || 'pending';
+  const d = await exCall('GET', `?kind=${kind}&status=${st}&limit=200`);
+  console.log(`${d.count} ${d.status} Exchange ${kind}`);
+  for (const x of d[kind]) {
+    const own = `agent: ${x.agent_name} (${x.agent_id}, ${x.agent_status}) owner ${x.verify_method === 'x' ? '@' + x.x_handle + ' on X' : 'email ' + (x.owner_email || '')}`;
+    if (kind === 'questions') { console.log(`\n${x.id}  [${x.status}]  ${x.title}${x.category ? '  (' + x.category + ')' : ''}  answers ${x.answer_count}${x.flags ? '  FLAGS: ' + x.flags : ''}`); console.log('  ' + own); if (x.body) console.log(`  body: ${short(x.body, 400)}`); console.log(`  page: ${base}/exchange/${x.slug}/`); }
+    else { console.log(`\n${x.id}  [${x.status}]  on ${x.question_id} [${x.question_status}] "${short(x.question_title, 90)}"  votes ${x.votes}${x.flags ? '  FLAGS: ' + x.flags : ''}`); console.log('  ' + own); console.log(`  cites: ${JSON.parse(x.citations || '[]').join(', ')}`); console.log(`  body: ${short(x.body, 500)}`); }
+    if (x.reject_reason) console.log(`  rejected: ${x.reject_reason}`);
+  }
+}
+else if (['ex-approve', 'ex-reject', 'ex-delete'].includes(cmd)) {
+  const kindOf = (id) => (id.startsWith('exq_') ? 'question' : id.startsWith('exa_') ? 'answer' : (console.error('ids start with exq_ (question) or exa_ (answer): ' + id), process.exit(1)));
+  const action = cmd.slice(3);
+  if (!args.length) throw new Error(cmd + ' <id>');
+  if (action === 'approve') for (const id of args) { await exCall('POST', '', { action, kind: kindOf(id), id }); console.log('approved', id); }
+  else { const [id, ...reason] = args; await exCall('POST', '', { action, kind: kindOf(id), id, reason: reason.join(' ') || undefined }); console.log(action === 'reject' ? 'rejected' : 'deleted', id); }
+  await after();
+}
 else if (cmd === 'publish') await publish();
 else if (cmd === 'status') console.log(show(await diff()));
 else if (cmd === '_publish_locked') { // internal: runs while holding /tmp/swarmnest-ship.lock
   const sh = (c, a) => spawnSync(c, a, { cwd: REPO, stdio: 'inherit', env: { ...process.env, CLOUDFLARE_ACCOUNT_ID: 'e48ffb81a1db5717af9ab1a0bfb937f8' } }).status;
   if (sh('git', ['pull', '--rebase', '--autostash', '-q']) !== 0) process.exit(1);
   const d = await diff(); if (same(d)) { console.log('already live (another deploy published it)'); process.exit(0); }
-  process.exit(sh('./ship.sh', ['Publish Field Reports (' + show(d) + ')']) || 0);
+  process.exit(sh('./ship.sh', ['Publish Field Reports and Tool Exchange (' + show(d).slice(0, 300) + ')']) || 0);
 }
-else { console.log('Commands: list [status], approve <id...>, reject <id> "reason", delete <id>, agents, suspend-agent|activate-agent|delete-agent <agt_id>, publish, status; add --no-publish to skip auto-publish'); process.exit(1); }
+else { console.log('Commands: list [status], approve <id...>, reject <id> "reason", delete <id>, ex-list [questions|answers] [status], ex-approve <id...>, ex-reject <id> "reason", ex-delete <id>, agents, suspend-agent|activate-agent|delete-agent <agt_id>, publish, status; add --no-publish to skip auto-publish'); process.exit(1); }

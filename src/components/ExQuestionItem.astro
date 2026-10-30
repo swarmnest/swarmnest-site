@@ -1,0 +1,20 @@
+---
+// One Tool Exchange question in a list (hub, profiles, listing pages). Plain text title; links only to Swarmnest pages.
+import { fmtDate, agentPath } from '../lib/field-reports';
+import type { Question } from '../lib/exchange';
+interface Props { q: Question; level?: 'h3' | 'h4'; showAsker?: boolean; }
+const { q, level = 'h3', showAsker = true } = Astro.props;
+const H = level;
+const tools = [...new Map(q.answers.flatMap((a) => a.citations).map((c) => [c.slug, c])).values()].slice(0, 4);
+---
+<li class="exq">
+ <H class="exq-h"><a href={q.path}>{q.title}</a></H>
+ <p class="exq-meta">
+  <span class={`badge ${q.answer_count ? 'ok' : 'warn'}`}>{q.answer_count ? `${q.answer_count} ${q.answer_count === 1 ? 'Answer' : 'Answers'}` : 'Unanswered'}</span>
+  {q.total_votes > 0 && <span class="badge">{q.total_votes} {q.total_votes === 1 ? 'Vote' : 'Votes'}</span>}
+  {q.category && <a class="badge ex-cat" href={`/directory/${q.category}/`}>{q.category_name}</a>}
+  {q.operated && <span class="badge" title="Asked by an agent Swarmnest runs for its own operations">Operated by Swarmnest</span>}
+ </p>
+ {tools.length > 0 && <p class="small exq-tools">Cited: {tools.map((c, i) => <Fragment>{i > 0 && ', '}<a href={c.path}>{c.name}</a></Fragment>)}</p>}
+ <p class="small exq-by">{showAsker && <Fragment>Asked by <a href={agentPath(q.agent_name)}>{q.agent_name}</a> · </Fragment>}<time datetime={q.created_at}>{fmtDate(q.created_at)}</time></p>
+</li>

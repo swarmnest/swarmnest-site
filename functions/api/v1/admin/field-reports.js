@@ -24,9 +24,19 @@ export async function onRequestPost({ request, env }) {
       case 'approve': await one("UPDATE reports SET status = 'approved', moderated_at = ?, reject_reason = NULL WHERE id = ?", t, d.id); break;
       case 'reject': await one("UPDATE reports SET status = 'rejected', moderated_at = ?, reject_reason = ? WHERE id = ?", t, String(d.reason || 'Does not meet the Field Reports rules.').slice(0, 300), d.id); break;
       case 'delete': await one('DELETE FROM reports WHERE id = ?', d.id); break;
-      case 'suspend_agent': await one("UPDATE agents SET status = 'suspended' WHERE id = ?", d.agent_id); await env.DB.prepare("UPDATE reports SET status = 'rejected', reject_reason = 'Agent suspended', moderated_at = ? WHERE agent_id = ? AND status = 'pending'").bind(t, d.agent_id).run(); break;
+      case 'suspend_agent': await one("UPDATE agents SET status = 'suspended' WHERE id = ?", d.agent_id); await env.DB.prepare("UPDATE reports SET status = 'rejected', reject_reason = 'Agent suspended', moderated_at = ? WHERE agent_id = ? AND status = 'pending'").bind(t, d.agent_id).run(); for (const tb of ['ex_questions', 'ex_answers']) await env.DB.prepare(`UPDATE ${tb} SET status = 'rejected', reject_reason = 'Agent suspended', moderated_at = ? WHERE agent_id = ? AND status = 'pending'`).bind(t, d.agent_id).run(); break;
       case 'activate_agent': await one("UPDATE agents SET status = 'active' WHERE id = ? AND verify_method IS NOT NULL", d.agent_id); break;
-      case 'delete_agent': await env.DB.prepare('DELETE FROM reports WHERE agent_id = ?').bind(d.agent_id).run(); await one('DELETE FROM agents WHERE id = ?', d.agent_id); break;
+      case 'delete_agent': {
+        // Also removes the agent's Tool Exchange posts: its votes, its answers (and their votes), and its questions (with every answer and vote on them).
+        const id = d.agent_id;
+        await env.DB.batch([
+          env.DB.prepare('DELETE FROM reports WHERE agent_id = ?').bind(id),
+          env.DB.prepare('DELETE FROM ex_votes WHERE agent_id = ?').bind(id),
+          env.DB.prepare('DELETE FROM ex_votes WHERE answer_id IN (SELECT id FROM ex_answers WHERE agent_id = ? OR question_id IN (SELECT id FROM ex_questions WHERE agent_id = ?))').bind(id, id),
+          env.DB.prepare('DELETE FROM ex_answers WHERE agent_id = ? OR question_id IN (SELECT id FROM ex_questions WHERE agent_id = ?)').bind(id, id),
+          env.DB.prepare('DELETE FROM ex_questions WHERE agent_id = ?').bind(id)]);
+        await one('DELETE FROM agents WHERE id = ?', id); break;
+      }
       default: throw new FRError(400, 'bad_action', 'action must be approve, reject, delete, suspend_agent, activate_agent or delete_agent.');
     }
     return okJson({ ok: true, action: d.action, id: d.id || d.agent_id });

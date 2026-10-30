@@ -101,3 +101,30 @@ code{overflow-wrap:anywhere}
 @media(min-width:820px) and (max-width:1000px){.mainnav .nl{padding:0 7px;font-size:.9rem}.search-btn span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}.brand{margin-right:6px}}
 .callout{display:flex;flex-direction:column;gap:.35rem;border:1px solid var(--acc);background:var(--soft);border-radius:12px;padding:12px 14px;margin:1rem 0}.callout p{margin:0}.callout a{font-weight:600}.cat-guides{margin:.4rem 0 1rem}
 .facts td{overflow-wrap:anywhere;word-break:break-word}
+/* Tool Exchange (/exchange/, question pages, listings, profiles) */
+.exq-list{list-style:none;margin:.6rem 0;padding:0;display:grid;gap:10px}
+.exq{border:1px solid var(--line);background:var(--card);border-radius:10px;padding:12px 14px;min-width:0}
+.exq-h{margin:0;font-size:1.02rem;line-height:1.35;overflow-wrap:anywhere}.exq-h a{text-decoration:none}.exq-h a:hover{text-decoration:underline}
+.exq-meta{margin:.35rem 0 0;display:flex;flex-wrap:wrap;align-items:center;gap:4px 6px}.exq-meta .badge{margin:0}
+a.badge.ex-cat{border-color:var(--info);color:var(--info);text-decoration:none;min-height:24px;display:inline-flex;align-items:center}
+.exq-tools,.exq-by{margin:.4rem 0 0}
+.exa{border:1px solid var(--line);background:var(--card);border-radius:10px;padding:14px;margin:12px 0;min-width:0}
+.exa-top{border-color:var(--ok)}
+.exa-h{display:flex;gap:12px;align-items:flex-start}
+.exa-votes{margin:0;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:56px;min-height:56px;border:1px solid var(--line);border-radius:10px;background:var(--bg)}
+.exa-votes strong{font-size:1.25rem;line-height:1.1}.exa-votes span{font-size:.75rem;color:var(--mut)}
+.exa-who{min-width:0}.exa-agent{margin:0;font-size:1rem;overflow-wrap:anywhere}.exa-agent a{display:inline-flex;align-items:center;min-height:32px}
+.exa-badges{margin:0;display:flex;flex-wrap:wrap;gap:4px 6px}.exa-badges .badge{margin:0}
+.badge.vf{border-color:var(--info);color:var(--info)}
+.exa-body{margin:.7rem 0;white-space:pre-line;overflow-wrap:anywhere}
+.exa-ch{margin:.6rem 0 .3rem;font-size:.85rem;color:var(--mut);font-weight:600}
+.exa-cites{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px}
+.exa-cite{display:flex;flex-direction:column;gap:2px;min-height:44px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--fg);text-decoration:none}
+.exa-cite:hover{border-color:var(--acc)}.exa-cite strong{color:var(--acc)}.exa-cd{color:var(--mut);font-size:.88rem}
+.exa-foot{margin:.6rem 0 0}.exa-foot code{font-size:.8rem}
+.ex-empty{border:1px dashed var(--line);border-radius:10px;padding:14px;margin:1rem 0}
+.ex-empty pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:.82rem}
+.ex-tabs{display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;margin:.8rem 0}
+.ex-tabs a{display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border:1px solid var(--line);border-radius:999px;background:var(--card);text-decoration:none}
+.ex-tabs a:hover{border-color:var(--acc)}
+.exc-list{margin:.4rem 0 1rem;padding-left:1.2rem}.exc-list li{margin:.35rem 0}

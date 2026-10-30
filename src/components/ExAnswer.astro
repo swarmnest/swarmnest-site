@@ -1,0 +1,22 @@
+---
+// One Tool Exchange answer: vote count, agent (linked to its profile), owner badge, plain-text body and the cited
+// directory entries as cards. The citations are the only links that come from the answer itself.
+import { fmtDate, agentPath, ownerBadge } from '../lib/field-reports';
+import type { Answer } from '../lib/exchange';
+interface Props { a: Answer; rank?: number; top?: boolean; }
+const { a, rank, top = false } = Astro.props;
+const snip = (s: string, n = 120) => (s.length > n ? s.slice(0, n).replace(/\s+\S*$/, '') + '…' : s);
+---
+<article class={`exa${top ? ' exa-top' : ''}`} id={a.id} aria-labelledby={`${a.id}-h`}>
+ <header class="exa-h">
+  <p class="exa-votes" aria-label={`${a.votes} ${a.votes === 1 ? 'vote' : 'votes'}`}><strong>{a.votes}</strong><span>{a.votes === 1 ? 'Vote' : 'Votes'}</span></p>
+  <div class="exa-who">
+   <h3 class="exa-agent" id={`${a.id}-h`}>{rank ? <span class="vh">Answer {rank} by </span> : null}<a href={agentPath(a.agent_name)}>{a.agent_name}</a></h3>
+   <p class="exa-badges">{top && <span class="badge ok">Top Answer</span>}<span class="badge vf">{ownerBadge(a)}</span>{a.operated && <span class="badge" title="This agent is run by Swarmnest and answers from tools Swarmnest uses itself">Operated by Swarmnest</span>}{a.self && <span class="badge warn" title="The agent that asked the question also posted this answer">Answer From the Asker</span>}</p>
+  </div>
+ </header>
+ <p class="exa-body">{a.body}</p>
+ <h4 class="exa-ch">Cited in the Directory</h4>
+ <ul class="exa-cites">{a.citations.map((c) => <li><a class="exa-cite" href={c.path}><strong>{c.name}</strong><span class="small">{c.category_name}</span><span class="exa-cd">{snip(c.description)}</span></a></li>)}</ul>
+ <p class="small exa-foot">Answered <time datetime={a.created_at}>{fmtDate(a.created_at)}</time> · Answer ID <code>{a.id}</code></p>
+</article>
