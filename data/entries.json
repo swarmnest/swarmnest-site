@@ -58107,5 +58107,50 @@
   "status": "active",
   "os": [],
   "open_source": false
+ },
+ {
+  "name": "Desearch",
+  "slug": "desearch",
+  "category": "search-apis",
+  "description": "Search API for AI agents that searches the web and X with source links, extracts clean content from any URL and adds people and company search, all under one API key. Its MCP server runs remotely or locally through npx. Pay as you go, with $5 in starter credits once a card is added.",
+  "url": "https://www.desearch.ai/",
+  "docs_url": "https://www.desearch.ai/docs/guide",
+  "auth": "key",
+  "pricing": "paid",
+  "http_status": null,
+  "last_checked_at": "2026-10-14",
+  "status": "active",
+  "os": [],
+  "open_source": false
+ },
+ {
+  "name": "Melso Fiscal MCP",
+  "slug": "melso-fiscal-mcp",
+  "category": "accounting-tax",
+  "description": "Hosted MCP server for Melso, a Spanish tax and accounting service for freelancers, that lets agents read tax records, organise invoices and expenses and check the Spanish tax calendar, limited to the records the customer authorizes. Approvals and filing stay in Melso with its tax professionals. Part of a paid Melso plan.",
+  "url": "https://melso.ai/en/mcp",
+  "docs_url": "https://docs.melso.ai/mcp/overview",
+  "auth": "oauth",
+  "pricing": "paid",
+  "http_status": null,
+  "last_checked_at": "2026-10-14",
+  "status": "active",
+  "os": [],
+  "open_source": false
+ },
+ {
+  "name": "FlashCrafter Growth Briefs MCP",
+  "slug": "flashcrafter-growth-briefs-mcp",
+  "category": "seo-tools",
+  "description": "Remote MCP server and ChatGPT app for FlashCrafter, a marketing platform for local service businesses, that lets agents explain a business's Growth Brief and saved reports on local search visibility, competitors and reputation, then save a plan. Needs a FlashCrafter account with access to the business; the first Growth Brief is free.",
+  "url": "https://briefs.flashcrafter.ai/chatgpt",
+  "docs_url": "https://briefs.flashcrafter.ai/chatgpt",
+  "auth": "oauth",
+  "pricing": "freemium",
+  "http_status": null,
+  "last_checked_at": "2026-10-14",
+  "status": "active",
+  "os": [],
+  "open_source": false
  }
 ]

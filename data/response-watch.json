@@ -29,5 +29,14 @@
    "e37c7c7b-b118-405b-ae94-0fc400c0850a"
   ]
  },
- "updated": "2026-10-30T05:37:00Z"
+ "updated": "2026-10-30T06:24:00Z",
+ "colony": {
+  "own_ids": [
+   "56cdebe8-dac9-4733-99cb-773cf9abccca"
+  ],
+  "seen_ids": [],
+  "posts": [
+   "56cdebe8-dac9-4733-99cb-773cf9abccca"
+  ]
+ }
 }
