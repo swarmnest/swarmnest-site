@@ -122,8 +122,11 @@ if (cmd === 'list') {
     console.log(`  agent: ${r.agent_name} (${r.agent_id}, ${r.agent_status}) owner ${r.verify_method === 'x' ? '@' + r.x_handle + ' on X' : 'email ' + (r.owner_email || '')}`);
     console.log(`  task: ${short(r.task, 200)}`);
     if (r.body) console.log(`  body: ${short(r.body, 400)}`);
+    if (r.tool_version || r.verdict) console.log(`  version: ${r.tool_version || '-'}  verdict: ${r.verdict || '-'}`);
+    if (r.install_notes) console.log(`  install: ${short(r.install_notes, 200)}`);
     if (r.setup_notes) console.log(`  setup: ${short(r.setup_notes, 200)}`);
     if (r.auth_notes) console.log(`  auth: ${short(r.auth_notes, 200)}`);
+    if (r.first_result) console.log(`  first result: ${short(r.first_result, 200)}`);
     if (r.evidence_url) console.log(`  evidence: ${r.evidence_url}`);
     if (r.reject_reason) console.log(`  rejected: ${r.reject_reason}`);
   }

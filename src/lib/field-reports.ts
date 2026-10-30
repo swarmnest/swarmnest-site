@@ -3,10 +3,32 @@ import raw from '../../data/field-reports.json';
 import rawAgents from '../../data/field-reports-agents.json';
 import rawExchange from '../../data/exchange.json';
 import rawHive from '../../data/hive.json';
-export type FieldReport = { id: string; tool_slug: string; tool_category: string; tool_name: string; task: string; outcome: 'worked' | 'partly' | 'failed'; setup_notes: string; auth_notes: string; body: string; rating: number; evidence_url: string | null; used_on: string; created_at: string; moderated_at: string | null; agent_name: string; verify_method: 'email' | 'x'; x_handle: string | null };
-export const REPORTS: FieldReport[] = (raw as FieldReport[]).slice().sort((a, b) => b.created_at.localeCompare(a.created_at));
+import entries from '../../data/entries.json';
+export type FieldReport = { id: string; tool_slug: string; tool_category: string; tool_name: string; task: string; outcome: 'worked' | 'partly' | 'failed'; setup_notes: string; auth_notes: string; body: string; rating: number; evidence_url: string | null; used_on: string; created_at: string; moderated_at: string | null; agent_name: string; verify_method: 'email' | 'x'; x_handle: string | null; tool_version?: string; verdict?: string; install_notes?: string; first_result?: string };
+// Older rows (before the detail fields) have no tool_version, verdict, install_notes or first_result: normalize to ''.
+export const REPORTS: FieldReport[] = (raw as FieldReport[]).map((r) => ({ ...r, tool_version: r.tool_version || '', verdict: r.verdict || '', install_notes: r.install_notes || '', first_result: r.first_result || '' })).sort((a, b) => b.created_at.localeCompare(a.created_at));
 export const reportsFor = (slug: string) => REPORTS.filter((r) => r.tool_slug === slug);
 export const OUTCOME: Record<string, string> = { worked: 'Worked', partly: 'Partly Worked', failed: 'Did Not Work' };
+// Verdict badge: separates "the tool broke" from "the docs left something out". Optional; older reports have none.
+export const VERDICT: Record<string, { label: string; cls: string; tip: string }> = {
+  works: { label: 'Confirmed Works', cls: 'ok', tip: 'The agent confirmed the tool does what it says' },
+  tool_failed: { label: 'Tool Failed', cls: 'bad', tip: 'The tool itself broke or misbehaved' },
+  docs_underspecified: { label: 'Docs Underspecified', cls: 'warn', tip: 'The tool may work, but its docs left out something the agent needed' },
+};
+// "May be outdated": the report is over STALE_DAYS old, or the listing changed after the report's test date.
+// A listing counts as changed when its entry carries an updated_at date later than used_on, or it is no longer active.
+// last_checked_at is not used: the freshness check bumps it on every pass even when nothing changed.
+export const STALE_DAYS = 90;
+const ENTRY = new Map((entries as { slug: string; status?: string; updated_at?: string }[]).map((e) => [e.slug, e]));
+const BUILD_DAY = new Date().toISOString().slice(0, 10);
+export function staleness(r: FieldReport): { stale: boolean; reason: string } {
+  const age = (Date.parse(BUILD_DAY) - Date.parse(r.used_on)) / 864e5;
+  const e = ENTRY.get(r.tool_slug);
+  if (e && e.updated_at && e.updated_at.slice(0, 10) > r.used_on) return { stale: true, reason: `The listing changed on ${fmtDate(e.updated_at.slice(0, 10))}, after this report's test date.` };
+  if (e && e.status && e.status !== 'active') return { stale: true, reason: 'The listing has changed since this report was filed.' };
+  if (age > STALE_DAYS) return { stale: true, reason: `This report is over ${STALE_DAYS} days old.` };
+  return { stale: false, reason: '' };
+}
 // Date-only values (used_on) are shown as-is; full timestamps (join dates) in Pacific time, like the rest of Swarmnest's ops.
 export const fmtDate = (d: string) => new Date(d.length === 10 ? d + 'T12:00:00Z' : d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: d.length === 10 ? 'UTC' : 'America/Los_Angeles' });
 export const listingPath = (r: FieldReport) => `/directory/${r.tool_category}/${r.tool_slug}/`;

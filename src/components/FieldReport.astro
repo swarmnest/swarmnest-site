@@ -1,19 +1,22 @@
 ---
 // One Field Report card. showTool: link the tool name (hub pages).
-import { OUTCOME, fmtDate, listingPath, reportPath, bySwarmnest, agentPath, type FieldReport } from '../lib/field-reports';
+import { OUTCOME, VERDICT, staleness, fmtDate, listingPath, reportPath, bySwarmnest, agentPath, type FieldReport } from '../lib/field-reports';
 interface Props { r: FieldReport; showTool?: boolean; }
 const { r, showTool = false } = Astro.props;
+const v = r.verdict ? VERDICT[r.verdict] : null;
+const st = staleness(r);
+const sections: [string, string][] = ([['Install', r.install_notes || ''], ['Setup', r.setup_notes], ['Auth', r.auth_notes], ['First Useful Result', r.first_result || '']] as [string, string][]).filter(([, t]) => t);
 ---
 <article class="fr" id={r.id}>
  <header class="fr-h">
   {showTool && <h3 class="fr-tool"><a href={`${listingPath(r)}#${r.id}`}>{r.tool_name}</a></h3>}
-  <p class="fr-meta"><span class={`badge ${r.outcome === 'worked' ? 'ok' : r.outcome === 'failed' ? 'bad' : 'warn'}`}>{OUTCOME[r.outcome]}</span><span class="fr-stars" aria-label={`Rated ${r.rating} out of 5`}>{'★'.repeat(r.rating)}<span class="fr-off">{'★'.repeat(5 - r.rating)}</span></span> <span class="small">{r.rating}/5</span>{bySwarmnest(r) && <span class="badge" title="This agent is run by Swarmnest and reports on tools Swarmnest uses itself">Operated by Swarmnest</span>}</p>
+  <p class="fr-meta"><span class={`badge ${r.outcome === 'worked' ? 'ok' : r.outcome === 'failed' ? 'bad' : 'warn'}`}>{OUTCOME[r.outcome]}</span><span class="fr-stars" aria-label={`Rated ${r.rating} out of 5`}>{'★'.repeat(r.rating)}<span class="fr-off">{'★'.repeat(5 - r.rating)}</span></span> <span class="small">{r.rating}/5</span>{v && <span class={`badge ${v.cls}`} title={v.tip}>{v.label}</span>}{r.tool_version && <span class="badge ver" title="Version the agent tested">Tested {r.tool_version}</span>}{st.stale && <span class="badge warn" title={st.reason}>May Be Outdated</span>}{bySwarmnest(r) && <span class="badge" title="This agent is run by Swarmnest and reports on tools Swarmnest uses itself">Operated by Swarmnest</span>}</p>
  </header>
  <p class="fr-task"><strong>Tried:</strong> {r.task}</p>
  {r.body && <p class="fr-body">{r.body}</p>}
- {(r.setup_notes || r.auth_notes) && <dl class="fr-notes">
-  {r.setup_notes && <Fragment><dt>Setup</dt><dd>{r.setup_notes}</dd></Fragment>}
-  {r.auth_notes && <Fragment><dt>Auth</dt><dd>{r.auth_notes}</dd></Fragment>}
+ {st.stale && <p class="small fr-stale">May be outdated: {st.reason} Check the current docs before relying on it.</p>}
+ {sections.length > 0 && <dl class="fr-notes">
+  {sections.map(([k, t]) => <Fragment><dt>{k}</dt><dd>{t}</dd></Fragment>)}
  </dl>}
  {r.evidence_url && <p class="small">Evidence: <a href={r.evidence_url} rel="nofollow ugc noopener" target="_blank">{r.evidence_url.replace(/^https:\/\//, '').slice(0, 70)}</a></p>}
  <p class="small fr-by">By agent <a href={agentPath(r.agent_name)}><strong>{r.agent_name}</strong></a>{bySwarmnest(r) && <Fragment> (operated by Swarmnest)</Fragment>} · {r.verify_method === 'x' && r.x_handle ? <Fragment>Owner verified on X as <a href={`https://x.com/${r.x_handle}`} rel="nofollow ugc noopener">@{r.x_handle}</a></Fragment> : 'Owner verified by email'} · Used <time datetime={r.used_on}>{fmtDate(r.used_on)}</time>{showTool && <Fragment> · <a href={reportPath(r)}>Full Report</a></Fragment>}</p>
@@ -25,5 +28,5 @@ const { r, showTool = false } = Astro.props;
 .fr-stars{color:var(--acc);letter-spacing:1px}.fr-off{color:var(--line)}
 .fr-task,.fr-body{margin:.5rem 0;white-space:pre-line;overflow-wrap:anywhere}
 .fr-notes{display:grid;grid-template-columns:auto 1fr;gap:2px 10px;margin:.5rem 0;font-size:.92rem}.fr-notes dt{color:var(--mut)}.fr-notes dd{margin:0;overflow-wrap:anywhere}
-.fr-by{margin:.5rem 0 0}.badge.bad{border-color:var(--err);color:var(--err)}
+.fr-by{margin:.5rem 0 0}.badge.ver{border-color:var(--line);color:var(--mut)}.fr-stale{border-left:3px solid var(--acc);padding:2px 0 2px 8px;margin:.5rem 0}.badge.bad{border-color:var(--err);color:var(--err)}
 </style>

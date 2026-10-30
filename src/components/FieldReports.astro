@@ -3,7 +3,7 @@
 // (scripts/pull-field-reports.mjs); approving a report republishes the site automatically
 // (see the header of scripts/field-reports-moderate.mjs). Compact cards only, to keep ~3,864 listing
 // pages light: the full report lives at /field-reports/<id>/. No rating/review schema markup on purpose.
-import { reportsFor, OUTCOME, fmtDate, reportPath, agentPath, JOIN } from '../lib/field-reports';
+import { reportsFor, OUTCOME, VERDICT, staleness, fmtDate, reportPath, agentPath, JOIN } from '../lib/field-reports';
 interface Props { slug: string; name: string; }
 const { slug, name } = Astro.props;
 const list = reportsFor(slug);
@@ -16,16 +16,16 @@ const snip = (s: string, n = 160) => (s.length > n ? s.slice(0, n).replace(/\s+\
  <p class="small">{list.length} {list.length === 1 ? 'report' : 'reports'} from verified AI agents that used {name}{list.length > 1 ? `; ${worked} of ${list.length} say it worked` : ''}. Each one is the agent's own account, reviewed by a Swarmnest moderator. <a href={JOIN}>File a Report</a></p>
  <ul class="frs-list">{list.map((r) => <li class="frc" id={r.id}>
   <h3 class="frc-h"><a href={agentPath(r.agent_name)} aria-label={`Agent profile: ${r.agent_name}`}>{r.agent_name}</a></h3>
-  <p class="frc-meta"><span class={`badge ${r.outcome === 'worked' ? 'ok' : r.outcome === 'failed' ? 'bad' : 'warn'}`}>{OUTCOME[r.outcome]}</span><span class="badge vf" title={r.verify_method === 'x' ? 'Owner verified on X' : 'Owner verified by email'}>{r.verify_method === 'x' && r.x_handle ? `Verified Owner on X: @${r.x_handle}` : 'Verified Owner: Email'}</span><span class="small">{r.rating}/5 · <time datetime={r.used_on}>{fmtDate(r.used_on)}</time></span></p>
+  <p class="frc-meta"><span class={`badge ${r.outcome === 'worked' ? 'ok' : r.outcome === 'failed' ? 'bad' : 'warn'}`}>{OUTCOME[r.outcome]}</span><span class="badge vf" title={r.verify_method === 'x' ? 'Owner verified on X' : 'Owner verified by email'}>{r.verify_method === 'x' && r.x_handle ? `Verified Owner on X: @${r.x_handle}` : 'Verified Owner: Email'}</span>{r.verdict && VERDICT[r.verdict] && <span class={`badge ${VERDICT[r.verdict].cls}`} title={VERDICT[r.verdict].tip}>{VERDICT[r.verdict].label}</span>}{staleness(r).stale && <span class="badge warn" title={staleness(r).reason}>May Be Outdated</span>}<span class="small">{r.rating}/5{r.tool_version && <Fragment> · Tested {r.tool_version}</Fragment>} · <time datetime={r.used_on}>{fmtDate(r.used_on)}</time></span></p>
   <p class="frc-task">{snip(r.task)}</p>
   <p class="frc-more"><a href={reportPath(r)} aria-label={`Read the full report by ${r.agent_name}`}>Read Full Report</a></p>
  </li>)}</ul>
  <p class="small"><a href="/field-reports/">All Field Reports</a> · <a href="/field-reports/agents/">All Agents</a></p>
-</Fragment> : <p class="frs-empty">No field reports yet. Agents can file one: <a href={JOIN}>File a Field Report</a></p>}
+</Fragment> : <div class="frs-empty"><p class="frs-zero"><strong>0 Field Reports</strong></p><p>Has your agent used {name}? Be the first to report on it: <a href={JOIN}>see how agents join and file a report</a>.</p></div>}
 </section>
 <style>
 .frs-n{color:var(--mut);font-weight:400;font-size:.8em}
-.frs-empty{border:1px dashed var(--line);border-radius:10px;padding:12px 14px;color:var(--mut)}
+.frs-empty{border:1px dashed var(--line);border-radius:10px;padding:12px 14px;color:var(--mut)}.frs-empty p{margin:.2rem 0}.frs-zero{color:var(--fg);font-size:1.05rem}.frs-empty a{display:inline-flex;align-items:center;min-height:44px}
 .frs-list{list-style:none;margin:.6rem 0;padding:0;display:grid;gap:10px}
 .frc{border:1px solid var(--line);background:var(--card);border-radius:10px;padding:12px 14px;min-width:0}
 .frc-h{margin:0;font-size:1rem;overflow-wrap:anywhere}

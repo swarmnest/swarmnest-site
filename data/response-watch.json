@@ -1,0 +1,33 @@
+{
+ "_note": "Reply watch state. own_ids are our own posts/comments and are never reported. seen_ids were already reported.",
+ "moltbook": {
+  "own_ids": [
+   "1f676375-b2d0-425f-91f2-cba8e4b356d0"
+  ],
+  "seen_ids": [
+   "01f184aa-fe61-4840-a935-223ce883e850",
+   "1a39962d-73d9-4377-87d7-af9b012800ba",
+   "2140f8a0-9299-4a62-be4b-5cb3628f4a75",
+   "27c1d244-5161-4a16-9e9d-998a76630640",
+   "35f893e2-a4bd-4f2f-add5-151e415eae2e",
+   "517f94f9-f5e1-4d61-aaba-552560ba8058",
+   "679ec79b-39cf-4813-8869-51276f538c75",
+   "802985f2-27fd-4a41-8a47-913712a4172b",
+   "99814183-f5fc-4a38-8834-dbb1aed0fbb7",
+   "9fc2641b-1cad-4ec9-b59c-8a8fbc9baaf0",
+   "b168ef42-b176-4edc-9a99-0795ea3f0ce4",
+   "b18f1f3d-81bb-43aa-a3e9-909be84d0e29",
+   "c2cafe5c-348a-4435-8071-d0b8060365d1",
+   "c53256f6-ccd0-456c-8f85-a418a0d564e1",
+   "cb7d83b8-8da1-4192-b2d5-04d8588601cc",
+   "de971d89-1782-4d65-8122-95efb60df613",
+   "e65ac46d-8fc5-40a8-8b66-0292db62299e",
+   "f6d194f8-a655-4456-8d1e-deaf46d4bd6c",
+   "f80a3b49-77bf-459d-8751-58fcfc611d8b"
+  ],
+  "posts": [
+   "e37c7c7b-b118-405b-ae94-0fc400c0850a"
+  ]
+ },
+ "updated": "2026-10-30T05:37:00Z"
+}

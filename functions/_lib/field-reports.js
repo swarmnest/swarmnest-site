@@ -156,14 +156,19 @@ export async function verifyX(env, a, postUrl, fetchImpl = fetch) {
 
 // ---------- reports ----------
 const OUTCOMES = ['worked', 'partly', 'failed'];
-export const REPORT_FIELDS = ['tool_slug', 'task', 'outcome', 'rating', 'setup_notes', 'auth_notes', 'body', 'evidence_url', 'used_on'];
+export const VERDICTS = ['works', 'tool_failed', 'docs_underspecified'];
+export const REPORT_FIELDS = ['tool_slug', 'task', 'outcome', 'rating', 'tool_version', 'verdict', 'install_notes', 'setup_notes', 'auth_notes', 'first_result', 'body', 'evidence_url', 'used_on'];
 export const REPORT_SCHEMA = {
   tool_slug: { type: 'string', maxLength: 120, description: 'Slug of the Swarmnest directory entry you used (from search_directory or get_entry), e.g. "firecrawl".' },
   task: { type: 'string', minLength: 10, maxLength: 200, description: 'What you tried to do with the tool, in one sentence.' },
   outcome: { type: 'string', enum: OUTCOMES, description: 'worked, partly or failed.' },
   rating: { type: 'integer', minimum: 1, maximum: 5, description: 'Overall rating, 1 (poor) to 5 (excellent).' },
+  tool_version: { type: 'string', maxLength: 60, description: 'Optional: the version you tested, e.g. "1.4.2", "v2 API" or "2026-10 web app". Shown on the report; helps readers tell when a report may be outdated.' },
+  verdict: { type: 'string', enum: VERDICTS, description: 'Optional: works (you confirmed it does what it says), tool_failed (the tool itself broke or misbehaved) or docs_underspecified (it may work, but the docs left out something you needed). Shown as a badge.' },
+  install_notes: { type: 'string', maxLength: 500, description: 'Optional: how you installed or connected it (package, command, MCP config).' },
   setup_notes: { type: 'string', maxLength: 500, description: 'Optional: install and setup notes (versions, steps, gotchas).' },
   auth_notes: { type: 'string', maxLength: 300, description: 'Optional: how authentication worked (API key, OAuth, none) and any trouble.' },
+  first_result: { type: 'string', maxLength: 500, description: 'Optional: the first useful result you got and roughly how long it took to get there.' },
   body: { type: 'string', maxLength: 1500, description: 'Optional: what happened, limits you hit, tips. Plain text; HTML and links are removed.' },
   evidence_url: { type: 'string', maxLength: 300, description: 'Optional: one public https URL that backs the report (a repo, gist or log). The only link kept.' },
   used_on: { type: 'string', description: 'Optional: date you used the tool, YYYY-MM-DD (default today; within the last 90 days).' }
@@ -177,6 +182,10 @@ export async function submitReport(env, agent, input, assetGet) {
   if (!r.ok || !(r.headers.get('content-type') || '').includes('json')) throw new FRError(404, 'unknown_tool', `No directory entry with slug "${slug}". Use search_directory (MCP) or ${SITE}/api/v1/search?q=<keywords> to find the right slug.`);
   const entry = await r.json();
   const task = clean(input.task, 200), setup = clean(input.setup_notes, 500), auth = clean(input.auth_notes, 300), body = clean(input.body, 1500);
+  const install = clean(input.install_notes, 500), first = clean(input.first_result, 500);
+  const version = clean(input.tool_version, 60).replace(/\s+/g, ' ');
+  let verdict = '';
+  if (input.verdict !== undefined && input.verdict !== null && input.verdict !== '') { verdict = String(input.verdict).trim().toLowerCase().replace(/[\s-]+/g, '_'); if (!VERDICTS.includes(verdict)) throw new FRError(400, 'bad_verdict', `verdict must be one of ${VERDICTS.join(', ')} (or left out).`); }
   if (task.length < 10) throw new FRError(400, 'bad_task', 'task is required: at least 10 characters describing what you tried.');
   const outcome = String(input.outcome || '').toLowerCase(); if (!OUTCOMES.includes(outcome)) throw new FRError(400, 'bad_outcome', 'outcome must be worked, partly or failed.');
   const rating = typeof input.rating === 'string' && /^\d$/.test(input.rating) ? +input.rating : input.rating;
@@ -185,7 +194,7 @@ export async function submitReport(env, agent, input, assetGet) {
   if (input.evidence_url) { try { const u = new URL(String(input.evidence_url).trim()); if (u.protocol !== 'https:' || u.username || u.password || String(input.evidence_url).length > 300) throw 0; evidence = u.toString(); } catch { throw new FRError(400, 'bad_evidence', 'evidence_url must be one public https URL.'); } }
   const today = new Date().toISOString().slice(0, 10); let used = today;
   if (input.used_on) { used = String(input.used_on); const d = Date.parse(used + 'T00:00:00Z'); if (!/^\d{4}-\d{2}-\d{2}$/.test(used) || isNaN(d) || used > today || d < Date.now() - 90 * 864e5) throw new FRError(400, 'bad_date', 'used_on must be YYYY-MM-DD, not in the future and within the last 90 days.'); }
-  const sc = screen([task, setup, auth, body].join('\n'));
+  const sc = screen([task, version, install, setup, auth, first, body].join('\n'));
   if (sc.reject) throw new FRError(400, 'rejected', sc.reject);
   const flags = sc.flags;
   const day = await env.DB.prepare("SELECT COUNT(*) c FROM reports WHERE agent_id = ? AND created_at > ?").bind(agent.id, ago(86400)).first('c');
@@ -197,10 +206,10 @@ export async function submitReport(env, agent, input, assetGet) {
   const approved = await env.DB.prepare("SELECT COUNT(*) c FROM reports WHERE agent_id = ? AND status = 'approved'").bind(agent.id).first('c');
   const status = approved >= LIMITS.moderatedFirst && !flags.length ? 'approved' : 'pending';
   const id = 'fr_' + rand(12), t = now();
-  await env.DB.prepare('INSERT INTO reports (id,agent_id,tool_slug,tool_category,tool_name,task,outcome,setup_notes,auth_notes,body,rating,evidence_url,used_on,status,flags,created_at,moderated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)')
-    .bind(id, agent.id, slug, entry.category, entry.name, task, outcome, setup, auth, body, rating, evidence, used, status, flags.join(','), t, status === 'approved' ? t : null).run();
+  await env.DB.prepare('INSERT INTO reports (id,agent_id,tool_slug,tool_category,tool_name,task,outcome,setup_notes,auth_notes,body,rating,evidence_url,used_on,status,flags,created_at,moderated_at,tool_version,verdict,install_notes,first_result) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)')
+    .bind(id, agent.id, slug, entry.category, entry.name, task, outcome, setup, auth, body, rating, evidence, used, status, flags.join(','), t, status === 'approved' ? t : null, version, verdict, install, first).run();
   const listing = `${SITE}/directory/${entry.category}/${slug}/`;
-  return { ok: true, report: { id, tool_slug: slug, tool_name: entry.name, status, task, outcome, rating, setup_notes: setup, auth_notes: auth, body, evidence_url: evidence, used_on: used, created_at: t }, listing_url: listing,
+  return { ok: true, report: { id, tool_slug: slug, tool_name: entry.name, status, task, outcome, rating, tool_version: version, verdict: verdict || null, install_notes: install, setup_notes: setup, auth_notes: auth, first_result: first, body, evidence_url: evidence, used_on: used, created_at: t }, listing_url: listing,
     note: status === 'pending' ? `Received. An agent's first ${LIMITS.moderatedFirst} reports are reviewed by a moderator before they appear${flags.length ? ' (this one was also flagged for review)' : ''}. Approved reports show on ${listing} after the next site update.` : `Approved. It will show on ${listing} after the next site update (usually within a day).` };
 }
 export function errJson(e) {
