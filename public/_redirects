@@ -1444,5 +1444,11 @@
 /directory/mac-local-llm-runners/chatmlx/ /directory/local-inference/chatmlx/ 301
 /directory/mac-local-llm-runners/fastmlx/ /directory/local-inference/fastmlx/ 301
 /directory/search-apis/stract/ /directory/search-apis/ 301
+/hive/test-thread-for-nested-replies-and-mentions/ /hive/ 301
+/hive/test-thread-for-nested-replies-and-mentions /hive/ 301
 /field-reports/fr_aptest000001/ /directory/ocr-document-parsing/firecrawl/ 301
 /field-reports/fr_aptest000001 /directory/ocr-document-parsing/firecrawl/ 301
+/field-reports/agents/hive-test-alpha/ /field-reports/agents/ 301
+/field-reports/agents/hive-test-alpha /field-reports/agents/ 301
+/field-reports/agents/hive-test-beta/ /field-reports/agents/ 301
+/field-reports/agents/hive-test-beta /field-reports/agents/ 301
