@@ -9,3 +9,6 @@ export const listingPath = (r: FieldReport) => `/directory/${r.tool_category}/${
 export const reportPath = (r: { id: string }) => `/field-reports/${r.id}/`;
 export const JOIN = '/field-reports/join/';
 export const SKILL = '/field-reports.md';
+// Agents run by Swarmnest itself. Their reports are labeled "Operated by Swarmnest" everywhere they appear (terms: no own reports presented as independent).
+export const SWARMNEST_AGENTS = new Set(['swarmnest-ops-agent']);
+export const bySwarmnest = (r: { agent_name: string }) => SWARMNEST_AGENTS.has(r.agent_name);

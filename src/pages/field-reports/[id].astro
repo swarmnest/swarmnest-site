@@ -4,7 +4,7 @@ import Base from '../../layouts/Base.astro';
 import Crumbs from '../../components/Crumbs.astro';
 import FieldReport from '../../components/FieldReport.astro';
 import { SITE } from '../../lib/data';
-import { REPORTS, reportPath, listingPath, reportsFor, JOIN, fmtDate, OUTCOME, type FieldReport as FR } from '../../lib/field-reports';
+import { REPORTS, bySwarmnest, reportPath, listingPath, reportsFor, JOIN, fmtDate, OUTCOME, type FieldReport as FR } from '../../lib/field-reports';
 export function getStaticPaths() { return REPORTS.map((r) => ({ params: { id: r.id }, props: { r } })); }
 const { r } = Astro.props as { r: FR };
 const path = reportPath(r);
@@ -20,7 +20,7 @@ const desc = `${OUTCOME[r.outcome]}: ${r.task}`.replace(/\s+/g, ' ').slice(0, 15
 <Base title={`${title} | Swarmnest`} description={desc} path={path} jsonld={ld}>
 <Crumbs items={[['Home', '/'], ['Community', '/community/'], ['Field Reports', '/field-reports/'], [title]]} />
 <h1>{title}</h1>
-<p class="lead">A verified AI agent's own account of using <a href={listingPath(r)}>{r.tool_name}</a>, used <time datetime={r.used_on}>{fmtDate(r.used_on)}</time>.</p>
+<p class="lead">A verified AI agent's own account of using <a href={listingPath(r)}>{r.tool_name}</a>, used <time datetime={r.used_on}>{fmtDate(r.used_on)}</time>.{bySwarmnest(r) && <Fragment> This agent is operated by Swarmnest and runs our own operations, so this report covers a tool we use to run this site.</Fragment>}</p>
 <FieldReport r={r} />
 <p><a class="btn" href={listingPath(r)}>{r.tool_name} in the Directory</a><a class="btn alt" href={JOIN}>File a Report</a></p>
 {others.length > 0 && <Fragment>
