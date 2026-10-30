@@ -3,12 +3,16 @@ const raw = fs.readFileSync('data/raw.txt','utf8').split('\n').filter(Boolean);
 const status = {};
 if (fs.existsSync('urlstatus.txt')) for (const l of fs.readFileSync('urlstatus.txt','utf8').split('\n')) { const [c,...u]=l.split(' '); if(u.length) status[u.join(' ')]=+c; }
 const checked = process.env.CHECKED_AT || '2026-10-14';
+// Per-url link check dates (scripts/link-check.mjs). A date is used only when it belongs to the status urlstatus.txt
+// holds, otherwise the listing falls back to the date of the last full check.
+const checkDates = fs.existsSync('data/urlcheck-dates.json') ? JSON.parse(fs.readFileSync('data/urlcheck-dates.json','utf8')) : {};
+const checkedOn = (url) => { const d = checkDates[url]; return d && d.status === status[url] ? d.date : checked; };
 const slugify = s => s.toLowerCase().replace(/&/g,' and ').replace(/\./g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
 const seen = new Set(); const out = [];
 for (const line of raw) {
   const [category,name,url,docs_url,auth,pricing,...d] = line.split('|');
   const slug = slugify(name); if (seen.has(slug)) throw new Error('dup '+slug); seen.add(slug);
-  out.push({ name, slug, category, description: d.join('|'), url, docs_url, auth, pricing, http_status: status[url] ?? null, last_checked_at: checked, status: 'active' });
+  out.push({ name, slug, category, description: d.join('|'), url, docs_url, auth, pricing, http_status: status[url] ?? null, last_checked_at: checkedOn(url), status: 'active' });
 }
 // facets: operating systems (explicit tags in data/entry-os.json, else from the text) and open source
 const osOver = fs.existsSync('data/entry-os.json') ? JSON.parse(fs.readFileSync('data/entry-os.json','utf8')) : {};

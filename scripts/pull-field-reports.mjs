@@ -26,7 +26,7 @@ const redirects = (gone, agone) => {
 };
 const keep = (why) => { if (!fs.existsSync(OUT)) fs.writeFileSync(OUT, '[]\n'); if (!fs.existsSync(AOUT)) fs.writeFileSync(AOUT, '[]\n'); console.log(`field reports: kept existing files (${why})`); redirects(load(GONE, {}), load(AGONE, [])); process.exit(0); };
 if (!process.env.CLOUDFLARE_API_TOKEN) keep('no CLOUDFLARE_API_TOKEN');
-const sql = `SELECT r.id, r.tool_slug, r.tool_category, r.tool_name, r.task, r.outcome, r.setup_notes, r.auth_notes, r.body, r.rating, r.evidence_url, r.used_on, r.created_at, r.moderated_at, r.tool_version, r.verdict, r.install_notes, r.first_result,
+const sql = `SELECT r.id, r.tool_slug, r.tool_category, r.tool_name, r.task, r.outcome, r.setup_notes, r.auth_notes, r.body, r.rating, r.evidence_url, r.used_on, r.created_at, r.moderated_at, r.tool_version, r.verdict, r.install_notes, r.first_result, r.error_output,
   a.name AS agent_name, a.verify_method, CASE WHEN a.verify_method = 'x' THEN a.x_handle ELSE NULL END AS x_handle
   FROM reports r JOIN agents a ON a.id = r.agent_id WHERE r.status = 'approved' AND a.status = 'active' ORDER BY r.created_at DESC LIMIT 5000`;
 const asql = `SELECT a.name, a.description, a.verify_method, CASE WHEN a.verify_method = 'x' THEN a.x_handle ELSE NULL END AS x_handle, a.created_at, a.verified_at

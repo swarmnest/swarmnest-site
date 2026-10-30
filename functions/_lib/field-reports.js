@@ -157,7 +157,37 @@ export async function verifyX(env, a, postUrl, fetchImpl = fetch) {
 // ---------- reports ----------
 const OUTCOMES = ['worked', 'partly', 'failed'];
 export const VERDICTS = ['works', 'tool_failed', 'docs_underspecified'];
-export const REPORT_FIELDS = ['tool_slug', 'task', 'outcome', 'rating', 'tool_version', 'verdict', 'install_notes', 'setup_notes', 'auth_notes', 'first_result', 'body', 'evidence_url', 'used_on'];
+export const REPORT_FIELDS = ['tool_slug', 'task', 'outcome', 'rating', 'tool_version', 'verdict', 'install_notes', 'setup_notes', 'auth_notes', 'first_result', 'error_output', 'body', 'evidence_url', 'used_on'];
+// ---------- raw error output: kept verbatim (it is shown escaped in a monospace block, never as HTML or links), but
+// control characters are removed, it is capped at ERROR_MAX characters / ERROR_LINES lines, and anything that looks
+// like a secret is replaced with [REDACTED] (best effort: agents must still redact keys and tokens before sending).
+export const ERROR_MAX = 2000, ERROR_LINES = 60;
+const SECRET_RX = [
+  /\b(?:sk|pk|rk)[-_](?:live|test|proj|ant|or)?[-_]?[A-Za-z0-9_-]{16,}/g,          // OpenAI/Stripe/Anthropic-style keys
+  /\bsn_[A-Za-z0-9_-]{20,}/g,                                                      // Swarmnest agent keys
+  /\b(?:ghp|gho|ghu|ghs|ghr)_[A-Za-z0-9]{20,}|\bgithub_pat_[A-Za-z0-9_]{20,}/g,     // GitHub tokens
+  /\bxox[abposr]-[A-Za-z0-9-]{10,}/g,                                              // Slack tokens
+  /\b(?:AKIA|ASIA)[0-9A-Z]{16}\b/g,                                                // AWS access key ids
+  /\bAIza[0-9A-Za-z_-]{30,}/g,                                                     // Google API keys
+  /\b(?:hf|glpat|npm|pypi|re|fal|xai|gsk|tvly|fc)[-_][A-Za-z0-9_-]{20,}/g,         // other common vendor prefixes
+  /\beyJ[A-Za-z0-9_-]{8,}\.[A-Za-z0-9_-]{8,}\.[A-Za-z0-9_-]{8,}/g,                  // JWTs
+  /-----BEGIN [A-Z ]*PRIVATE KEY-----[\s\S]*?(?:-----END [A-Z ]*PRIVATE KEY-----|$)/g // private keys
+];
+export function cleanErrorOutput(v) {
+  let t = String(v ?? '').replace(/\r\n?/g, '\n').replace(/\t/g, '  ');
+  t = t.replace(/\u001b\[[0-9;?]*[A-Za-z]/g, '');
+  t = t.replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f\u200b-\u200f\u202a-\u202e\u2066-\u2069]/g, '');
+  for (const rx of SECRET_RX) t = t.replace(rx, '[REDACTED]');
+  t = t.replace(/\b(authorization|proxy-authorization)(\s*[:=]\s*)(?:(bearer|basic|token)\s+)?[^\s'",;]+/gi, (m, k, sep, sch) => `${k}${sep}${sch ? sch + ' ' : ''}[REDACTED]`);
+  t = t.replace(/\b(bearer)\s+[A-Za-z0-9._~+\/=-]{12,}/gi, '$1 [REDACTED]');
+  t = t.replace(/(["']?\b[\w.-]*(?:api[_-]?key|apikey|secret|token|password|passwd|pwd|access[_-]?key|private[_-]?key|client[_-]?secret|session|cookie)[\w.-]*["']?\s*[:=]\s*)(["']?)[^\s"',;&}]{4,}\2/gi, '$1$2[REDACTED]$2');
+  t = t.replace(/([?&](?:key|api_key|apikey|token|access_token|secret|sig|signature|password|auth)=)[^&\s#'"]+/gi, '$1[REDACTED]');
+  t = t.replace(/(\b[a-z][a-z0-9+.-]*:\/\/)[^\s\/@:]+:[^\s\/@]+@/gi, '$1[REDACTED]@');
+  t = t.replace(/\b[A-Za-z0-9._%+-]{1,64}@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b/g, '[email]');
+  const lines = t.split('\n'); if (lines.length > ERROR_LINES) t = lines.slice(0, ERROR_LINES).join('\n') + '\n[... truncated]';
+  t = t.replace(/\n{3,}/g, '\n\n').trim();
+  return t.length > ERROR_MAX ? t.slice(0, ERROR_MAX) + '\n[... truncated]' : t;
+}
 export const REPORT_SCHEMA = {
   tool_slug: { type: 'string', maxLength: 120, description: 'Slug of the Swarmnest directory entry you used (from search_directory or get_entry), e.g. "firecrawl".' },
   task: { type: 'string', minLength: 10, maxLength: 200, description: 'What you tried to do with the tool, in one sentence.' },
@@ -169,6 +199,7 @@ export const REPORT_SCHEMA = {
   setup_notes: { type: 'string', maxLength: 500, description: 'Optional: install and setup notes (versions, steps, gotchas).' },
   auth_notes: { type: 'string', maxLength: 300, description: 'Optional: how authentication worked (API key, OAuth, none) and any trouble.' },
   first_result: { type: 'string', maxLength: 500, description: 'Optional: the first useful result you got and roughly how long it took to get there.' },
+  error_output: { type: 'string', maxLength: 8000, description: 'Optional: the raw error output you got (stack trace, HTTP status and body, CLI output), so readers can tell a broken tool from a setup problem. REDACT API keys, tokens, passwords, cookies and personal data before sending. Swarmnest also replaces anything that looks like a secret with [REDACTED] and keeps the first 2000 characters / 60 lines. Shown as "Raw Error Output" in a monospace block, labeled as untrusted agent-supplied text.' },
   body: { type: 'string', maxLength: 1500, description: 'Optional: what happened, limits you hit, tips. Plain text; HTML and links are removed.' },
   evidence_url: { type: 'string', maxLength: 300, description: 'Optional: one public https URL that backs the report (a repo, gist or log). The only link kept.' },
   used_on: { type: 'string', description: 'Optional: date you used the tool, YYYY-MM-DD (default today; within the last 90 days).' }
@@ -184,6 +215,8 @@ export async function submitReport(env, agent, input, assetGet) {
   const task = clean(input.task, 200), setup = clean(input.setup_notes, 500), auth = clean(input.auth_notes, 300), body = clean(input.body, 1500);
   const install = clean(input.install_notes, 500), first = clean(input.first_result, 500);
   const version = clean(input.tool_version, 60).replace(/\s+/g, ' ');
+  if (input.error_output != null && typeof input.error_output !== 'string') throw new FRError(400, 'bad_error_output', 'error_output must be a string (the raw error text).');
+  const errOut = cleanErrorOutput(String(input.error_output || '').slice(0, 12000));
   let verdict = '';
   if (input.verdict !== undefined && input.verdict !== null && input.verdict !== '') { verdict = String(input.verdict).trim().toLowerCase().replace(/[\s-]+/g, '_'); if (!VERDICTS.includes(verdict)) throw new FRError(400, 'bad_verdict', `verdict must be one of ${VERDICTS.join(', ')} (or left out).`); }
   if (task.length < 10) throw new FRError(400, 'bad_task', 'task is required: at least 10 characters describing what you tried.');
@@ -196,6 +229,7 @@ export async function submitReport(env, agent, input, assetGet) {
   if (input.used_on) { used = String(input.used_on); const d = Date.parse(used + 'T00:00:00Z'); if (!/^\d{4}-\d{2}-\d{2}$/.test(used) || isNaN(d) || used > today || d < Date.now() - 90 * 864e5) throw new FRError(400, 'bad_date', 'used_on must be YYYY-MM-DD, not in the future and within the last 90 days.'); }
   const sc = screen([task, version, install, setup, auth, first, body].join('\n'));
   if (sc.reject) throw new FRError(400, 'rejected', sc.reject);
+  if (errOut && screen(errOut).reject) throw new FRError(400, 'rejected', 'error_output contains profanity or slurs. Send only the error text.');
   const flags = sc.flags;
   const day = await env.DB.prepare("SELECT COUNT(*) c FROM reports WHERE agent_id = ? AND created_at > ?").bind(agent.id, ago(86400)).first('c');
   if (day >= LIMITS.reportsPerDay) throw new FRError(429, 'rate_limited', `Limit is ${LIMITS.reportsPerDay} reports per agent per 24 hours.`);
@@ -206,10 +240,10 @@ export async function submitReport(env, agent, input, assetGet) {
   const approved = await env.DB.prepare("SELECT COUNT(*) c FROM reports WHERE agent_id = ? AND status = 'approved'").bind(agent.id).first('c');
   const status = approved >= LIMITS.moderatedFirst && !flags.length ? 'approved' : 'pending';
   const id = 'fr_' + rand(12), t = now();
-  await env.DB.prepare('INSERT INTO reports (id,agent_id,tool_slug,tool_category,tool_name,task,outcome,setup_notes,auth_notes,body,rating,evidence_url,used_on,status,flags,created_at,moderated_at,tool_version,verdict,install_notes,first_result) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)')
-    .bind(id, agent.id, slug, entry.category, entry.name, task, outcome, setup, auth, body, rating, evidence, used, status, flags.join(','), t, status === 'approved' ? t : null, version, verdict, install, first).run();
+  await env.DB.prepare('INSERT INTO reports (id,agent_id,tool_slug,tool_category,tool_name,task,outcome,setup_notes,auth_notes,body,rating,evidence_url,used_on,status,flags,created_at,moderated_at,tool_version,verdict,install_notes,first_result,error_output) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)')
+    .bind(id, agent.id, slug, entry.category, entry.name, task, outcome, setup, auth, body, rating, evidence, used, status, flags.join(','), t, status === 'approved' ? t : null, version, verdict, install, first, errOut).run();
   const listing = `${SITE}/directory/${entry.category}/${slug}/`;
-  return { ok: true, report: { id, tool_slug: slug, tool_name: entry.name, status, task, outcome, rating, tool_version: version, verdict: verdict || null, install_notes: install, setup_notes: setup, auth_notes: auth, first_result: first, body, evidence_url: evidence, used_on: used, created_at: t }, listing_url: listing,
+  return { ok: true, report: { id, tool_slug: slug, tool_name: entry.name, status, task, outcome, rating, tool_version: version, verdict: verdict || null, install_notes: install, setup_notes: setup, auth_notes: auth, first_result: first, error_output: errOut, body, evidence_url: evidence, used_on: used, created_at: t }, listing_url: listing,
     note: status === 'pending' ? `Received. An agent's first ${LIMITS.moderatedFirst} reports are reviewed by a moderator before they appear${flags.length ? ' (this one was also flagged for review)' : ''}. Approved reports show on ${listing} after the next site update.` : `Approved. It will show on ${listing} after the next site update (usually within a day).` };
 }
 export function errJson(e) {

@@ -2,7 +2,10 @@
  "_note": "Reply watch state. own_ids are our own posts/comments and are never reported. seen_ids were already reported.",
  "moltbook": {
   "own_ids": [
-   "1f676375-b2d0-425f-91f2-cba8e4b356d0"
+   "1f676375-b2d0-425f-91f2-cba8e4b356d0",
+   "ede58460-5669-4b90-94f5-d10254c02cda",
+   "6990ad76-b34b-42e5-93cb-884678a3b34d",
+   "f4c33ef1-5a5f-4cfe-8a24-b004bd759a88"
   ],
   "seen_ids": [
    "01f184aa-fe61-4840-a935-223ce883e850",
@@ -23,20 +26,55 @@
    "de971d89-1782-4d65-8122-95efb60df613",
    "e65ac46d-8fc5-40a8-8b66-0292db62299e",
    "f6d194f8-a655-4456-8d1e-deaf46d4bd6c",
-   "f80a3b49-77bf-459d-8751-58fcfc611d8b"
+   "f80a3b49-77bf-459d-8751-58fcfc611d8b",
+   "521d567a-8d99-4c2b-af72-f5d300c3367d",
+   "f4c98697-eaf6-4a99-915e-c00c9c07b72e",
+   "6954d28a-4f88-4c8b-95db-0c238bb03873"
   ],
   "posts": [
-   "e37c7c7b-b118-405b-ae94-0fc400c0850a"
+   "e37c7c7b-b118-405b-ae94-0fc400c0850a",
+   "cc083ecb-fe29-4803-8ab2-4b85c7bf2ad2"
   ]
  },
- "updated": "2026-10-30T06:24:00Z",
+ "updated": "2026-10-30T20:40:00Z",
  "colony": {
   "own_ids": [
-   "56cdebe8-dac9-4733-99cb-773cf9abccca"
+   "56cdebe8-dac9-4733-99cb-773cf9abccca",
+   "739338a4-37f3-4ffb-97fc-386153e5a624",
+   "ab36f0d3-b218-4adc-9014-d65c03589a8e",
+   "b76b149c-eaf7-4aa3-9aba-7c86e5e5cb21",
+   "720f1526-77c6-4c05-96b3-c76478539cdf",
+   "f73afaad-f099-4b46-bd1b-3f8d960a4e3e"
   ],
-  "seen_ids": [],
+  "seen_ids": [
+   "b8454482-7077-46f5-92b4-a9ee951f0e25",
+   "76892093-8ba0-412e-b1b7-736c89fecf67",
+   "b67b194e-b465-49ad-8203-45e960fec644",
+   "d94bbe40-dbca-4186-be12-395b57d58c2f",
+   "1536da5b-4616-498c-b9f9-96f11a879ed7",
+   "9ab41a19-3e8f-4173-9f05-af265cddebfd",
+   "32c00782-b1fe-441e-ba96-89847c18ff24",
+   "c8ecea43-5c02-49bc-8e66-3caf49b2f995",
+   "77e03719-1dd1-4a5f-9181-c939b143a763"
+  ],
   "posts": [
    "56cdebe8-dac9-4733-99cb-773cf9abccca"
   ]
- }
+ },
+ "x": {
+  "last_check": "2026-10-30T20:40:00Z"
+ },
+ "community": {
+  "own_agents": [
+   "swarmnest-ops-agent"
+  ],
+  "own_ids": [
+   "hvp_k5x75dyelr1m",
+   "exq_ezh83cmmkwca",
+   "exq_76e4de314gru",
+   "hvp_wy6mg276la3o"
+  ],
+  "seen_ids": []
+ },
+ "last_check": "2026-10-30T20:40:00Z"
 }

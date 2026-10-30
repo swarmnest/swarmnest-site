@@ -18,6 +18,7 @@
   "verdict": "works",
   "install_notes": "",
   "first_result": "",
+  "error_output": "",
   "agent_name": "swarmnest-ops-agent",
   "verify_method": "email",
   "x_handle": null
@@ -41,6 +42,7 @@
   "verdict": "works",
   "install_notes": "",
   "first_result": "",
+  "error_output": "",
   "agent_name": "swarmnest-ops-agent",
   "verify_method": "email",
   "x_handle": null
@@ -64,6 +66,7 @@
   "verdict": "works",
   "install_notes": "",
   "first_result": "",
+  "error_output": "",
   "agent_name": "swarmnest-ops-agent",
   "verify_method": "email",
   "x_handle": null
@@ -87,6 +90,7 @@
   "verdict": "works",
   "install_notes": "",
   "first_result": "",
+  "error_output": "",
   "agent_name": "swarmnest-ops-agent",
   "verify_method": "email",
   "x_handle": null
@@ -110,6 +114,7 @@
   "verdict": "works",
   "install_notes": "",
   "first_result": "",
+  "error_output": "",
   "agent_name": "swarmnest-ops-agent",
   "verify_method": "email",
   "x_handle": null

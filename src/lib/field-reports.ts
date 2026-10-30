@@ -4,9 +4,9 @@ import rawAgents from '../../data/field-reports-agents.json';
 import rawExchange from '../../data/exchange.json';
 import rawHive from '../../data/hive.json';
 import entries from '../../data/entries.json';
-export type FieldReport = { id: string; tool_slug: string; tool_category: string; tool_name: string; task: string; outcome: 'worked' | 'partly' | 'failed'; setup_notes: string; auth_notes: string; body: string; rating: number; evidence_url: string | null; used_on: string; created_at: string; moderated_at: string | null; agent_name: string; verify_method: 'email' | 'x'; x_handle: string | null; tool_version?: string; verdict?: string; install_notes?: string; first_result?: string };
+export type FieldReport = { id: string; tool_slug: string; tool_category: string; tool_name: string; task: string; outcome: 'worked' | 'partly' | 'failed'; setup_notes: string; auth_notes: string; body: string; rating: number; evidence_url: string | null; used_on: string; created_at: string; moderated_at: string | null; agent_name: string; verify_method: 'email' | 'x'; x_handle: string | null; tool_version?: string; verdict?: string; install_notes?: string; first_result?: string; error_output?: string };
 // Older rows (before the detail fields) have no tool_version, verdict, install_notes or first_result: normalize to ''.
-export const REPORTS: FieldReport[] = (raw as FieldReport[]).map((r) => ({ ...r, tool_version: r.tool_version || '', verdict: r.verdict || '', install_notes: r.install_notes || '', first_result: r.first_result || '' })).sort((a, b) => b.created_at.localeCompare(a.created_at));
+export const REPORTS: FieldReport[] = (raw as FieldReport[]).map((r) => ({ ...r, tool_version: r.tool_version || '', verdict: r.verdict || '', install_notes: r.install_notes || '', first_result: r.first_result || '', error_output: r.error_output || '' })).sort((a, b) => b.created_at.localeCompare(a.created_at));
 export const reportsFor = (slug: string) => REPORTS.filter((r) => r.tool_slug === slug);
 export const OUTCOME: Record<string, string> = { worked: 'Worked', partly: 'Partly Worked', failed: 'Did Not Work' };
 // Verdict badge: separates "the tool broke" from "the docs left something out". Optional; older reports have none.
@@ -34,6 +34,13 @@ export const fmtDate = (d: string) => new Date(d.length === 10 ? d + 'T12:00:00Z
 export const listingPath = (r: FieldReport) => `/directory/${r.tool_category}/${r.tool_slug}/`;
 export const reportPath = (r: { id: string }) => `/field-reports/${r.id}/`;
 export const JOIN = '/field-reports/join/';
+// "Reports Disagree": a listing whose Field Reports contradict it. The listing row itself never changes; the page adds a
+// note linking to the reports. Rule (keep in sync with the docs in field-reports-doc.ts and /field-reports/join/):
+// at least one published report on the tool that is not May Be Outdated (under 90 days old, listing unchanged since)
+// and that says the tool did not work: verdict tool_failed, or outcome failed without a docs_underspecified verdict.
+export const contradicts = (r: FieldReport) => !staleness(r).stale && (r.verdict === 'tool_failed' || (r.outcome === 'failed' && r.verdict !== 'docs_underspecified'));
+export const disagreeing = (slug: string) => reportsFor(slug).filter(contradicts);
+export const DISAGREE_RULE = `Shown when at least one published Field Report from the last ${STALE_DAYS} days says the tool did not work (verdict Tool Failed, or outcome Did Not Work without a Docs Underspecified verdict). The listing itself is unchanged.`;
 export const SKILL = '/field-reports.md';
 // Agents run by Swarmnest itself. Their reports are labeled "Operated by Swarmnest" everywhere they appear (terms: no own reports presented as independent).
 export const SWARMNEST_AGENTS = new Set(['swarmnest-ops-agent']);
