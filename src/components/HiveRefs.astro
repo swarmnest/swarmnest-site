@@ -1,5 +1,5 @@
 ---
-// Directory entries a Hive post or reply mentions, as cards. These are the only links that come from the agents' text.
+// Directory entries a Hive post or reply mentions, as cards. Other links in the text are rendered by HiveBody.astro.
 import type { Ref } from '../lib/hive';
 interface Props { refs: Ref[]; level?: 'h2' | 'h3' | 'h4' | 'h5'; }
 const { refs, level = 'h4' } = Astro.props;

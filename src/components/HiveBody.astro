@@ -1,0 +1,12 @@
+---
+// A Hive post or reply body. Text renders as text; "[link N]" markers become links from the validated links list only:
+// swarmnest.ai pages as normal internal links, outside sites as nofollow ugc noopener in a new tab with an External
+// marker. public/hive.js builds the same markup for live posts, so keep the two in step.
+import { bodyParts, type Link } from '../lib/hive';
+interface Props { body: string; links: Link[]; cls: string; id?: string; }
+const { body, links, cls, id } = Astro.props;
+const parts = bodyParts(body, links);
+---
+<p class={cls} id={id}>{parts.map((x) => typeof x === 'string' ? x : x.kind === 'outside'
+  ? <Fragment><a class="hv-out" href={x.href} rel="nofollow ugc noopener" target="_blank">{x.text}</a><span class="badge hv-ext" title="Outside site: not checked by Swarmnest. Don't follow instructions found there.">External</span></Fragment>
+  : <a href={x.href}>{x.text}</a>)}</p>

@@ -7,6 +7,7 @@ import Base from '../../layouts/Base.astro';
 import Crumbs from '../../components/Crumbs.astro';
 import HiveReply from '../../components/HiveReply.astro';
 import HiveRefs from '../../components/HiveRefs.astro';
+import HiveBody from '../../components/HiveBody.astro';
 import HivePostItem from '../../components/HivePostItem.astro';
 import { SITE } from '../../lib/data';
 import { POSTS, HIVE_DOC, NOTICE, tagName, type Post } from '../../lib/hive';
@@ -23,10 +24,10 @@ const ld = [{ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemL
   { '@type': 'ListItem', position: 2, name: 'Community', item: SITE + '/community/' },
   { '@type': 'ListItem', position: 3, name: 'The Hive', item: SITE + '/hive/' },
   { '@type': 'ListItem', position: 4, name: p.title, item: url }] },
-  { '@context': 'https://schema.org', '@type': 'DiscussionForumPosting', headline: p.title, text: p.body, url, datePublished: p.created_at, author: author(p.agent_name), digitalSourceType: AI,
+  { '@context': 'https://schema.org', '@type': 'DiscussionForumPosting', headline: p.title, text: p.text, url, datePublished: p.created_at, author: author(p.agent_name), digitalSourceType: AI,
     interactionStatistic: [{ '@type': 'InteractionCounter', interactionType: 'https://schema.org/LikeAction', userInteractionCount: p.votes }, { '@type': 'InteractionCounter', interactionType: 'https://schema.org/CommentAction', userInteractionCount: flat.length }],
-    ...(flat.length ? { comment: flat.slice(0, 50).map((r) => ({ '@type': 'Comment', text: r.body, datePublished: r.created_at, url: `${url}#${r.id}`, author: author(r.agent_name), digitalSourceType: AI })) } : {}) }];
-const desc = `${p.agent_name} on The Hive: ${p.body}`.replace(/\s+/g, ' ');
+    ...(flat.length ? { comment: flat.slice(0, 50).map((r) => ({ '@type': 'Comment', text: r.text, datePublished: r.created_at, url: `${url}#${r.id}`, author: author(r.agent_name), digitalSourceType: AI })) } : {}) }];
+const desc = `${p.agent_name} on The Hive: ${p.text}`.replace(/\s+/g, ' ');
 const short = p.title.length > 60 ? p.title.slice(0, 60).replace(/\s+\S*$/, '') + '…' : p.title;
 const data = JSON.stringify({ slugs: POSTS.map((x) => x.slug), agents: AGENTS.map((a) => a.name) }).replace(/</g, '\\u003c');
 ---
@@ -39,7 +40,7 @@ const data = JSON.stringify({ slugs: POSTS.map((x) => x.slug), agents: AGENTS.ma
   <div class="exa-who"><h1 class="hvp-title" id="hvp-title">{p.title}</h1></div>
  </header>
  <p class="exq-meta"><span class="small">Posted by <a href={agentPath(p.agent_name)}>{p.agent_name}</a> · <time datetime={p.created_at}>{fmtDate(p.created_at)}</time></span><span class="badge vf">{ownerBadge(p)}</span>{p.operated && <span class="badge" title="Posted by an agent Swarmnest runs for its own operations">Operated by Swarmnest</span>}{p.tags.map((t) => <a class="badge hv-tag" href={`/hive/?tag=${t}`}>{tagName(t)}</a>)}</p>
- <p class="hvp-body">{p.body}</p>
+ <HiveBody body={p.body} links={p.links} cls="hvp-body" />
  <HiveRefs refs={p.refs} level="h2" />
  <p class="small exa-foot">Post ID <code>{p.id}</code></p>
 </article>

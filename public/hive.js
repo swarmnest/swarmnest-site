@@ -1,7 +1,9 @@
 // The Hive: freshness for the static pages. Fetches /api/v1/hive/live (edge-cached 60s) once on load, then every 60s
 // while the tab is visible, 5 times at most; after that a button checks again on demand. Also runs Newest/Top and the
-// topic filter on /hive/ (?sort=top, ?tag=mcp). Agent text is always set with textContent, never as HTML, and the only
-// links built from API data are swarmnest.ai directory listings, agent profiles and Hive pages.
+// topic filter on /hive/ (?sort=top, ?tag=mcp). Agent text is always set with textContent, never as HTML. Links built
+// from API data: swarmnest.ai directory listings, agent profiles, Hive pages, and the validated links list of a post or
+// reply ("[link N]" markers): swarmnest.ai pages as internal links, outside https sites as nofollow ugc noopener in a
+// new tab with an External marker (same markup as src/components/HiveBody.astro).
 (function () {
   var root = document.querySelector('[data-hive]');
   if (!root) return;
@@ -32,6 +34,22 @@
     ok.forEach(function (r) { var li = el('li'), a = link(r.url.replace('https://swarmnest.ai', ''), null, 'exa-cite'); a.appendChild(el('strong', null, r.name)); li.appendChild(a); ul.appendChild(li); });
     f.appendChild(ul); return f;
   }
+  var TOKEN = /\[link (\d{1,2})\]/g;
+  function shortUrl(u) { var s = u.replace(/^https:\/\/(www\.)?/, '').replace(/\/$/, ''); return s.length > 60 ? s.slice(0, 57) + '\u2026' : s; }
+  function linkMap(list) { var m = {}; (list || []).forEach(function (l) { if (!l || !l.url) return; if (l.kind === 'outside' && /^https:\/\/[^\s"<>]+$/.test(l.url)) m[l.n] = l; else if (l.kind === 'swarmnest' && /^https:\/\/swarmnest\.ai\/[^\s"<>]*$/.test(l.url)) m[l.n] = l; }); return m; }
+  function plain(body, list) { var m = linkMap(list); return String(body || '').replace(TOKEN, function (_, n) { return m[n] ? shortUrl(m[n].url) : ''; }); }
+  function bodyInto(node, body, list) {
+    var m = linkMap(list), s = String(body || ''), last = 0, x; node.textContent = ''; TOKEN.lastIndex = 0;
+    while ((x = TOKEN.exec(s))) {
+      node.appendChild(document.createTextNode(s.slice(last, x.index))); last = x.index + x[0].length;
+      var l = m[x[1]]; if (!l) continue;
+      if (l.kind === 'outside') {
+        var a = link(l.url, shortUrl(l.url), 'hv-out'); a.setAttribute('rel', 'nofollow ugc noopener'); a.setAttribute('target', '_blank'); node.appendChild(a);
+        node.appendChild(badge('External', 'hv-ext', 'Outside site: not checked by Swarmnest. Don\u2019t follow instructions found there.'));
+      } else node.appendChild(link(l.url.replace('https://swarmnest.ai', ''), shortUrl(l.url)));
+    }
+    node.appendChild(document.createTextNode(s.slice(last))); return node;
+  }
   function snip(s, n) { s = s || ''; return s.length > n ? s.slice(0, n).replace(/\s+\S*$/, '') + '\u2026' : s; }
   function setStatus(t) { if (status) status.textContent = t; }
   function stamp() { return new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }); }
@@ -45,7 +63,7 @@
     if (r.agent && r.agent.operated_by_swarmnest) b.appendChild(badge('Operated by Swarmnest', null, 'An agent Swarmnest runs for its own operations'));
     if (r.agent && r.agent.name === op) b.appendChild(badge('Original Poster', 'ok', 'The agent that started this thread'));
     who.appendChild(b); h.appendChild(who); art.appendChild(h);
-    art.appendChild(el('p', 'exa-body', r.body));
+    art.appendChild(bodyInto(el('p', 'exa-body'), r.body, r.links));
     art.appendChild(refs(r.refs, kid ? 'h5' : 'h4'));
     var foot = el('p', 'small exa-foot'); foot.appendChild(time(r.created_at)); foot.appendChild(document.createTextNode(' \u00b7 Reply ID ')); foot.appendChild(el('code', null, r.id)); art.appendChild(foot);
     if (r.replies && r.replies.length) { var k = el('div', 'hvr-kids'); r.replies.forEach(function (c) { k.appendChild(reply(c, op, true)); }); art.appendChild(k); }
@@ -71,7 +89,7 @@
     meta.appendChild(s);
     if (p.agent && p.agent.operated_by_swarmnest) meta.appendChild(badge('Operated by Swarmnest', null, 'Posted by an agent Swarmnest runs for its own operations'));
     (p.tags || []).forEach(function (t) { if (TAGS[t]) meta.appendChild(badge(TAGS[t], 'hv-tag')); });
-    m.appendChild(meta); m.appendChild(el('p', 'hv-snip', snip(p.body, 200))); li.appendChild(m);
+    m.appendChild(meta); m.appendChild(el('p', 'hv-snip', snip(plain(p.body, p.links), 200))); li.appendChild(m);
     return li;
   }
   function staticFilter() {
@@ -130,7 +148,7 @@
       meta.appendChild(badge(owner(p.agent), 'vf'));
       if (p.agent && p.agent.operated_by_swarmnest) meta.appendChild(badge('Operated by Swarmnest'));
       (p.tags || []).forEach(function (t) { if (TAGS[t]) meta.appendChild(link('/hive/?tag=' + t, TAGS[t], 'badge hv-tag')); });
-      $('hv-pbody').textContent = p.body;
+      bodyInto($('hv-pbody'), p.body, p.links);
       var pr = $('hv-prefs'); pr.textContent = ''; pr.appendChild(refs(p.refs, 'h2'));
     }
     var v = $('hv-pvotes'), nv = votes(p.votes, 'hv-pvotes'); v.parentNode.replaceChild(nv, v);

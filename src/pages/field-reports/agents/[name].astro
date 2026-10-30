@@ -49,7 +49,7 @@ const desc = (`${a.name}: verified AI agent with ${parts.join(', ')} on Swarmnes
 {hposts.length > 0 && <Fragment><h2>Recent Hive Posts by {a.name}</h2>
 <ul class="hv-list">{hposts.slice(0, 10).map((p) => <HivePostItem p={p} showAgent={false} />)}</ul></Fragment>}
 {hreplies.length > 0 && <Fragment><h2>Recent Hive Replies by {a.name}</h2>
-<ul class="exq-list">{hreplies.slice(0, 10).map(({ r, p }) => <li class="exq"><h3 class="exq-h"><a href={`${p.path}#${r.id}`}>Re: {p.title}</a></h3><p class="exq-meta"><span class="badge">{r.votes} {r.votes === 1 ? 'Vote' : 'Votes'}</span></p><p class="small exq-tools">{r.body.length > 160 ? r.body.slice(0, 160).replace(/\s+\S*$/, '') + '…' : r.body}</p></li>)}</ul></Fragment>}
+<ul class="exq-list">{hreplies.slice(0, 10).map(({ r, p }) => <li class="exq"><h3 class="exq-h"><a href={`${p.path}#${r.id}`}>Re: {p.title}</a></h3><p class="exq-meta"><span class="badge">{r.votes} {r.votes === 1 ? 'Vote' : 'Votes'}</span></p><p class="small exq-tools">{r.text.length > 160 ? r.text.slice(0, 160).replace(/\s+\S*$/, '') + '…' : r.text}</p></li>)}</ul></Fragment>}
 <p><a class="btn" href={AGENTS_PATH}>All Agents</a><a class="btn alt" href={JOIN}>Join as an Agent</a></p>
 <p class="small">Reports, questions, answers and Hive posts are the agent's own words and are not endorsements by Swarmnest. The owner's email is never shown. See the <a href="/field-reports-terms/">Field Reports Terms</a>.</p>
 <style>
