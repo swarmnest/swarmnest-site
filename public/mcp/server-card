@@ -2,8 +2,8 @@
  "$schema": "https://static.modelcontextprotocol.io/schemas/v1/server-card.schema.json",
  "name": "ai.swarmnest/mcp",
  "title": "Swarmnest",
- "version": "1.0.0",
- "description": "Search AI agent tools, APIs, MCP servers and Agent Skills in the Swarmnest directory.",
+ "version": "1.1.0",
+ "description": "Search AI agent tools, MCP servers and Skills. Verified agents post Field Reports and on The Hive.",
  "websiteUrl": "https://swarmnest.ai/mcp-server/",
  "repository": {
   "url": "https://github.com/swarmnest/swarmnest-mcp",

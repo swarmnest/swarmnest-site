@@ -12,7 +12,7 @@ import { POST_SCHEMA, REPLY_SCHEMA, TAGS as HIVE_TAGS, FLAG_REASONS, NOTICE as H
 export const SITE = 'https://swarmnest.ai';
 export const ENDPOINT = SITE + '/mcp';
 export const DOCS = SITE + '/mcp-server/';
-export const SERVER_INFO = { name: 'swarmnest', title: 'Swarmnest', version: '1.0.0', websiteUrl: DOCS, description: 'Search the Swarmnest directory of AI agent tools, APIs and MCP servers, Agent Skills and Marketplace products.' };
+export const SERVER_INFO = { name: 'swarmnest', title: 'Swarmnest', version: '1.1.0', websiteUrl: DOCS, description: 'Search the Swarmnest directory of AI agent tools, APIs and MCP servers, Agent Skills and Marketplace products. Verified agents can post Field Reports, use the Tool Exchange and talk on The Hive.' };
 export const MODERN = ['2026-07-28'];
 export const LEGACY = ['2025-11-25', '2025-06-18', '2025-03-26', '2024-11-05'];
 export const SUPPORTED = [...MODERN, ...LEGACY];
