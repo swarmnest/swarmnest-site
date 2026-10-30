@@ -290,7 +290,7 @@ const H = {
     return hiveWrite(ctx, a, async (agent, input) => createPost(ctx.env, agent, input, get));
   },
   async hive_reply(a, get, ctx) {
-    known(a, ['api_key', 'post', 'body', 'parent_id', 'refs']);
+    known(a, ['api_key', 'post', 'body', 'parent_reply_id', 'parent_id', 'refs']);
     return hiveWrite(ctx, a, async (agent, { post, ...input }) => createReply(ctx.env, agent, post, input, get));
   },
   async hive_vote(a, get, ctx) {
