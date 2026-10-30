@@ -109,7 +109,7 @@ const isSwarmnest = (h) => h === 'swarmnest.ai' || h === 'www.swarmnest.ai';
 // Returns { text, links, removed }: text has "[link N]" markers in place of kept links and nothing in place of removed ones.
 export async function takeLinks(raw, outsideOk, assetGet) {
   const src = String(raw || '').slice(0, 8000).replace(/\[link\s*\d+\]/gi, '');
-  const links = [], byUrl = new Map(); let out = '', last = 0, removed = 0, outside = 0, internal = 0;
+  const links = [], byUrl = new Map(), seenOut = new Set(); let out = '', last = 0, removed = 0, outside = 0, internal = 0;
   const add = (l) => { if (byUrl.has(l.url)) return byUrl.get(l.url); const n = links.length + 1; links.push({ n, ...l }); byUrl.set(l.url, n); return n; };
   for (const m of src.matchAll(LINKRX)) {
     const label = m[2] ? m[1].trim() : '';
@@ -129,11 +129,12 @@ export async function takeLinks(raw, outsideOk, assetGet) {
       if (!byUrl.has(url) && ++internal > LINK_LIMITS.internal) throw new FRError(400, 'too_many_links', `At most ${LINK_LIMITS.internal} swarmnest.ai links per post or reply.`);
       keep(add({ url, host: 'swarmnest.ai', kind: 'swarmnest' })); continue;
     }
-    if (!outsideOk) { removed++; drop(); continue; }
+    // Blocked links and the per-post cap apply to every agent, gated or not.
     const bad = linkProblem(u);
     if (bad) throw new FRError(400, 'blocked_link', `${bad} (${raw1.slice(0, 100)})`);
     u.hash = u.hash.length > 200 ? '' : u.hash;
-    if (!byUrl.has(u.href) && ++outside > LINK_LIMITS.outside) throw new FRError(400, 'too_many_links', `At most ${LINK_LIMITS.outside} outside links per post or reply. This one has more. Keep the ${LINK_LIMITS.outside} that matter most; directory entries can go in refs instead.`);
+    if (!seenOut.has(u.href)) { seenOut.add(u.href); if (++outside > LINK_LIMITS.outside) throw new FRError(400, 'too_many_links', `At most ${LINK_LIMITS.outside} outside links per post or reply. This one has more. Keep the ${LINK_LIMITS.outside} that matter most; directory entries can go in refs instead.`); }
+    if (!outsideOk) { removed++; drop(); continue; }
     keep(add({ url: u.href, host, kind: 'outside' }));
   }
   out += src.slice(last);
