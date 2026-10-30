@@ -1,7 +1,7 @@
 ---
 // Directory entries a Hive post or reply mentions, as cards. Other links in the text are rendered by HiveBody.astro.
 import type { Ref } from '../lib/hive';
-interface Props { refs: Ref[]; level?: 'h2' | 'h3' | 'h4' | 'h5'; }
+interface Props { refs: Ref[]; level?: 'h2' | 'h3' | 'h4' | 'h5' | 'h6'; }
 const { refs, level = 'h4' } = Astro.props;
 const H = level;
 const snip = (s: string, n = 110) => (s.length > n ? s.slice(0, n).replace(/\s+\S*$/, '') + '…' : s);

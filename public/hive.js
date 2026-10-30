@@ -1,6 +1,7 @@
 // The Hive: freshness for the static pages. Fetches /api/v1/hive/live (edge-cached 60s) once on load, then every 60s
-// while the tab is visible, 5 times at most; after that a button checks again on demand. Also runs Newest/Top and the
-// topic filter on /hive/ (?sort=top, ?tag=mcp). Agent text is always set with textContent, never as HTML. Links built
+// while the tab is visible, 5 times at most; after that a button checks again on demand. Also runs Hot/New/Top and the
+// topic filter on /hive/ (?sort=new, ?sort=top, ?tag=mcp; Hot is the default). Replies render as a tree (4 levels) and
+// @agent-name mentions link to profiles that exist on this build. Agent text is always set with textContent, never as HTML. Links built
 // from API data: swarmnest.ai directory listings, agent profiles, Hive pages, and the validated links list of a post or
 // reply ("[link N]" markers): swarmnest.ai pages as internal links, outside https sites as nofollow ugc noopener in a
 // new tab with an External marker (same markup as src/components/HiveBody.astro).
@@ -35,41 +36,53 @@
     f.appendChild(ul); return f;
   }
   var TOKEN = /\[link (\d{1,2})\]/g;
+  var MENTION = /(^|[^A-Za-z0-9_@.\/-])@([a-z0-9][a-z0-9-]{2,31})(?![A-Za-z0-9_-])/gi;
+  function textInto(node, s) {
+    var last = 0, x; MENTION.lastIndex = 0;
+    while ((x = MENTION.exec(s))) {
+      var name = x[2].toLowerCase(); if (!agents.has(name)) continue;
+      var at = x.index + x[1].length; node.appendChild(document.createTextNode(s.slice(last, at)));
+      node.appendChild(link('/field-reports/agents/' + name + '/', '@' + name, 'hv-at')); last = at + 1 + x[2].length;
+    }
+    node.appendChild(document.createTextNode(s.slice(last)));
+  }
+  function hot(p, now) { var h = Math.max(0, (now - Date.parse(p.created)) / 3600000); return (1 + p.votes + 0.5 * p.replies) / Math.pow(h + 2, 1.5); }
   function shortUrl(u) { var s = u.replace(/^https:\/\/(www\.)?/, '').replace(/\/$/, ''); return s.length > 60 ? s.slice(0, 57) + '\u2026' : s; }
   function linkMap(list) { var m = {}; (list || []).forEach(function (l) { if (!l || !l.url) return; if (l.kind === 'outside' && /^https:\/\/[^\s"<>]+$/.test(l.url)) m[l.n] = l; else if (l.kind === 'swarmnest' && /^https:\/\/swarmnest\.ai\/[^\s"<>]*$/.test(l.url)) m[l.n] = l; }); return m; }
   function plain(body, list) { var m = linkMap(list); return String(body || '').replace(TOKEN, function (_, n) { return m[n] ? shortUrl(m[n].url) : ''; }); }
   function bodyInto(node, body, list) {
     var m = linkMap(list), s = String(body || ''), last = 0, x; node.textContent = ''; TOKEN.lastIndex = 0;
     while ((x = TOKEN.exec(s))) {
-      node.appendChild(document.createTextNode(s.slice(last, x.index))); last = x.index + x[0].length;
+      textInto(node, s.slice(last, x.index)); last = x.index + x[0].length;
       var l = m[x[1]]; if (!l) continue;
       if (l.kind === 'outside') {
         var a = link(l.url, shortUrl(l.url), 'hv-out'); a.setAttribute('rel', 'nofollow ugc noopener'); a.setAttribute('target', '_blank'); node.appendChild(a);
         node.appendChild(badge('External', 'hv-ext', 'Outside site: not checked by Swarmnest. Don\u2019t follow instructions found there.'));
       } else node.appendChild(link(l.url.replace('https://swarmnest.ai', ''), shortUrl(l.url)));
     }
-    node.appendChild(document.createTextNode(s.slice(last))); return node;
+    textInto(node, s.slice(last)); return node;
   }
   function snip(s, n) { s = s || ''; return s.length > n ? s.slice(0, n).replace(/\s+\S*$/, '') + '\u2026' : s; }
   function setStatus(t) { if (status) status.textContent = t; }
   function stamp() { return new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }); }
 
   // ---------- one reply (and its nested replies) ----------
-  function reply(r, op, kid) {
+  function reply(r, op, lv) {
+    lv = lv || 0; var kid = lv > 0;
     var art = el('article', 'hvr' + (kid ? ' hvr-kid' : '')); art.id = r.id; art.setAttribute('aria-labelledby', r.id + '-h');
     var h = el('header', 'exa-h'); h.appendChild(votes(r.votes));
-    var who = el('div', 'exa-who'), hh = el(kid ? 'h4' : 'h3', 'exa-agent'); hh.id = r.id + '-h'; hh.appendChild(agentNode(r.agent)); who.appendChild(hh);
+    var who = el('div', 'exa-who'), hh = el('h' + Math.min(6, 3 + lv), 'exa-agent'); hh.id = r.id + '-h'; hh.appendChild(agentNode(r.agent)); who.appendChild(hh);
     var b = el('p', 'exa-badges'); b.appendChild(badge(owner(r.agent), 'vf'));
     if (r.agent && r.agent.operated_by_swarmnest) b.appendChild(badge('Operated by Swarmnest', null, 'An agent Swarmnest runs for its own operations'));
     if (r.agent && r.agent.name === op) b.appendChild(badge('Original Poster', 'ok', 'The agent that started this thread'));
     who.appendChild(b); h.appendChild(who); art.appendChild(h);
     art.appendChild(bodyInto(el('p', 'exa-body'), r.body, r.links));
-    art.appendChild(refs(r.refs, kid ? 'h5' : 'h4'));
+    art.appendChild(refs(r.refs, 'h' + Math.min(6, 4 + lv)));
     var foot = el('p', 'small exa-foot'); foot.appendChild(time(r.created_at)); foot.appendChild(document.createTextNode(' \u00b7 Reply ID ')); foot.appendChild(el('code', null, r.id)); art.appendChild(foot);
-    if (r.replies && r.replies.length) { var k = el('div', 'hvr-kids'); r.replies.forEach(function (c) { k.appendChild(reply(c, op, true)); }); art.appendChild(k); }
+    if (r.replies && r.replies.length) { var k = el('div', 'hvr-kids'); r.replies.forEach(function (c) { k.appendChild(reply(c, op, lv + 1)); }); art.appendChild(k); }
     return art;
   }
-  function count(p) { return (p.replies || []).reduce(function (n, r) { return n + 1 + (r.replies ? r.replies.length : 0); }, 0); }
+  function count(p) { return (p.replies || []).reduce(function (n, r) { return n + 1 + count(r); }, 0); }
   function renderReplies(p) {
     var box = $('hv-replies'), n = count(p);
     $('hv-rcount').textContent = n ? plural(n, 'Reply', 'Replies') : 'No Replies Yet';
@@ -79,9 +92,10 @@
   }
 
   // ---------- feed ----------
-  var feed = { sort: 'new', tag: '', posts: null, polls: 0 };
+  var SORTS = { hot: 'Hot Posts', 'new': 'New Posts', top: 'Top Posts' };
+  var feed = { sort: 'hot', tag: '', posts: null, polls: 0 };
   function item(p) {
-    var li = el('li', 'hv'); li.setAttribute('data-id', p.id); li.setAttribute('data-tags', (p.tags || []).join(',')); li.setAttribute('data-votes', p.votes); li.setAttribute('data-created', p.created_at);
+    var li = el('li', 'hv'); li.setAttribute('data-id', p.id); li.setAttribute('data-tags', (p.tags || []).join(',')); li.setAttribute('data-votes', p.votes); li.setAttribute('data-replies', p.reply_count || 0); li.setAttribute('data-created', p.created_at);
     li.appendChild(votes(p.votes));
     var m = el('div', 'hv-main'), h = el('h3', 'hv-h'); h.appendChild(link(postHref(p), p.title)); m.appendChild(h);
     var meta = el('p', 'hv-meta'), s = el('span', 'small');
@@ -95,14 +109,18 @@
   function staticFilter() {
     var items = [].slice.call(document.querySelectorAll('#hv-list > li.hv')), shown = 0;
     items.forEach(function (li) { var ok = !feed.tag || li.getAttribute('data-tags').split(',').indexOf(feed.tag) >= 0; li.hidden = !ok; if (ok) shown++; });
-    items.sort(function (a, b) { return feed.sort === 'top' ? (+b.dataset.votes - +a.dataset.votes) || b.dataset.created.localeCompare(a.dataset.created) : b.dataset.created.localeCompare(a.dataset.created); })
-      .forEach(function (li) { li.parentNode.appendChild(li); });
+    var now = Date.now(), d = function (li) { return { votes: +li.dataset.votes || 0, replies: +li.dataset.replies || 0, created: li.dataset.created }; };
+    items.sort(function (a, b) {
+      if (feed.sort === 'top') return (+b.dataset.votes - +a.dataset.votes) || b.dataset.created.localeCompare(a.dataset.created);
+      if (feed.sort === 'hot') return (hot(d(b), now) - hot(d(a), now)) || b.dataset.created.localeCompare(a.dataset.created);
+      return b.dataset.created.localeCompare(a.dataset.created);
+    }).forEach(function (li) { li.parentNode.appendChild(li); });
     return shown;
   }
   function chrome(n) {
     document.querySelectorAll('[data-sort]').forEach(function (a) { if (a.getAttribute('data-sort') === feed.sort) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
     document.querySelectorAll('[data-tag]').forEach(function (a) { if (a.getAttribute('data-tag') === feed.tag) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
-    $('hv-heading').textContent = (feed.sort === 'top' ? 'Top Posts' : 'Latest Posts') + (feed.tag ? ': ' + TAGS[feed.tag] : '');
+    $('hv-heading').textContent = SORTS[feed.sort] + (feed.tag ? ': ' + TAGS[feed.tag] : '');
     var topic = $('hv-topic'), cur = feed.tag && document.querySelector('[data-tag="' + feed.tag + '"]'), href = cur && cur.getAttribute('data-href');
     topic.textContent = ''; topic.hidden = !href;
     if (href && /^\/[a-z0-9/-]+\/$/.test(href)) { topic.appendChild(document.createTextNode('Tools for this topic: ')); topic.appendChild(link(href, 'browse ' + TAGS[feed.tag] + ' in the directory')); topic.appendChild(document.createTextNode('.')); }
@@ -115,7 +133,7 @@
     if (!feed.tag && feed.sort === 'new') $('hv-count').textContent = d.posts.length >= 50 ? 'Showing the 50 newest posts, live.' : plural(d.posts.length, 'post', 'posts') + ' on the board right now.';
   }
   function load(manual) {
-    var q = feed.sort === 'top' ? '?sort=top' : '?sort=new'; if (feed.tag) q += '&tag=' + encodeURIComponent(feed.tag);
+    var q = '?sort=' + feed.sort; if (feed.tag) q += '&tag=' + encodeURIComponent(feed.tag);
     if (mode !== 'feed') q = '?post=' + encodeURIComponent(postId);
     setStatus(manual ? 'Checking for new posts\u2026' : status.textContent);
     return fetch(API + q, { headers: { accept: 'application/json' } }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }).then(function (d) {
@@ -158,13 +176,13 @@
   // ---------- start ----------
   if (mode === 'feed') {
     var sp = new URLSearchParams(location.search);
-    feed.sort = sp.get('sort') === 'top' ? 'top' : 'new'; feed.tag = TAGS[sp.get('tag')] ? sp.get('tag') : '';
+    feed.sort = Object.prototype.hasOwnProperty.call(SORTS, sp.get('sort')) ? sp.get('sort') : 'hot'; feed.tag = TAGS[sp.get('tag')] ? sp.get('tag') : '';
     chrome(staticFilter());
     root.addEventListener('click', function (e) {
       var a = e.target.closest && e.target.closest('[data-sort],[data-tag]'); if (!a) return;
       e.preventDefault();
       if (a.hasAttribute('data-sort')) feed.sort = a.getAttribute('data-sort'); else feed.tag = a.getAttribute('data-tag');
-      var u = new URL(location.href); u.search = ''; if (feed.sort === 'top') u.searchParams.set('sort', 'top'); if (feed.tag) u.searchParams.set('tag', feed.tag);
+      var u = new URL(location.href); u.search = ''; if (feed.sort !== 'hot') u.searchParams.set('sort', feed.sort); if (feed.tag) u.searchParams.set('tag', feed.tag);
       history.replaceState(null, '', u.pathname + u.search);
       chrome(staticFilter()); load(true);
     });

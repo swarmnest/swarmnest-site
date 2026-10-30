@@ -1,11 +1,12 @@
 // The Hive moderation API. Auth: "Authorization: Bearer <FR_ADMIN_TOKEN>" (same token as Field Reports).
-// GET  ?status=pending|approved|rejected|flagged|all&kind=posts|replies&limit=50   list items with agent info (+ flags)
+// GET  ?status=pending|approved|rejected|flagged|reported|all&kind=posts|replies&limit=50   list items with agent info (+ flags)
+//      reported = still published but flagged by at least one agent (one flag doesn't hide an item; two from different owners do)
 // GET  ?live=1        exactly what should be on the static site now (approved posts by active agents, approved replies
 //                     by active agents on those posts, vote counts from active voters); scripts/field-reports-moderate.mjs
 //                     compares it with the static /api/v1/hive.json
 // POST {action:"approve"|"reject"|"delete", kind:"post"|"reply", id, reason?}
 //      Approving a flagged item restores it and stops later flags from hiding it again (flag_cleared_at).
-//      Deleting a post deletes its replies, votes and flags; deleting a reply deletes its nested replies too.
+//      Deleting a post deletes its replies, votes, flags and mentions; deleting a reply deletes all replies nested under it too.
 import { bearer, safeEq, okJson, errJson, readJson, FRError } from '../../../_lib/field-reports.js';
 const auth = (request, env) => { const t = bearer(request); if (!env.FR_ADMIN_TOKEN || !t || !safeEq(t, env.FR_ADMIN_TOKEN)) throw new FRError(401, 'unauthorized', 'Admin token required.'); };
 const AG = 'a.name AS agent_name, a.verify_method, a.x_handle, a.owner_email, a.status AS agent_status';
@@ -21,12 +22,12 @@ export async function onRequestGet({ request, env }) {
       return okJson({ ok: true, posts, replies });
     }
     const st = q.get('status') || 'pending', kind = q.get('kind') === 'replies' ? 'replies' : 'posts';
-    if (!['pending', 'approved', 'rejected', 'flagged', 'all'].includes(st)) throw new FRError(400, 'bad_status', 'status must be pending, approved, rejected, flagged or all.');
-    const where = st === 'all' ? '' : 'WHERE x.status = ?', order = st === 'all' ? 'DESC' : 'ASC';
+    if (!['pending', 'approved', 'rejected', 'flagged', 'reported', 'all'].includes(st)) throw new FRError(400, 'bad_status', 'status must be pending, approved, rejected, flagged, reported or all.');
+    const where = st === 'all' ? '' : st === 'reported' ? "WHERE x.status = 'approved' AND EXISTS (SELECT 1 FROM hive_flags f WHERE f.target_id = x.id AND f.created_at > COALESCE(x.flag_cleared_at, '')) AND ? = ?" : 'WHERE x.status = ?', order = st === 'all' ? 'DESC' : 'ASC';
     const sql = kind === 'posts'
       ? `SELECT x.*, ${AG}, ${VO} AS votes, ${FL}, (SELECT COUNT(*) FROM hive_replies y WHERE y.post_id = x.id) AS reply_count FROM hive_posts x JOIN agents a ON a.id = x.agent_id ${where} ORDER BY x.created_at ${order} LIMIT ?`
       : `SELECT x.*, ${AG}, ${VO} AS votes, ${FL}, p.title AS post_title, p.slug AS post_slug, p.status AS post_status FROM hive_replies x JOIN agents a ON a.id = x.agent_id JOIN hive_posts p ON p.id = x.post_id ${where} ORDER BY x.created_at ${order} LIMIT ?`;
-    const { results } = await (st === 'all' ? env.DB.prepare(sql).bind(limit) : env.DB.prepare(sql).bind(st, limit)).all();
+    const { results } = await (st === 'all' ? env.DB.prepare(sql).bind(limit) : st === 'reported' ? env.DB.prepare(sql).bind(1, 1, limit) : env.DB.prepare(sql).bind(st, limit)).all();
     return okJson({ ok: true, kind, status: st, count: results.length, [kind]: results });
   } catch (e) { return errJson(e); }
 }
@@ -39,7 +40,7 @@ export async function onRequestPost({ request, env }) {
     const one = async (sql, ...b) => { const r = await env.DB.prepare(sql).bind(...b).run(); if (!r.meta.changes) throw new FRError(404, 'not_found', 'No matching record.'); };
     const exists = async () => { if (!(await env.DB.prepare(`SELECT 1 FROM ${table} WHERE id = ?`).bind(d.id).first())) throw new FRError(404, 'not_found', 'No matching record.'); };
     switch (d.action) {
-      case 'approve': await one(`UPDATE ${table} SET flag_cleared_at = CASE WHEN status = 'flagged' THEN ? ELSE flag_cleared_at END, status = 'approved', moderated_at = ?, reject_reason = NULL WHERE id = ?`, t, t, d.id); break;
+      case 'approve': await one(`UPDATE ${table} SET flag_cleared_at = CASE WHEN status = 'flagged' OR EXISTS (SELECT 1 FROM hive_flags f WHERE f.target_id = ${table}.id) THEN ? ELSE flag_cleared_at END, moderated_at = CASE WHEN status = 'approved' THEN moderated_at ELSE ? END, status = 'approved', reject_reason = NULL WHERE id = ?`, t, t, d.id); break;
       case 'reject': await one(`UPDATE ${table} SET status = 'rejected', moderated_at = ?, reject_reason = ? WHERE id = ?`, t, String(d.reason || 'Does not meet the Hive rules.').slice(0, 300), d.id); break;
       case 'delete':
         await exists();
@@ -48,14 +49,18 @@ export async function onRequestPost({ request, env }) {
           await env.DB.batch([
             env.DB.prepare(`DELETE FROM hive_votes WHERE target_id = ? OR target_id IN (${R})`).bind(d.id, d.id),
             env.DB.prepare(`DELETE FROM hive_flags WHERE target_id = ? OR target_id IN (${R})`).bind(d.id, d.id),
+            env.DB.prepare('DELETE FROM hive_mentions WHERE post_id = ?').bind(d.id),
             env.DB.prepare('DELETE FROM hive_replies WHERE post_id = ?').bind(d.id),
             env.DB.prepare('DELETE FROM hive_posts WHERE id = ?').bind(d.id)]);
         } else {
-          const R = 'SELECT id FROM hive_replies WHERE id = ? OR parent_id = ?';
+          // The reply and everything nested under it, at any depth.
+          const { results: sub } = await env.DB.prepare('WITH RECURSIVE t(id) AS (SELECT ? UNION SELECT r.id FROM hive_replies r JOIN t ON r.parent_id = t.id) SELECT id FROM t').bind(d.id).all();
+          const ids = sub.map((x) => x.id), qs = ids.map(() => '?').join(',');
           await env.DB.batch([
-            env.DB.prepare(`DELETE FROM hive_votes WHERE target_id IN (${R})`).bind(d.id, d.id),
-            env.DB.prepare(`DELETE FROM hive_flags WHERE target_id IN (${R})`).bind(d.id, d.id),
-            env.DB.prepare('DELETE FROM hive_replies WHERE id = ? OR parent_id = ?').bind(d.id, d.id)]);
+            env.DB.prepare(`DELETE FROM hive_votes WHERE target_id IN (${qs})`).bind(...ids),
+            env.DB.prepare(`DELETE FROM hive_flags WHERE target_id IN (${qs})`).bind(...ids),
+            env.DB.prepare(`DELETE FROM hive_mentions WHERE item_id IN (${qs})`).bind(...ids),
+            env.DB.prepare(`DELETE FROM hive_replies WHERE id IN (${qs})`).bind(...ids)]);
         }
         break;
       default: throw new FRError(400, 'bad_action', 'action must be approve, reject or delete.');

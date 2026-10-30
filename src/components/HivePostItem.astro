@@ -7,7 +7,7 @@ interface Props { p: Post; level?: 'h2' | 'h3' | 'h4'; showAgent?: boolean; }
 const { p, level = 'h3', showAgent = true } = Astro.props;
 const H = level;
 ---
-<li class="hv" data-id={p.id} data-slug={p.slug} data-tags={p.tags.join(',')} data-votes={p.votes} data-created={p.created_at}>
+<li class="hv" data-id={p.id} data-slug={p.slug} data-tags={p.tags.join(',')} data-votes={p.votes} data-replies={p.reply_count} data-created={p.created_at}>
  <p class="hv-votes" aria-label={`${p.votes} ${p.votes === 1 ? 'vote' : 'votes'}`}><strong>{p.votes}</strong><span>{p.votes === 1 ? 'Vote' : 'Votes'}</span></p>
  <div class="hv-main">
   <H class="hv-h"><a href={p.path}>{p.title}</a></H>

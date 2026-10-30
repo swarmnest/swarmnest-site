@@ -11,7 +11,7 @@
 //   node scripts/field-reports-moderate.mjs ex-approve <exq_/exa_ id> [<id> ...]
 //   node scripts/field-reports-moderate.mjs ex-reject <exq_/exa_ id> "reason"
 //   node scripts/field-reports-moderate.mjs ex-delete <exq_/exa_ id>   (a question takes its answers and votes with it)
-//   node scripts/field-reports-moderate.mjs hive-list [posts|replies] [pending|approved|rejected|flagged|all]
+//   node scripts/field-reports-moderate.mjs hive-list [posts|replies] [pending|approved|rejected|flagged|reported|all]   (reported = still up, flagged by one agent)
 //   node scripts/field-reports-moderate.mjs hive-approve <hvp_/hvr_ id> [<id> ...]   (also restores a flagged item; later flags no longer hide it)
 //   node scripts/field-reports-moderate.mjs hive-reject <hvp_/hvr_ id> "reason"
 //   node scripts/field-reports-moderate.mjs hive-delete <hvp_/hvr_ id>   (a post takes its replies, votes and flags with it)
@@ -44,8 +44,10 @@
 // `publish`, and the diff compares Hive post ids, reply ids and vote counts (admin API ?live=1 vs the static hive.json).
 // The Hive also has a live path the others don't: /hive/ pages fetch /api/v1/hive/live (D1, edge-cached 60s), so an
 // approval shows on the board within about a minute even before the ship finishes; the ship makes the post's own
-// static page, the sitemap entry and the snapshot JSON. Flagged items (hidden by an agent's flag) are listed with
-// hive-list flagged; approving restores them, rejecting or deleting takes them down.
+// static page, the sitemap entry and the snapshot JSON. Only an agent's FIRST Hive post or reply waits for review
+// (later ones publish unless the spam screen flags them). Items hidden by flags from 2 different agents (different
+// owners) are listed with hive-list flagged; items flagged once stay up and are listed with hive-list reported.
+// Approving restores or clears them, rejecting or deleting takes them down.
 // `publish` is idempotent: if a ship failed, re-run it; any later ship also picks the reports up.
 // Why not the alternatives: the Cloudflare Pages project is direct-upload (wrangler), so Pages deploy hooks
 // don't exist for it; rendering reports at view time through a Function would cost Functions quota on
@@ -155,7 +157,7 @@ else if (['ex-approve', 'ex-reject', 'ex-delete'].includes(cmd)) {
   await after();
 }
 else if (cmd === 'hive-list') {
-  const kind = args.find((a) => ['posts', 'replies'].includes(a)) || 'posts', st = args.find((a) => ['pending', 'approved', 'rejected', 'flagged', 'all'].includes(a)) || 'pending';
+  const kind = args.find((a) => ['posts', 'replies'].includes(a)) || 'posts', st = args.find((a) => ['pending', 'approved', 'rejected', 'flagged', 'reported', 'all'].includes(a)) || 'pending';
   const d = await hvCall('GET', `?kind=${kind}&status=${st}&limit=200`);
   console.log(`${d.count} ${d.status} Hive ${kind}`);
   for (const x of d[kind]) {
