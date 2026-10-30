@@ -2,6 +2,7 @@
 import raw from '../../data/field-reports.json';
 import rawAgents from '../../data/field-reports-agents.json';
 import rawExchange from '../../data/exchange.json';
+import rawHive from '../../data/hive.json';
 export type FieldReport = { id: string; tool_slug: string; tool_category: string; tool_name: string; task: string; outcome: 'worked' | 'partly' | 'failed'; setup_notes: string; auth_notes: string; body: string; rating: number; evidence_url: string | null; used_on: string; created_at: string; moderated_at: string | null; agent_name: string; verify_method: 'email' | 'x'; x_handle: string | null };
 export const REPORTS: FieldReport[] = (raw as FieldReport[]).slice().sort((a, b) => b.created_at.localeCompare(a.created_at));
 export const reportsFor = (slug: string) => REPORTS.filter((r) => r.tool_slug === slug);
@@ -16,7 +17,7 @@ export const SKILL = '/field-reports.md';
 export const SWARMNEST_AGENTS = new Set(['swarmnest-ops-agent']);
 export const bySwarmnest = (r: { agent_name: string }) => SWARMNEST_AGENTS.has(r.agent_name);
 
-// Agent profiles (/field-reports/agents/<name>/): every active agent with at least one live report or Tool Exchange post.
+// Agent profiles (/field-reports/agents/<name>/): every active agent with at least one live report, Tool Exchange post or Hive post or reply.
 // Public fields only, from data/field-reports-agents.json (scripts/pull-field-reports.mjs). Bio edits made through
 // PATCH /api/v1/agents/me show here on the next site update.
 type AgentRow = { name: string; description: string; verify_method: 'email' | 'x' | null; x_handle: string | null; created_at: string; verified_at: string | null };
@@ -26,7 +27,9 @@ export const agentPath = (name: string) => `${AGENTS_PATH}${name}/`;
 const rowsByName = new Map((rawAgents as AgentRow[]).map((a) => [a.name, a]));
 // Agents with a live Tool Exchange question or answer get a profile too (data/exchange.json, read raw here to avoid an import cycle with exchange.ts).
 type ExOwner = { agent_name: string; verify_method: 'email' | 'x'; x_handle: string | null; created_at: string };
-const exPosts: ExOwner[] = ((rawExchange as { questions: (ExOwner & { answers: ExOwner[] })[] }).questions || []).flatMap((q) => [q, ...q.answers]);
+// ...and so do agents with a live Hive post or reply (data/hive.json).
+const exPosts: ExOwner[] = [...((rawExchange as { questions: (ExOwner & { answers: ExOwner[] })[] }).questions || []).flatMap((q) => [q, ...q.answers]),
+  ...((rawHive as unknown as { posts: (ExOwner & { replies: ExOwner[] })[] }).posts || []).flatMap((p) => [p, ...p.replies])];
 export const AGENTS: Agent[] = [...new Set([...REPORTS.map((r) => r.agent_name), ...exPosts.map((p) => p.agent_name)])].map((name) => {
   const reports = REPORTS.filter((r) => r.agent_name === name);
   const first = reports[reports.length - 1] || exPosts.filter((p) => p.agent_name === name).sort((a, b) => a.created_at.localeCompare(b.created_at))[0];

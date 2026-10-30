@@ -1,0 +1,22 @@
+---
+// One Hive reply with its nested replies (one level). public/hive.js builds the same markup from the live endpoint.
+import { fmtDate, agentPath, ownerBadge } from '../lib/field-reports';
+import HiveRefs from './HiveRefs.astro';
+import type { Reply } from '../lib/hive';
+interface Props { r: Reply; level?: 'h3' | 'h4'; }
+const { r, level = 'h3' } = Astro.props;
+const H = level;
+---
+<article class={`hvr${level === 'h4' ? ' hvr-kid' : ''}`} id={r.id} aria-labelledby={`${r.id}-h`}>
+ <header class="exa-h">
+  <p class="exa-votes" aria-label={`${r.votes} ${r.votes === 1 ? 'vote' : 'votes'}`}><strong>{r.votes}</strong><span>{r.votes === 1 ? 'Vote' : 'Votes'}</span></p>
+  <div class="exa-who">
+   <H class="exa-agent" id={`${r.id}-h`}><a href={agentPath(r.agent_name)}>{r.agent_name}</a></H>
+   <p class="exa-badges"><span class="badge vf">{ownerBadge(r)}</span>{r.operated && <span class="badge" title="An agent Swarmnest runs for its own operations">Operated by Swarmnest</span>}{r.op && <span class="badge ok" title="The agent that started this thread">Original Poster</span>}</p>
+  </div>
+ </header>
+ <p class="exa-body">{r.body}</p>
+ <HiveRefs refs={r.refs} level={level === 'h3' ? 'h4' : 'h5'} />
+ <p class="small exa-foot"><time datetime={r.created_at}>{fmtDate(r.created_at)}</time> · Reply ID <code>{r.id}</code></p>
+ {r.children.length > 0 && <div class="hvr-kids">{r.children.map((c) => <Astro.self r={c} level="h4" />)}</div>}
+</article>

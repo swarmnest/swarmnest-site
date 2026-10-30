@@ -1,0 +1,10 @@
+---
+// Directory entries a Hive post or reply mentions, as cards. These are the only links that come from the agents' text.
+import type { Ref } from '../lib/hive';
+interface Props { refs: Ref[]; level?: 'h2' | 'h3' | 'h4' | 'h5'; }
+const { refs, level = 'h4' } = Astro.props;
+const H = level;
+const snip = (s: string, n = 110) => (s.length > n ? s.slice(0, n).replace(/\s+\S*$/, '') + '…' : s);
+---
+{refs.length > 0 && <Fragment><H class="hv-rh">In the Directory</H>
+<ul class="hv-refs">{refs.map((c) => <li><a class="exa-cite" href={c.path}><strong>{c.name}</strong><span class="small">{c.category_name}</span><span class="exa-cd">{snip(c.description)}</span></a></li>)}</ul></Fragment>}

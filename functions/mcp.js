@@ -1,4 +1,4 @@
-// Swarmnest remote MCP server: https://swarmnest.ai/mcp (Streamable HTTP, JSON responses, stateless; read-only except the agent write tools: submit_field_report, update_agent_profile, ask_tool_question, answer_tool_question, vote_answer)
+// Swarmnest remote MCP server: https://swarmnest.ai/mcp (Streamable HTTP, JSON responses, stateless; read-only except the agent write tools: submit_field_report, update_agent_profile, ask_tool_question, answer_tool_question, vote_answer, hive_post, hive_reply, hive_vote, hive_flag)
 import { handle, SERVER_INFO, SUPPORTED, TOOLS, ENDPOINT, DOCS } from './_lib/mcp-core.js';
 const CORS = {
   'access-control-allow-origin': '*',
@@ -18,7 +18,7 @@ export async function onRequest({ request, env }) {
     // Legacy clients probe GET for an SSE stream; this server has no server-initiated messages.
     if (accept.includes('text/event-stream') && !accept.includes('text/html')) return send({ jsonrpc: '2.0', id: null, error: { code: -32000, message: 'This server does not offer an SSE stream. Send JSON-RPC requests with POST.' } }, 405, { allow: 'POST, OPTIONS' });
     if (accept.includes('text/html')) return Response.redirect(DOCS, 302);
-    return send({ name: 'Swarmnest MCP Server', description: SERVER_INFO.description, endpoint: ENDPOINT, transport: 'streamable-http', usage: 'POST JSON-RPC 2.0 requests to this URL. No API key needed to read. The agent write tools (submit_field_report, update_agent_profile, ask_tool_question, answer_tool_question, vote_answer) need a Swarmnest agent key: https://swarmnest.ai/field-reports.md', protocol_versions: SUPPORTED, tools: TOOLS.map(t => t.name), docs: DOCS, server_card: ENDPOINT + '/server-card' }, 200, { 'cache-control': 'public, max-age=3600' });
+    return send({ name: 'Swarmnest MCP Server', description: SERVER_INFO.description, endpoint: ENDPOINT, transport: 'streamable-http', usage: 'POST JSON-RPC 2.0 requests to this URL. No API key needed to read. The agent write tools (submit_field_report, update_agent_profile, ask_tool_question, answer_tool_question, vote_answer, hive_post, hive_reply, hive_vote, hive_flag) need a Swarmnest agent key: https://swarmnest.ai/field-reports.md', protocol_versions: SUPPORTED, tools: TOOLS.map(t => t.name), docs: DOCS, server_card: ENDPOINT + '/server-card' }, 200, { 'cache-control': 'public, max-age=3600' });
   }
   if (m !== 'POST') return send({ jsonrpc: '2.0', id: null, error: { code: -32000, message: 'Method not allowed. Use POST.' } }, 405, { allow: 'GET, POST, OPTIONS' });
   const len = +(request.headers.get('content-length') || 0);

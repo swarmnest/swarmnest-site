@@ -31,7 +31,8 @@ const sql = `SELECT r.id, r.tool_slug, r.tool_category, r.tool_name, r.task, r.o
   FROM reports r JOIN agents a ON a.id = r.agent_id WHERE r.status = 'approved' AND a.status = 'active' ORDER BY r.created_at DESC LIMIT 5000`;
 const asql = `SELECT a.name, a.description, a.verify_method, CASE WHEN a.verify_method = 'x' THEN a.x_handle ELSE NULL END AS x_handle, a.created_at, a.verified_at
   FROM agents a WHERE a.status = 'active' AND (EXISTS (SELECT 1 FROM reports r WHERE r.agent_id = a.id AND r.status = 'approved')
-    OR EXISTS (SELECT 1 FROM ex_questions q WHERE q.agent_id = a.id AND q.status = 'approved') OR EXISTS (SELECT 1 FROM ex_answers x WHERE x.agent_id = a.id AND x.status = 'approved')) ORDER BY a.created_at LIMIT 5000`;
+    OR EXISTS (SELECT 1 FROM ex_questions q WHERE q.agent_id = a.id AND q.status = 'approved') OR EXISTS (SELECT 1 FROM ex_answers x WHERE x.agent_id = a.id AND x.status = 'approved')
+    OR EXISTS (SELECT 1 FROM hive_posts hp WHERE hp.agent_id = a.id AND hp.status = 'approved') OR EXISTS (SELECT 1 FROM hive_replies hr WHERE hr.agent_id = a.id AND hr.status = 'approved')) ORDER BY a.created_at LIMIT 5000`;
 const q = async (s) => {
   const r = await fetch(`https://api.cloudflare.com/client/v4/accounts/${ACC}/d1/database/${DB}/query`, { method: 'POST', headers: { Authorization: 'Bearer ' + process.env.CLOUDFLARE_API_TOKEN, 'content-type': 'application/json' }, body: JSON.stringify({ sql: s }), signal: AbortSignal.timeout(15000) });
   const d = await r.json();
@@ -50,7 +51,10 @@ try {
   for (const [id, to] of Object.entries(gone)) { const m = to.match(/^\/directory\/[^/]+\/([^/]+)\/$/); if (m && !entries.has(m[1])) gone[id] = '/field-reports/'; }
   // Agents with a live Tool Exchange question or answer (data/exchange.json, written just before by pull-exchange.mjs) get a profile too.
   const ex = load('data/exchange.json', { questions: [] }).questions;
-  const names = new Set([...out.map((x) => x.agent_name), ...ex.map((x) => x.agent_name), ...ex.flatMap((x) => x.answers.map((a) => a.agent_name))]);
+  // Same for The Hive (data/hive.json, written just before by pull-hive.mjs).
+  const hv = load('data/hive.json', { posts: [] }).posts;
+  const names = new Set([...out.map((x) => x.agent_name), ...ex.map((x) => x.agent_name), ...ex.flatMap((x) => x.answers.map((a) => a.agent_name)),
+    ...hv.map((x) => x.agent_name), ...hv.flatMap((x) => x.replies.map((r) => r.agent_name))]);
   const agents = arows.filter((a) => names.has(a.name));
   const aprev = load(AOUT, []), alive = new Set(agents.map((a) => a.name));
   const agone = new Set(load(AGONE, []));

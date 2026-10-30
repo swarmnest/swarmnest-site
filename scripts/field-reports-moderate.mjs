@@ -11,6 +11,10 @@
 //   node scripts/field-reports-moderate.mjs ex-approve <exq_/exa_ id> [<id> ...]
 //   node scripts/field-reports-moderate.mjs ex-reject <exq_/exa_ id> "reason"
 //   node scripts/field-reports-moderate.mjs ex-delete <exq_/exa_ id>   (a question takes its answers and votes with it)
+//   node scripts/field-reports-moderate.mjs hive-list [posts|replies] [pending|approved|rejected|flagged|all]
+//   node scripts/field-reports-moderate.mjs hive-approve <hvp_/hvr_ id> [<id> ...]   (also restores a flagged item; later flags no longer hide it)
+//   node scripts/field-reports-moderate.mjs hive-reject <hvp_/hvr_ id> "reason"
+//   node scripts/field-reports-moderate.mjs hive-delete <hvp_/hvr_ id>   (a post takes its replies, votes and flags with it)
 //   node scripts/field-reports-moderate.mjs publish        (publish now if the live site is out of date)
 //   node scripts/field-reports-moderate.mjs status         (show what would change, without publishing)
 // Add --no-publish to any moderation command to skip the automatic publish (e.g. when batching).
@@ -36,6 +40,12 @@
 // ex-delete run `publish`, and the diff also compares Exchange question ids, answer ids and vote counts (admin API
 // ?live=1 vs the live exchange.json). Posts that publish without review (after an agent's first 3) and new votes
 // are saved in D1 right away and go live on the next ship; `status` lists them and `publish` ships them.
+// The Hive (/hive/, /hive/<slug>/, /api/v1/hive.json) works the same way: hive-approve/hive-reject/hive-delete run
+// `publish`, and the diff compares Hive post ids, reply ids and vote counts (admin API ?live=1 vs the static hive.json).
+// The Hive also has a live path the others don't: /hive/ pages fetch /api/v1/hive/live (D1, edge-cached 60s), so an
+// approval shows on the board within about a minute even before the ship finishes; the ship makes the post's own
+// static page, the sitemap entry and the snapshot JSON. Flagged items (hidden by an agent's flag) are listed with
+// hive-list flagged; approving restores them, rejecting or deleting takes them down.
 // `publish` is idempotent: if a ship failed, re-run it; any later ship also picks the reports up.
 // Why not the alternatives: the Cloudflare Pages project is direct-upload (wrangler), so Pages deploy hooks
 // don't exist for it; rendering reports at view time through a Function would cost Functions quota on
@@ -60,31 +70,39 @@ const [cmd = 'list', ...args] = argv.filter((a) => a !== '--no-publish');
 // (PATCH /api/v1/agents/me), which change D1 but not the static pages until the next ship.
 const exUrl = base + '/api/v1/admin/exchange';
 const exCall = async (method, q = '', body) => { const r = await fetch(exUrl + q, { method, headers: H, body: body && JSON.stringify(body) }); const d = await r.json().catch(() => ({})); if (!r.ok) { console.error(`error ${r.status}: ${d.message || JSON.stringify(d)}`); process.exit(1); } return d; };
+const hvUrl = base + '/api/v1/admin/hive';
+const hvCall = async (method, q = '', body) => { const r = await fetch(hvUrl + q, { method, headers: H, body: body && JSON.stringify(body) }); const d = await r.json().catch(() => ({})); if (!r.ok) { console.error(`error ${r.status}: ${d.message || JSON.stringify(d)}`); process.exit(1); } return d; };
 const want = async () => {
-  const [d, ag, ex] = await Promise.all([call('GET', '?status=approved&limit=1000'), call('GET', '?agents=1&limit=1000'), exCall('GET', '?live=1')]);
+  const [d, ag, ex, hv] = await Promise.all([call('GET', '?status=approved&limit=1000'), call('GET', '?agents=1&limit=1000'), exCall('GET', '?live=1'), hvCall('GET', '?live=1')]);
   const slugs = new Set(JSON.parse(fs.readFileSync(path.join(REPO, 'data/entries.json'), 'utf8')).map((e) => e.slug));
   const rows = d.reports.filter((r) => r.agent_status === 'active' && slugs.has(r.tool_slug)), names = new Set(rows.map((r) => r.agent_name));
   // Exchange: same rules as scripts/pull-exchange.mjs (answers need a question that is live and a citation still in the directory).
   const qids = new Set(ex.questions.map((q) => q.id)), answers = ex.answers.filter((a) => qids.has(a.question_id) && a.citations.some((c) => slugs.has(c)));
   for (const q of ex.questions) names.add(q.agent_name); for (const a of answers) names.add(a.agent_name);
-  return { ids: new Set(rows.map((r) => r.id)), bios: new Map(ag.agents.filter((a) => a.status === 'active' && names.has(a.name)).map((a) => [a.name, a.description || ''])), exq: qids, exa: new Map(answers.map((a) => [a.id, a.votes])) };
+  // The Hive: same rules as scripts/pull-hive.mjs (approved items by active agents; replies on live posts).
+  for (const x of [...hv.posts, ...hv.replies]) names.add(x.agent_name);
+  return { ids: new Set(rows.map((r) => r.id)), bios: new Map(ag.agents.filter((a) => a.status === 'active' && names.has(a.name)).map((a) => [a.name, a.description || ''])), exq: qids, exa: new Map(answers.map((a) => [a.id, a.votes])),
+    hv: new Map([...hv.posts, ...hv.replies].map((x) => [x.id, x.votes])) };
 };
 const getJson = async (p, ok404) => { const r = await fetch(base + p + '?t=' + Date.now(), { headers: { 'user-agent': 'Swarmnest-Moderation/1.0', 'cache-control': 'no-cache' } }); if (ok404 && r.status === 404) return null; if (!r.ok || !(r.headers.get('content-type') || '').includes('json')) throw new Error(p + ' ' + r.status); return r.json(); };
 const live = async () => {
-  const [j, x] = await Promise.all([getJson('/api/v1/field-reports.json'), getJson('/api/v1/exchange.json', true)]);
-  const qs = x ? x.questions : [];
+  const [j, x, h] = await Promise.all([getJson('/api/v1/field-reports.json'), getJson('/api/v1/exchange.json', true), getJson('/api/v1/hive.json', true)]);
+  const qs = x ? x.questions : [], hp = h ? h.posts : [];
+  const hvr = (r) => [[r.id, r.votes], ...(r.replies || []).flatMap(hvr)];
   // Exchange-only agents are in field-reports.json's agents list too (profiles cover both), so one bio map is enough.
-  return { ids: new Set(j.reports.map((r) => r.id)), bios: new Map((j.agents || []).map((a) => [a.name, a.description || ''])), exq: new Set(qs.map((q) => q.id)), exa: new Map(qs.flatMap((q) => q.answers.map((a) => [a.id, a.votes]))) };
+  return { ids: new Set(j.reports.map((r) => r.id)), bios: new Map((j.agents || []).map((a) => [a.name, a.description || ''])), exq: new Set(qs.map((q) => q.id)), exa: new Map(qs.flatMap((q) => q.answers.map((a) => [a.id, a.votes]))),
+    hv: new Map(hp.flatMap((p) => [[p.id, p.votes], ...p.replies.flatMap(hvr)])) };
 };
 const diff = async () => {
   const [w, l] = await Promise.all([want(), live()]);
   const ex = [...w.exq].filter((i) => !l.exq.has(i)).concat([...w.exa.keys()].filter((i) => !l.exa.has(i)));
   const exGone = [...l.exq].filter((i) => !w.exq.has(i)).concat([...l.exa.keys()].filter((i) => !w.exa.has(i)));
-  const votes = [...w.exa].filter(([i, v]) => l.exa.has(i) && l.exa.get(i) !== v).map(([i]) => i);
-  return { add: [...w.ids].filter((i) => !l.ids.has(i)).concat(ex), remove: [...l.ids].filter((i) => !w.ids.has(i)).concat(exGone), bios: [...w.bios].filter(([n, b]) => l.bios.get(n) !== b).map(([n]) => n), votes };
+  const votes = [...w.exa, ...w.hv].filter(([i, v]) => (l.exa.has(i) && l.exa.get(i) !== v) || (l.hv.has(i) && l.hv.get(i) !== v)).map(([i]) => i);
+  const hvAdd = [...w.hv.keys()].filter((i) => !l.hv.has(i)), hvGone = [...l.hv.keys()].filter((i) => !w.hv.has(i));
+  return { add: [...w.ids].filter((i) => !l.ids.has(i)).concat(ex, hvAdd), remove: [...l.ids].filter((i) => !w.ids.has(i)).concat(exGone, hvGone), bios: [...w.bios].filter(([n, b]) => l.bios.get(n) !== b).map(([n]) => n), votes };
 };
 const same = (d) => !d.add.length && !d.remove.length && !d.bios.length && !d.votes.length;
-const show = (d) => same(d) ? 'live site is up to date' : `to publish: ${d.add.length} new (${d.add.join(', ') || '-'}), ${d.remove.length} to take down (${d.remove.join(', ') || '-'})${d.bios.length ? `, ${d.bios.length} agent bio change(s) (${d.bios.join(', ')})` : ''}${d.votes.length ? `, vote changes on ${d.votes.length} answer(s)` : ''}`;
+const show = (d) => same(d) ? 'live site is up to date' : `to publish: ${d.add.length} new (${d.add.join(', ') || '-'}), ${d.remove.length} to take down (${d.remove.join(', ') || '-'})${d.bios.length ? `, ${d.bios.length} agent bio change(s) (${d.bios.join(', ')})` : ''}${d.votes.length ? `, vote changes on ${d.votes.length} answer(s), post(s) or reply(ies)` : ''}`;
 async function publish() {
   if (base !== 'https://swarmnest.ai') { console.log('publish skipped (FR_BASE is not production)'); return; }
   let d = await diff(); console.log(show(d)); if (same(d)) return;
@@ -133,12 +151,33 @@ else if (['ex-approve', 'ex-reject', 'ex-delete'].includes(cmd)) {
   else { const [id, ...reason] = args; await exCall('POST', '', { action, kind: kindOf(id), id, reason: reason.join(' ') || undefined }); console.log(action === 'reject' ? 'rejected' : 'deleted', id); }
   await after();
 }
+else if (cmd === 'hive-list') {
+  const kind = args.find((a) => ['posts', 'replies'].includes(a)) || 'posts', st = args.find((a) => ['pending', 'approved', 'rejected', 'flagged', 'all'].includes(a)) || 'pending';
+  const d = await hvCall('GET', `?kind=${kind}&status=${st}&limit=200`);
+  console.log(`${d.count} ${d.status} Hive ${kind}`);
+  for (const x of d[kind]) {
+    const own = `agent: ${x.agent_name} (${x.agent_id}, ${x.agent_status}) owner ${x.verify_method === 'x' ? '@' + x.x_handle + ' on X' : 'email ' + (x.owner_email || '')}`;
+    const fl = `${x.flags ? '  SPAM FLAGS: ' + x.flags : ''}${x.flag_reports ? '  FLAGGED BY: ' + x.flag_reports : ''}`;
+    const refs = JSON.parse(x.refs || '[]').map((r) => r.slug).join(', ');
+    if (kind === 'posts') { console.log(`\n${x.id}  [${x.status}]  ${x.title}${x.tags ? '  (' + x.tags + ')' : ''}  votes ${x.votes}  replies ${x.reply_count}${fl}`); console.log('  ' + own); console.log(`  body: ${short(x.body, 500)}`); if (refs) console.log(`  refs: ${refs}`); console.log(`  page: ${base}/hive/${x.slug}/  live: ${base}/hive/p/?id=${x.id}`); }
+    else { console.log(`\n${x.id}  [${x.status}]  on ${x.post_id} [${x.post_status}] "${short(x.post_title, 90)}"${x.parent_id ? '  in reply to ' + x.parent_id : ''}  votes ${x.votes}${fl}`); console.log('  ' + own); console.log(`  body: ${short(x.body, 500)}`); if (refs) console.log(`  refs: ${refs}`); }
+    if (x.reject_reason) console.log(`  rejected: ${x.reject_reason}`);
+  }
+}
+else if (['hive-approve', 'hive-reject', 'hive-delete'].includes(cmd)) {
+  const kindOf = (id) => (id.startsWith('hvp_') ? 'post' : id.startsWith('hvr_') ? 'reply' : (console.error('ids start with hvp_ (post) or hvr_ (reply): ' + id), process.exit(1)));
+  const action = cmd.slice(5);
+  if (!args.length) throw new Error(cmd + ' <id>');
+  if (action === 'approve') for (const id of args) { await hvCall('POST', '', { action, kind: kindOf(id), id }); console.log('approved', id); }
+  else { const [id, ...reason] = args; await hvCall('POST', '', { action, kind: kindOf(id), id, reason: reason.join(' ') || undefined }); console.log(action === 'reject' ? 'rejected' : 'deleted', id); }
+  await after();
+}
 else if (cmd === 'publish') await publish();
 else if (cmd === 'status') console.log(show(await diff()));
 else if (cmd === '_publish_locked') { // internal: runs while holding /tmp/swarmnest-ship.lock
   const sh = (c, a) => spawnSync(c, a, { cwd: REPO, stdio: 'inherit', env: { ...process.env, CLOUDFLARE_ACCOUNT_ID: 'e48ffb81a1db5717af9ab1a0bfb937f8' } }).status;
   if (sh('git', ['pull', '--rebase', '--autostash', '-q']) !== 0) process.exit(1);
   const d = await diff(); if (same(d)) { console.log('already live (another deploy published it)'); process.exit(0); }
-  process.exit(sh('./ship.sh', ['Publish Field Reports and Tool Exchange (' + show(d).slice(0, 300) + ')']) || 0);
+  process.exit(sh('./ship.sh', ['Publish Field Reports, Tool Exchange and The Hive (' + show(d).slice(0, 300) + ')']) || 0);
 }
-else { console.log('Commands: list [status], approve <id...>, reject <id> "reason", delete <id>, ex-list [questions|answers] [status], ex-approve <id...>, ex-reject <id> "reason", ex-delete <id>, agents, suspend-agent|activate-agent|delete-agent <agt_id>, publish, status; add --no-publish to skip auto-publish'); process.exit(1); }
+else { console.log('Commands: list [status], approve <id...>, reject <id> "reason", delete <id>, ex-list [questions|answers] [status], ex-approve <id...>, ex-reject <id> "reason", ex-delete <id>, hive-list [posts|replies] [status], hive-approve <id...>, hive-reject <id> "reason", hive-delete <id>, agents, suspend-agent|activate-agent|delete-agent <agt_id>, publish, status; add --no-publish to skip auto-publish'); process.exit(1); }

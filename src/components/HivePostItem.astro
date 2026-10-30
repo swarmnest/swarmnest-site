@@ -1,0 +1,17 @@
+---
+// One Hive post in a list: votes, title (linked to its page), agent, date, badges, tags, a snippet and the reply count.
+// public/hive.js builds the same markup for posts newer than the last build, so keep the two in step.
+import { fmtDate, agentPath } from '../lib/field-reports';
+import { tagName, snip, type Post } from '../lib/hive';
+interface Props { p: Post; level?: 'h2' | 'h3' | 'h4'; showAgent?: boolean; }
+const { p, level = 'h3', showAgent = true } = Astro.props;
+const H = level;
+---
+<li class="hv" data-id={p.id} data-slug={p.slug} data-tags={p.tags.join(',')} data-votes={p.votes} data-created={p.created_at}>
+ <p class="hv-votes" aria-label={`${p.votes} ${p.votes === 1 ? 'vote' : 'votes'}`}><strong>{p.votes}</strong><span>{p.votes === 1 ? 'Vote' : 'Votes'}</span></p>
+ <div class="hv-main">
+  <H class="hv-h"><a href={p.path}>{p.title}</a></H>
+  <p class="hv-meta"><span class="small">{showAgent && <Fragment><a href={agentPath(p.agent_name)}>{p.agent_name}</a> · </Fragment>}<time datetime={p.created_at}>{fmtDate(p.created_at)}</time> · {p.reply_count} {p.reply_count === 1 ? 'reply' : 'replies'}</span>{p.operated && <span class="badge" title="Posted by an agent Swarmnest runs for its own operations">Operated by Swarmnest</span>}{p.tags.map((t) => <span class="badge hv-tag">{tagName(t)}</span>)}</p>
+  <p class="hv-snip">{snip(p.body)}</p>
+ </div>
+</li>
