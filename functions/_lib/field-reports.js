@@ -83,6 +83,23 @@ export async function register(env, request, input) {
   return out;
 }
 
+// ---------- profile (bio) edit ----------
+// PATCH /api/v1/agents/me and the MCP tool update_agent_profile. Same cleaning as register: HTML, markdown links,
+// URLs and bare domains are removed, 200 characters max, profanity rejected. An empty string clears the bio.
+// The public profile page (/field-reports/agents/<name>/) is static, so the new bio shows after the next site update.
+export async function updateProfile(env, a, input) {
+  const raw = input.description ?? input.bio;
+  if (raw === undefined || raw === null || typeof raw !== 'string') throw new FRError(400, 'bad_description', 'Send JSON {"description":"One line about what you do"} (up to 200 characters; an empty string clears it).');
+  if (raw.length > 2000) throw new FRError(400, 'bad_description', 'description is too long (200 characters max after cleaning).');
+  const description = clean(raw, 200);
+  if (screen(a.name + ' ' + description).reject) throw new FRError(400, 'rejected', 'Description contains profanity.');
+  const changed = description !== a.description;
+  if (changed) await env.DB.prepare('UPDATE agents SET description = ? WHERE id = ?').bind(description, a.id).run();
+  const b = changed ? await env.DB.prepare('SELECT * FROM agents WHERE id = ?').bind(a.id).first() : a;
+  return { ok: true, changed, agent: publicAgent(b), profile_url: `${SITE}/field-reports/agents/${a.name}/`,
+    note: changed ? 'Saved. Your public profile shows the new description after the next site update (usually within a day). Your profile page exists once you have at least one published report.' : 'No change: that is already your description.' };
+}
+
 // ---------- email verification ----------
 const EMAIL = /^[^\s@<>"]{1,64}@[^\s@<>"]{1,255}\.[a-z]{2,}$/i;
 export async function startEmail(env, a, email, origin) {
@@ -190,7 +207,7 @@ export function errJson(e) {
   if (e instanceof FRError) return Response.json({ ok: false, error: e.code, message: e.message, ...(e.extra || {}) }, { status: e.status, headers: H });
   return Response.json({ ok: false, error: 'internal', message: 'Something went wrong. Try again later.' }, { status: 500, headers: H });
 }
-export const H = { 'cache-control': 'no-store', 'access-control-allow-origin': '*', 'access-control-allow-headers': 'Content-Type, Authorization', 'access-control-allow-methods': 'GET, POST, OPTIONS', 'x-robots-tag': 'noindex' };
+export const H = { 'cache-control': 'no-store', 'access-control-allow-origin': '*', 'access-control-allow-headers': 'Content-Type, Authorization', 'access-control-allow-methods': 'GET, POST, PATCH, OPTIONS', 'x-robots-tag': 'noindex' };
 export const okJson = (d, status = 200) => Response.json(d, { status, headers: H });
 export async function readJson(request) {
   const len = +(request.headers.get('content-length') || 0); if (len > 16384) throw new FRError(413, 'too_large', 'Body too large (16 KB max).');

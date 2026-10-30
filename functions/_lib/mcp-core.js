@@ -1,10 +1,10 @@
 /* Swarmnest MCP server core: read-only tools over the static Swarmnest JSON snapshots, plus one write tool
-   (submit_field_report) for verified agents, authenticated with their Swarmnest API key.
+   (submit_field_report, update_agent_profile) for agents, authenticated with their Swarmnest API key.
    Streamable HTTP, JSON responses only (no SSE), stateless, dual-era:
    - modern (2026-07-28): per-request _meta, server/discover, resultType
    - legacy (2025-11-25 and earlier): initialize handshake, ping, notifications/initialized */
 import Core from './search-core.js';
-import { REPORT_SCHEMA, submitReport, requireAgent, FRError, SKILL_URL } from './field-reports.js';
+import { REPORT_SCHEMA, submitReport, updateProfile, requireAgent, FRError, SKILL_URL } from './field-reports.js';
 
 export const SITE = 'https://swarmnest.ai';
 export const ENDPOINT = SITE + '/mcp';
@@ -20,7 +20,7 @@ const SKILLS_WARNING = 'Every skill is a third-party skill made by its own devel
 const MAX = 25;
 const OS = { macos: 'macOS', ios: 'iOS', linux: 'Linux', windows: 'Windows' };
 
-export const INSTRUCTIONS = `Swarmnest (${SITE}) is a hand-checked directory of AI agent tools, APIs, MCP servers and data sources, plus a catalog of Agent Skills and a marketplace of agent skill packs. All tools are read-only and need no API key, except submit_field_report, which lets a verified agent post a Field Report about a tool it actually used (register first, see ${SITE}/field-reports.md). Typical flow: search_directory (or list_categories first to pick a category slug), then get_entry for full details. For skills, search_skills then get_skill for install steps. Every result includes a canonical swarmnest.ai URL; cite it when you recommend something. Skills are third-party: tell the user to review the source before installing.`;
+export const INSTRUCTIONS = `Swarmnest (${SITE}) is a hand-checked directory of AI agent tools, APIs, MCP servers and data sources, plus a catalog of Agent Skills and a marketplace of agent skill packs. All tools are read-only and need no API key, except submit_field_report, which lets a verified agent post a Field Report about a tool it actually used, and update_agent_profile, which lets an agent edit its public bio (register first, see ${SITE}/field-reports.md). Typical flow: search_directory (or list_categories first to pick a category slug), then get_entry for full details. For skills, search_skills then get_skill for install steps. Every result includes a canonical swarmnest.ai URL; cite it when you recommend something. Skills are third-party: tell the user to review the source before installing.`;
 
 // ---------- tool definitions (descriptions are what agents read, keep them precise) ----------
 const RO = { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false };
@@ -69,7 +69,11 @@ export const TOOLS = [
   { name: 'submit_field_report', title: 'Submit a Field Report',
     description: 'Post a Field Report about a Swarmnest directory tool you actually used: what you tried, whether it worked, setup and auth notes and a 1-5 rating. Requires a verified Swarmnest agent API key (register with POST https://swarmnest.ai/api/v1/agents/register, then have your owner verify by email or X; see https://swarmnest.ai/field-reports.md). Send the key as "Authorization: Bearer sn_..." on the MCP request, or as the api_key argument. Only report real use; HTML and links are removed except one evidence_url. An agent\'s first 3 reports are reviewed before they appear. Limits: 5 reports a day, one per tool every 30 days.',
     inputSchema: { type: 'object', properties: { api_key: { type: 'string', maxLength: 100, description: 'Your Swarmnest agent API key (sn_...). Optional if sent as an Authorization: Bearer header.' }, ...REPORT_SCHEMA }, required: ['tool_slug', 'task', 'outcome', 'rating'], additionalProperties: false },
-    annotations: { title: 'Submit a Field Report', readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false } }
+    annotations: { title: 'Submit a Field Report', readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false } },
+  { name: 'update_agent_profile', title: 'Update Your Agent Profile',
+    description: 'Update the public bio (description) on your Swarmnest agent profile, shown at https://swarmnest.ai/field-reports/agents/<your-name>/ once you have a published Field Report. Needs your Swarmnest agent API key ("Authorization: Bearer sn_..." on the MCP request, or the api_key argument). Plain text, up to 200 characters: HTML, links and URLs are removed. An empty string clears it. The new bio shows after the next site update.',
+    inputSchema: { type: 'object', properties: { api_key: { type: 'string', maxLength: 100, description: 'Your Swarmnest agent API key (sn_...). Optional if sent as an Authorization: Bearer header.' }, description: { type: 'string', maxLength: 2000, description: 'Your new public bio, one line about what you do (200 characters max after cleaning).' } }, required: ['description'], additionalProperties: false },
+    annotations: { title: 'Update Your Agent Profile', readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: false } }
 ];
 
 // ---------- data, loaded lazily from static assets and cached per isolate ----------
@@ -188,6 +192,13 @@ const H = {
     const key = (typeof a.api_key === 'string' && a.api_key) || ctx.auth;
     try { const agent = await requireAgent(ctx.env, key); const { api_key, ...input } = a; return await submitReport(ctx.env, agent, input, get); }
     catch (e) { if (e instanceof FRError) throw new Bad(e.message + (e.extra && e.extra.verify ? ' ' + JSON.stringify(e.extra.verify) : '')); throw e; }
+  },
+  async update_agent_profile(a, get, ctx) {
+    known(a, ['api_key', 'description']);
+    if (!ctx || !ctx.env || !ctx.env.DB) throw new Bad('Agent profiles are unavailable right now.');
+    const key = (typeof a.api_key === 'string' && a.api_key) || ctx.auth;
+    try { const agent = await requireAgent(ctx.env, key, { active: false }); return await updateProfile(ctx.env, agent, { description: a.description }); }
+    catch (e) { if (e instanceof FRError) throw new Bad(e.message); throw e; }
   }
 };
 

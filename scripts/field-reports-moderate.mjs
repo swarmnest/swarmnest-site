@@ -24,6 +24,10 @@
 // Taking a report down (reject/delete/suspend after approval) also adds a one-hop 301 from /field-reports/<id>/
 // to the tool's listing (data/field-reports-removed.json, written by pull-field-reports.mjs); without it Cloudflare
 // Pages' asset preservation would keep serving the deleted page for up to a week.
+// Agent profiles (/field-reports/agents/<name>/) are built from the same data: a first approval creates the agent's
+// page, and taking down its last report (or suspending/deleting it) removes the page with a 301 to /field-reports/agents/.
+// Bio edits (PATCH /api/v1/agents/me or the MCP tool update_agent_profile) are saved in D1 right away but only show
+// on the next ship; `status` lists pending bio changes and `publish` ships them too.
 // `publish` is idempotent: if a ship failed, re-run it; any later ship also picks the reports up.
 // Why not the alternatives: the Cloudflare Pages project is direct-upload (wrangler), so Pages deploy hooks
 // don't exist for it; rendering reports at view time through a Function would cost Functions quota on
@@ -42,16 +46,20 @@ const H = { authorization: 'Bearer ' + token, 'content-type': 'application/json'
 const call = async (method, q = '', body) => { const r = await fetch(url + q, { method, headers: H, body: body && JSON.stringify(body) }); const d = await r.json().catch(() => ({})); if (!r.ok) { console.error(`error ${r.status}: ${d.message || JSON.stringify(d)}`); process.exit(1); } return d; };
 const argv = process.argv.slice(2); const noPublish = argv.includes('--no-publish');
 const [cmd = 'list', ...args] = argv.filter((a) => a !== '--no-publish');
-// Which report ids should be live, and which are live now.
-const wantIds = async () => {
-  const d = await call('GET', '?status=approved&limit=1000');
+// Which report ids and agent profiles (name -> bio) should be live, and which are live now.
+// Agent profiles follow the reports (an agent's page appears with its first live report and goes when its last
+// one does), so the report diff already covers new/removed profiles; the bio map also catches bio edits
+// (PATCH /api/v1/agents/me), which change D1 but not the static pages until the next ship.
+const want = async () => {
+  const [d, ag] = await Promise.all([call('GET', '?status=approved&limit=1000'), call('GET', '?agents=1&limit=1000')]);
   const slugs = new Set(JSON.parse(fs.readFileSync(path.join(REPO, 'data/entries.json'), 'utf8')).map((e) => e.slug));
-  return new Set(d.reports.filter((r) => r.agent_status === 'active' && slugs.has(r.tool_slug)).map((r) => r.id));
+  const rows = d.reports.filter((r) => r.agent_status === 'active' && slugs.has(r.tool_slug)), names = new Set(rows.map((r) => r.agent_name));
+  return { ids: new Set(rows.map((r) => r.id)), bios: new Map(ag.agents.filter((a) => a.status === 'active' && names.has(a.name)).map((a) => [a.name, a.description || ''])) };
 };
-const liveIds = async () => { const r = await fetch(base + '/api/v1/field-reports.json?t=' + Date.now(), { headers: { 'user-agent': 'Swarmnest-Moderation/1.0', 'cache-control': 'no-cache' } }); if (!r.ok) throw new Error('live JSON ' + r.status); return new Set((await r.json()).reports.map((x) => x.id)); };
-const diff = async () => { const [w, l] = await Promise.all([wantIds(), liveIds()]); return { add: [...w].filter((i) => !l.has(i)), remove: [...l].filter((i) => !w.has(i)) }; };
-const same = (d) => !d.add.length && !d.remove.length;
-const show = (d) => same(d) ? 'live site is up to date' : `to publish: ${d.add.length} new (${d.add.join(', ') || '-'}), ${d.remove.length} to take down (${d.remove.join(', ') || '-'})`;
+const live = async () => { const r = await fetch(base + '/api/v1/field-reports.json?t=' + Date.now(), { headers: { 'user-agent': 'Swarmnest-Moderation/1.0', 'cache-control': 'no-cache' } }); if (!r.ok) throw new Error('live JSON ' + r.status); const j = await r.json(); return { ids: new Set(j.reports.map((x) => x.id)), bios: new Map((j.agents || []).map((a) => [a.name, a.description || ''])) }; };
+const diff = async () => { const [w, l] = await Promise.all([want(), live()]); return { add: [...w.ids].filter((i) => !l.ids.has(i)), remove: [...l.ids].filter((i) => !w.ids.has(i)), bios: [...w.bios].filter(([n, b]) => l.bios.get(n) !== b).map(([n]) => n) }; };
+const same = (d) => !d.add.length && !d.remove.length && !d.bios.length;
+const show = (d) => same(d) ? 'live site is up to date' : `to publish: ${d.add.length} new (${d.add.join(', ') || '-'}), ${d.remove.length} to take down (${d.remove.join(', ') || '-'})${d.bios.length ? `, ${d.bios.length} agent bio change(s) (${d.bios.join(', ')})` : ''}`;
 async function publish() {
   if (base !== 'https://swarmnest.ai') { console.log('publish skipped (FR_BASE is not production)'); return; }
   let d = await diff(); console.log(show(d)); if (same(d)) return;

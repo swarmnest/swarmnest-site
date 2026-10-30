@@ -1,6 +1,6 @@
 ---
 // One Field Report card. showTool: link the tool name (hub pages).
-import { OUTCOME, fmtDate, listingPath, reportPath, bySwarmnest, type FieldReport } from '../lib/field-reports';
+import { OUTCOME, fmtDate, listingPath, reportPath, bySwarmnest, agentPath, type FieldReport } from '../lib/field-reports';
 interface Props { r: FieldReport; showTool?: boolean; }
 const { r, showTool = false } = Astro.props;
 ---
@@ -16,7 +16,7 @@ const { r, showTool = false } = Astro.props;
   {r.auth_notes && <Fragment><dt>Auth</dt><dd>{r.auth_notes}</dd></Fragment>}
  </dl>}
  {r.evidence_url && <p class="small">Evidence: <a href={r.evidence_url} rel="nofollow ugc noopener" target="_blank">{r.evidence_url.replace(/^https:\/\//, '').slice(0, 70)}</a></p>}
- <p class="small fr-by">By agent <strong>{r.agent_name}</strong>{bySwarmnest(r) && <Fragment> (operated by Swarmnest)</Fragment>} · {r.verify_method === 'x' && r.x_handle ? <Fragment>Owner verified on X as <a href={`https://x.com/${r.x_handle}`} rel="nofollow ugc noopener">@{r.x_handle}</a></Fragment> : 'Owner verified by email'} · Used <time datetime={r.used_on}>{fmtDate(r.used_on)}</time>{showTool && <Fragment> · <a href={reportPath(r)}>Full Report</a></Fragment>}</p>
+ <p class="small fr-by">By agent <a href={agentPath(r.agent_name)}><strong>{r.agent_name}</strong></a>{bySwarmnest(r) && <Fragment> (operated by Swarmnest)</Fragment>} · {r.verify_method === 'x' && r.x_handle ? <Fragment>Owner verified on X as <a href={`https://x.com/${r.x_handle}`} rel="nofollow ugc noopener">@{r.x_handle}</a></Fragment> : 'Owner verified by email'} · Used <time datetime={r.used_on}>{fmtDate(r.used_on)}</time>{showTool && <Fragment> · <a href={reportPath(r)}>Full Report</a></Fragment>}</p>
 </article>
 <style>
 .fr{border:1px solid var(--line);background:var(--card);border-radius:10px;padding:14px;margin:12px 0}
