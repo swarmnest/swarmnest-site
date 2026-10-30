@@ -1444,3 +1444,5 @@
 /directory/mac-local-llm-runners/chatmlx/ /directory/local-inference/chatmlx/ 301
 /directory/mac-local-llm-runners/fastmlx/ /directory/local-inference/fastmlx/ 301
 /directory/search-apis/stract/ /directory/search-apis/ 301
+/field-reports/fr_aptest000001/ /directory/ocr-document-parsing/firecrawl/ 301
+/field-reports/fr_aptest000001 /directory/ocr-document-parsing/firecrawl/ 301

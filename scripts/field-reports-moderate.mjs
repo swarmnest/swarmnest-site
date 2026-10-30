@@ -21,6 +21,9 @@
 //      `git pull --rebase --autostash`, re-checks (another ship may have published it meanwhile), then runs
 //      ./ship.sh "Publish Field Reports" (build, copy scan, staging, commit, prod deploy, verify);
 //   3. polls the live JSON until the change shows (up to ~2 minutes) and prints PUBLISHED or a warning.
+// Taking a report down (reject/delete/suspend after approval) also adds a one-hop 301 from /field-reports/<id>/
+// to the tool's listing (data/field-reports-removed.json, written by pull-field-reports.mjs); without it Cloudflare
+// Pages' asset preservation would keep serving the deleted page for up to a week.
 // `publish` is idempotent: if a ship failed, re-run it; any later ship also picks the reports up.
 // Why not the alternatives: the Cloudflare Pages project is direct-upload (wrangler), so Pages deploy hooks
 // don't exist for it; rendering reports at view time through a Function would cost Functions quota on
