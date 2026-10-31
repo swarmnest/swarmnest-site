@@ -1041,7 +1041,74 @@
     "2115896877334020194",
     "2115934441411674600",
     "2115833251184902479",
-    "2115823665543852073"
+    "2115823665543852073",
+    "2115821177893446006",
+    "2115841570494722289",
+    "2115865319918997805",
+    "2115866948966007031",
+    "2115878715477618829",
+    "2115878773111280090",
+    "2115879944500744537",
+    "2115889617476178141",
+    "2115890705931325787",
+    "2115900183863284201",
+    "2115900227320451572",
+    "2115911644501147972",
+    "2115944112251609172",
+    "2115956854467760509",
+    "2115963668852560050",
+    "2115974955754238360",
+    "2115995031462895693",
+    "2115998954181816694",
+    "2116005035226148889",
+    "2116026694934892947",
+    "2116028668812079411",
+    "2116030512431243380",
+    "2116033743807041872",
+    "2116038045829054688",
+    "2116045852783579593",
+    "2116048510927999227",
+    "2116049199716266259",
+    "2116056223770657037",
+    "2116060395551223851",
+    "2116068900798685516",
+    "2116078021417517110",
+    "2116088167598277116",
+    "2116088184350114179",
+    "2116091212012679227",
+    "2116105153094836689",
+    "2116116912878833759",
+    "2116127542255964195",
+    "2116129027517714921",
+    "2116133802900652189",
+    "2116139221400609091",
+    "2116143086242070788",
+    "2116145760798433493",
+    "2116149853671555219",
+    "2116151468285895019",
+    "2116152640359092733",
+    "2116153604629241988",
+    "2116162218387497023",
+    "2116166348829270269",
+    "2116168505657532525",
+    "2116168621198061934",
+    "2116169466308665634",
+    "2116172551734894742",
+    "2116172727900086672",
+    "2116175085426118804",
+    "2116183610134843461",
+    "2116184233332912257",
+    "2116184460353794458",
+    "2116085588356968887",
+    "2116205526229127596",
+    "2116276040045916267",
+    "2116255529987342349",
+    "2116318436980936733",
+    "2116173719349391609",
+    "2116194882184531986",
+    "2116229628431925731",
+    "2116214388885438779",
+    "2116181211643335117"
   ],
   "surfaced": {
     "2111478492336734697": "KamesGeraghty asks where to find agent workflows/prompt loops",
@@ -1067,10 +1134,12 @@
     "2114876681878175952": "HaziqBuilds asks for something to make Claude Code good at computer use (cua / Playwright MCP)",
     "2115075891734905008": "Silvers_48 asks what people use for agent memory: Mem0, Letta, or own (agent-memory)",
     "2115566805125308862": "nikitadrokin asks how people edit videos with AI and which MCPs or apps they use (video-editing)",
-    "2115403389098233902": "bk_knowledge asks for a skill or plugin to model game characters with Codex + Blender (3d-graphics)"
+    "2115403389098233902": "bk_knowledge asks for a skill or plugin to model game characters with Codex + Blender (3d-graphics)",
+    "2115878715477618829": "chiranjeevkap asks for the best Claude skills for frontend design (frontend-skills)",
+    "2116038045829054688": "_pragmatic_dev asks what MCP people use daily (context7)"
   },
-  "last_run": "2026-10-29T17:12:00-07:00",
-  "newest_id_seen": "2115949908264095925",
+  "last_run": "2026-10-30T17:10:00-07:00",
+  "newest_id_seen": "2116318436980936733",
   "notes": {
     "2111940664208265550": "lonniev follow-up post on same MCP-listing complaint already surfaced (2111601012880368072); not re-surfaced",
     "2112259678822441302": "SaidAitmbarek: \"new SEO is getting your tool into Claude's MCP directory\" (commentary, 507 views); not surfaced",
@@ -1097,7 +1166,13 @@
     "2115775921496179042": "am56ay asks marclou what skills he uses for UI (directed at one person); not surfaced",
     "2115821259418444206": "tanmaybawakar asks devteamdrew which skills for sfx (directed); not surfaced",
     "2115755971490271506": "nokoxyz installed 145 claude skills (own content, not a question); not surfaced",
-    "2115700736084648177": "theo asks if T3 Code should add skill manager/MCP marketplace (64K views, 567 replies); not surfaced, product poll and reply would be buried/promotional"
+    "2115700736084648177": "theo asks if T3 Code should add skill manager/MCP marketplace (64K views, 567 replies); not surfaced, product poll and reply would be buried/promotional",
+    "2116151468285895019": "drbarnard (16.5K followers) wants a design-inspiration MCP (Mobbin/Refero-style) Claude can present options from; no matching Swarmnest entry; not surfaced",
+    "2116205526229127596": "imkirankumarg 'Claude skills vs MCPs vs Connectors vs Plugins' (13 views, own explainer content); not surfaced",
+    "2116255529987342349": "TeddyinMedia SEO tools for AI agents roundup (own content); not surfaced",
+    "2116276040045916267": "NTreze_ asks finnardley what he uses for voice (directed at one person); not surfaced",
+    "2116318436980936733": "PromptToProdApp scored best-MCP list (own content, 6 views); not surfaced",
+    "2116214388885438779": "SkillMaxxAI tests which MCP servers connect in Cursor (directory-like project, own content); not surfaced"
   },
   "competitors_spotted": {
     "2112161484595765252": "ToolPassed: tested directory of AI tools, MCP servers, agent skills; $99 priority review",
@@ -1138,7 +1213,10 @@
     "2115799312852742239": "chenyiyl Fuel, a directory of AI agents, CLI tools, MCP servers, prompts and skills",
     "2115782874159108475": "Liran1337 free directory of finance and trading AI tools (MCP servers, skills, APIs)",
     "2115490679556317400": "ferrraridave69 SwiftAgents, directory of AI tools for Swift/Apple devs",
-    "2115692636921057780": "AgentRigs (@AgentRigs): leaderboard of AI coding agent setups and which MCP servers they use"
+    "2115692636921057780": "AgentRigs (@AgentRigs): leaderboard of AI coding agent setups and which MCP servers they use",
+    "2115956854467760509": "nicklaunches: AI Agents Listing, MCP page lists 800+ servers, searchable over MCP",
+    "2115900183863284201": "SkillGild: marketplace for AI agent skills",
+    "2116214388885438779": "SkillMaxxAI: tests which MCP servers connect in a clean Cursor sandbox, publishes full list + logs"
   },
   "posted": {
     "2113861273012089099": "replied from @Swarmnest_ai 2026-10-24 11:20 PT",
@@ -1195,7 +1273,10 @@
     },
     "2115934441411674600": "replied from @Swarmnest_ai 2026-10-29 17:11 PT (reply 2115959772705181733)",
     "2115823665543852073": "replied from @Swarmnest_ai 2026-10-29 18:22 PT (reply 2115977490426679494)",
-    "2115833251184902479": "replied from @Swarmnest_ai 2026-10-29 19:13 PT (reply 2115990543440441664)"
+    "2115833251184902479": "replied from @Swarmnest_ai 2026-10-29 19:13 PT (reply 2115990543440441664)",
+    "2115878715477618829": "replied from @Swarmnest_ai 2026-10-30 08:11 PT (reply 2116186270884061290)",
+    "2116038045829054688": "replied from @Swarmnest_ai 2026-10-30 09:07 PT (reply 2116200344120402382)",
+    "2116085588356968887": "replied from @Swarmnest_ai 2026-10-30 17:28 PT (reply 2116326517747679638)"
   },
   "proposed": {
     "2114053263477629420": {
@@ -1269,6 +1350,18 @@
       "url": "https://x.com/itsjoenaso/status/2115823665543852073",
       "reply": "It starts to feel different when tools match jobs instead of endpoints: one find_overdue_invoices call that chains three API requests and returns only what the model needs. A 1:1 API mirror leaves all that planning to the model. https://swarmnest.ai/guides/best-mcp-servers-for-claude-code-and-cursor/",
       "proposed_at": "2026-10-29T17:12:00-07:00"
+    },
+    "2115878715477618829": {
+      "author": "chiranjeevkap",
+      "url": "https://x.com/chiranjeevkap/status/2115878715477618829",
+      "reply": "Start with Anthropic's frontend-design skill: it pushes Claude past generic layouts toward bolder type, color and motion. Pair it with Vercel's web-design-guidelines for accessibility and UX checks. More in one place: https://swarmnest.ai/agent-skills/category/frontend-skills/",
+      "proposed_at": "2026-10-30T08:20:00-07:00"
+    },
+    "2116038045829054688": {
+      "author": "_pragmatic_dev",
+      "url": "https://x.com/_pragmatic_dev/status/2116038045829054688",
+      "reply": "The one most devs keep on daily is Context7: it gives the agent current library docs instead of stale training data. Then Playwright for checking UI in a real browser and GitHub MCP for issues and PRs. A few servers beat a long list. https://swarmnest.ai/directory/mcp-servers/context7/",
+      "proposed_at": "2026-10-30T08:20:00-07:00"
     }
   }
 }
