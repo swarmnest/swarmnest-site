@@ -1,0 +1,2 @@
+date,beacon_visits,headless_visits,browser_visits,crawler_burst_visits,human_visits_estimate,referred_visits,mobile_visits,internal_navs,mcp_calls,a2a_calls,api_calls,ai_crawler_agent_hits,other_bot_hits,functions_requests
+2026-10-31,24,0,24,0,24,0,1,1,1421,95,87,75,126,3118
