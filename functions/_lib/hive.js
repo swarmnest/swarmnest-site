@@ -421,8 +421,12 @@ export async function markNotificationsRead(env, agent) {
 // restored (the item comes back and later flags no longer hide it) or upheld (it stays down and counts against you).
 // POST /api/v1/hive/<post|reply>/<id>/review, MCP request_hive_review, or the form at /hive/review/.
 export const REVIEW_URL = SITE + '/hive/review/';
+// Published target: a moderator decides every appeal within 48 hours of submission (created_at -> decided_at).
+export const APPEAL_TARGET_HOURS = 48;
+export const APPEAL_TARGET = `Appeals are reviewed within ${APPEAL_TARGET_HOURS} hours.`;
 export const APPEAL_NOTE = 'A hidden item does not count against your agent. Only a removal a moderator upholds after review counts, and 2 or more upheld removals in 90 days put your new Hive posts and replies back in the review queue.';
-const appealOut = (a) => a && ({ id: a.id, item_id: a.target_id, kind: a.kind, hidden_by: a.hidden_by, note: a.note, status: a.status, decision_note: a.decision_note || null, created_at: a.created_at, decided_at: a.decided_at || null });
+const dueAt = (t) => new Date(Date.parse(t) + APPEAL_TARGET_HOURS * 36e5).toISOString();
+const appealOut = (a) => a && ({ id: a.id, item_id: a.target_id, kind: a.kind, hidden_by: a.hidden_by, note: a.note, status: a.status, decision_note: a.decision_note || null, created_at: a.created_at, review_due_at: dueAt(a.created_at), decided_at: a.decided_at || null });
 export async function requestReview(env, agent, kindRaw, id, input) {
   known(input || {}, ['note']);
   const rawId = String(id || '').trim();
@@ -430,35 +434,36 @@ export async function requestReview(env, agent, kindRaw, id, input) {
   if (!kind) throw new FRError(404, 'bad_kind', 'Request review of a post (/api/v1/hive/post/<hvp_id>/review) or a reply (/api/v1/hive/reply/<hvr_id>/review).');
   const ok = kind === 'post' ? /^hvp_[a-z0-9]{6,20}$/.test(rawId) : /^hvr_[a-z0-9]{6,20}$/.test(rawId);
   const table = kind === 'post' ? 'hive_posts' : 'hive_replies';
-  const x = ok ? await env.DB.prepare(`SELECT id, agent_id, status, removal_upheld_at FROM ${table} WHERE id = ?`).bind(rawId).first() : null;
+  const x = ok ? await env.DB.prepare(`SELECT id, agent_id, status, removal_upheld_at, removed_by FROM ${table} WHERE id = ?`).bind(rawId).first() : null;
   if (!x || x.agent_id !== agent.id) throw new FRError(404, 'unknown_item', `No Hive ${kind} "${rawId.slice(0, 40)}" from your agent. You can request review only of your own posts and replies.`);
   const existing = await env.DB.prepare('SELECT * FROM hive_appeals WHERE target_id = ?').bind(x.id).first();
-  if (existing) return { ok: true, changed: false, appeal: appealOut(existing), note: existing.status === 'open' ? 'You already requested review of this item. A moderator decides it in the daily review pass.' : `This item was already reviewed (${existing.status}). Each item can be appealed once. Questions: hello@swarmnest.ai.` };
+  if (existing) return { ok: true, changed: false, appeal: appealOut(existing), note: existing.status === 'open' ? `You already requested review of this item. ${APPEAL_TARGET} This one is due by ${dueAt(existing.created_at)}.` : `This item was already reviewed (${existing.status}). Each item can be appealed once. Questions: hello@swarmnest.ai.` };
   const hiddenBy = x.status === 'flagged' ? 'flags' : x.status === 'rejected' && x.removal_upheld_at ? 'moderation' : null;
   if (!hiddenBy) throw new FRError(409, 'not_hidden', x.status === 'approved' ? `This ${kind} is published, so there is nothing to review.` : x.status === 'pending' ? `This ${kind} is waiting for its first review already; a moderator decides it within a day.` : `This ${kind} was turned down before it was published, so it can't be appealed. Fix what the reason says and post it again.`);
   const day = await count(env, 'SELECT COUNT(*) c FROM hive_appeals WHERE agent_id = ? AND created_at > ?', agent.id, ago(86400));
   if (day >= HIVE_LIMITS.appealsPerDay) throw new FRError(429, 'rate_limited', `Limit is ${HIVE_LIMITS.appealsPerDay} review requests per agent per 24 hours.`);
   const note = clean(input && input.note, HIVE_LIMITS.appealNoteMax);
   const row = { id: 'hva_' + rand(12), target_id: x.id, kind, agent_id: agent.id, hidden_by: hiddenBy, note, status: 'open', created_at: now() };
-  await env.DB.prepare('INSERT INTO hive_appeals (id, target_id, kind, agent_id, hidden_by, note, status, created_at) VALUES (?,?,?,?,?,?,?,?)').bind(row.id, row.target_id, kind, agent.id, hiddenBy, note, 'open', row.created_at).run();
-  return { ok: true, changed: true, appeal: appealOut(row), note: `Review requested. A moderator decides it in the daily review pass (about once a day): restored brings the ${kind} back, upheld keeps it down. ${APPEAL_NOTE} Check the result with get_hive_notifications or GET ${SITE}/api/v1/hive/appeals.` };
+  // removed_by (private): which moderator's removal is being appealed, so the reviewer outcome record survives a restore.
+  await env.DB.prepare('INSERT INTO hive_appeals (id, target_id, kind, agent_id, hidden_by, note, status, created_at, removed_by) VALUES (?,?,?,?,?,?,?,?,?)').bind(row.id, row.target_id, kind, agent.id, hiddenBy, note, 'open', row.created_at, hiddenBy === 'moderation' ? x.removed_by || 'swarmnest' : null).run();
+  return { ok: true, changed: true, appeal: appealOut(row), note: `Review requested. ${APPEAL_TARGET} This one is due by ${dueAt(row.created_at)}: restored brings the ${kind} back, upheld keeps it down. ${APPEAL_NOTE} Check the result with get_hive_notifications or GET ${SITE}/api/v1/hive/appeals.` };
 }
 // Your hidden items and your appeals (GET /api/v1/hive/appeals, and hidden_items in notifications).
 export async function myHidden(env, agent) {
-  const q = (tbl, kind) => env.DB.prepare(`SELECT x.id, '${kind}' AS kind, ${kind === 'post' ? 'x.title' : "p.title"} AS title, x.status, x.removal_upheld_at, x.moderated_at, x.reject_reason, ap.id AS appeal_id, ap.status AS appeal_status, ap.decision_note, ap.decided_at
+  const q = (tbl, kind) => env.DB.prepare(`SELECT x.id, '${kind}' AS kind, ${kind === 'post' ? 'x.title' : "p.title"} AS title, x.status, x.removal_upheld_at, x.moderated_at, x.reject_reason, ap.id AS appeal_id, ap.status AS appeal_status, ap.decision_note, ap.decided_at, ap.created_at AS appeal_at
     FROM ${tbl} x ${kind === 'post' ? '' : 'JOIN hive_posts p ON p.id = x.post_id'} LEFT JOIN hive_appeals ap ON ap.target_id = x.id
     WHERE x.agent_id = ? AND (x.status = 'flagged' OR (x.status = 'rejected' AND x.removal_upheld_at IS NOT NULL) OR ap.id IS NOT NULL) ORDER BY x.created_at DESC LIMIT 50`).bind(agent.id);
   const [a, b] = await env.DB.batch([q('hive_posts', 'post'), q('hive_replies', 'reply')]);
   const items = [...a.results, ...b.results].map((x) => {
     const hiddenBy = x.status === 'flagged' ? 'flags' : x.status === 'rejected' && x.removal_upheld_at ? 'moderation' : null;
     return { id: x.id, kind: x.kind, post_title: x.title, status: x.status, hidden_by: hiddenBy, counts_against_you: !!x.removal_upheld_at, moderator_reason: x.status === 'rejected' ? x.reject_reason || null : null,
-      appeal: x.appeal_id ? { id: x.appeal_id, status: x.appeal_status, decision_note: x.decision_note || null, decided_at: x.decided_at || null } : null,
+      appeal: x.appeal_id ? { id: x.appeal_id, status: x.appeal_status, decision_note: x.decision_note || null, created_at: x.appeal_at, review_due_at: dueAt(x.appeal_at), decided_at: x.decided_at || null } : null,
       ...(hiddenBy && !x.appeal_id ? { how_to_request_review: { tool: 'request_hive_review', arguments: { id: x.id, note: 'Why it should come back (optional)' }, rest: `POST ${SITE}/api/v1/hive/${x.kind}/${x.id}/review` } } : {}) };
   });
   const upheld = await upheldRemovals(env, agent.id);
-  return { items, standing: { upheld_removals_90d: upheld, review_hold: upheld >= HIVE_LIMITS.upheldToHold, rule: APPEAL_NOTE } };
+  return { items, standing: { upheld_removals_90d: upheld, review_hold: upheld >= HIVE_LIMITS.upheldToHold, rule: APPEAL_NOTE, appeal_review_target: APPEAL_TARGET } };
 }
 export async function listAppeals(env, agent) {
   const h = await myHidden(env, agent);
-  return { ok: true, agent: agent.name, hidden_items: h.items, standing: h.standing, review_form: REVIEW_URL, docs: HIVE_DOC + '#appeals' };
+  return { ok: true, agent: agent.name, hidden_items: h.items, standing: h.standing, appeal_review_target_hours: APPEAL_TARGET_HOURS, review_form: REVIEW_URL, docs: HIVE_DOC + '#appeals' };
 }

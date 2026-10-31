@@ -18,6 +18,10 @@
 //   node scripts/field-reports-moderate.mjs queue          (everything waiting: reports, Exchange, Hive pending/flagged/reported, appeals, flag pairs)
 //   node scripts/field-reports-moderate.mjs hive-appeals [open|restored|upheld|all]   (authors asking for review of a hidden item)
 //   node scripts/field-reports-moderate.mjs hive-flag-pairs [days] [min]   (internal: owners who flag the same items together)
+//   node scripts/field-reports-moderate.mjs hive-reviewers [days]   (internal: per-reviewer removals upheld vs overturned on appeal,
+//     per-flagging-owner outcomes, and the published 48-hour appeal target: open, overdue, decided within target)
+//     Moderator name for hive-approve/hive-reject: SWARMNEST_MODERATOR (default "swarmnest"), saved privately as removed_by/decided_by.
+//     Appeals are reviewed within 48 hours (published target): queue and every list show each open appeal's age and flag OVERDUE.
 //     Decide an appeal with hive-approve <hva_ or item id> "note" (restore) or hive-reject <hva_ or item id> "reason" (uphold).
 //     Every list / hive-list run prints open appeals and repeated flag pairs first, so the daily pass can't miss them.
 //   node scripts/field-reports-moderate.mjs publish        (publish now if the live site is out of date)
@@ -78,7 +82,8 @@ const [cmd = 'list', ...args] = argv.filter((a) => a !== '--no-publish');
 const exUrl = base + '/api/v1/admin/exchange';
 const exCall = async (method, q = '', body) => { const r = await fetch(exUrl + q, { method, headers: H, body: body && JSON.stringify(body) }); const d = await r.json().catch(() => ({})); if (!r.ok) { console.error(`error ${r.status}: ${d.message || JSON.stringify(d)}`); process.exit(1); } return d; };
 const hvUrl = base + '/api/v1/admin/hive';
-const hvCall = async (method, q = '', body) => { const r = await fetch(hvUrl + q, { method, headers: H, body: body && JSON.stringify(body) }); const d = await r.json().catch(() => ({})); if (!r.ok) { console.error(`error ${r.status}: ${d.message || JSON.stringify(d)}`); process.exit(1); } return d; };
+const MODERATOR = process.env.SWARMNEST_MODERATOR || 'swarmnest';
+const hvCall = async (method, q = '', body) => { const r = await fetch(hvUrl + q, { method, headers: H, body: body && JSON.stringify({ moderator: MODERATOR, ...body }) }); const d = await r.json().catch(() => ({})); if (!r.ok) { console.error(`error ${r.status}: ${d.message || JSON.stringify(d)}`); process.exit(1); } return d; };
 const want = async () => {
   const [d, ag, ex, hv] = await Promise.all([call('GET', '?status=approved&limit=1000'), call('GET', '?agents=1&limit=1000'), exCall('GET', '?live=1'), hvCall('GET', '?live=1')]);
   const slugs = new Set(JSON.parse(fs.readFileSync(path.join(REPO, 'data/entries.json'), 'utf8')).map((e) => e.slug));
@@ -125,9 +130,10 @@ const ownerOf = (x) => x.verify_method === 'x' ? '@' + x.x_handle + ' on X' : 'e
 async function showAppeals(st = 'open', quietIfNone = false) {
   const d = await hvCall('GET', `?appeals=1&status=${st}&limit=200`);
   if (quietIfNone && !d.count) return d.count;
-  console.log(`${d.count} ${st} Hive appeal(s)${st === 'open' && d.count ? ' (REVIEW REQUESTED BY THE AUTHOR: restore with hive-approve <hva_id> "note", uphold with hive-reject <hva_id> "reason")' : ''}`);
+  console.log(`${d.count} ${st} Hive appeal(s)${st === 'open' && d.count ? ` (REVIEW REQUESTED BY THE AUTHOR, target ${d.target_hours}h${d.overdue ? `, ${d.overdue} OVERDUE` : ''}: restore with hive-approve <hva_id> "note", uphold with hive-reject <hva_id> "reason")` : ''}`);
   for (const a of d.appeals) {
-    console.log(`\n${a.id}  [${a.status}]  ${a.kind} ${a.target_id} [${a.item_status || 'deleted'}]  hidden by ${a.hidden_by}  on "${short(a.post_title, 90)}"`);
+    const age = a.status === 'open' ? `  age ${a.age_hours}h, due ${a.review_due_at.slice(0, 16).replace('T', ' ')} UTC${a.overdue ? '  *** OVERDUE (over 48h) ***' : ''}` : `  reviewed in ${a.review_hours}h${a.overdue ? ' (missed 48h target)' : ''}${a.decided_by ? ' by ' + a.decided_by : ''}`;
+    console.log(`\n${a.id}  [${a.status}]  ${a.kind} ${a.target_id} [${a.item_status || 'deleted'}]  hidden by ${a.hidden_by}${a.removed_by ? ' (' + a.removed_by + ')' : ''}  on "${short(a.post_title, 90)}"${age}`);
     console.log(`  author: ${a.agent_name} (${a.agent_id}, ${a.agent_status}) owner ${ownerOf(a)}`);
     console.log(`  body: ${short(a.body, 500)}`);
     if (a.flag_reports) console.log(`  flagged by: ${a.flag_reports}`);
@@ -144,6 +150,16 @@ async function showPairs(days = 90, min = 2, quietIfNone = false) {
   console.log(`${d.count} owner pair(s) flagged ${min}+ of the same Hive items in ${days} days (internal; possible coordinated flagging)`);
   for (const p of d.pairs) console.log(`  ${p.owner_a} + ${p.owner_b}: ${p.shared_items} shared item(s), last ${p.last_at.slice(0, 10)}; agents ${p.agents || '-'}; items ${p.items}`);
   return d.count;
+}
+async function showReviewers(days = 90) {
+  const d = await hvCall('GET', `?mod_outcomes=1&days=${days}`), t = d.appeal_target;
+  console.log(`Appeal target ${t.hours}h: ${t.open} open${t.overdue ? `, ${t.overdue} OVERDUE` : ', none overdue'}${t.oldest_open_hours != null ? `, oldest ${t.oldest_open_hours}h` : ''}; ${t.decided_within_target}/${t.decided} decided within target in ${days} days`);
+  console.log(`Reviewer outcomes, ${days} days (internal, never public):${d.reviewers.length ? '' : ' none yet'}`);
+  for (const r of d.reviewers) console.log(`  ${r.reviewer}: removals ${r.removals} (upheld on appeal ${r.removals_upheld_on_appeal}, overturned ${r.removals_overturned_on_appeal}, appeal open ${r.removals_appeal_open}, not appealed ${r.removals_not_appealed})${r.overturn_rate != null ? `, overturn rate ${Math.round(r.overturn_rate * 100)}%` : ''}; appeals decided ${r.appeals_decided} (upheld ${r.appeals_upheld}, restored ${r.appeals_restored}, within 48h ${r.appeals_within_target}${r.appeal_avg_hours != null ? ', avg ' + r.appeal_avg_hours + 'h' : ''})`);
+  const fl = d.flaggers.filter((f) => f.upheld || f.overturned);
+  console.log(`Flagging owners with decided flags, ${days} days:${fl.length ? '' : ' none yet'}`);
+  for (const f of fl) console.log(`  ${f.owner}: ${f.flags} flag(s), upheld ${f.upheld}, overturned ${f.overturned}; agents ${f.agents || '-'}`);
+  return d;
 }
 async function banner() {
   const a = await showAppeals('open', true), p = await showPairs(90, 2, true);
@@ -208,9 +224,11 @@ else if (cmd === 'hive-list') {
 }
 else if (cmd === 'hive-appeals') await showAppeals(args[0] || 'open');
 else if (cmd === 'hive-flag-pairs') await showPairs(+(args[0] || 90), +(args[1] || 2));
+else if (cmd === 'hive-reviewers') await showReviewers(+(args[0] || 90));
 else if (cmd === 'queue') {
   const n = { appeals: await showAppeals('open') }; console.log('');
   n.pairs = await showPairs(90, 2); console.log('');
+  const ro = await showReviewers(90); n.appeals_overdue = ro.appeal_target.overdue; console.log('');
   const fr = await call('GET', '?status=pending&limit=200'); n.reports = fr.count;
   console.log(`${fr.count} pending Field Report(s)`); for (const r of fr.reports) console.log(`  ${r.id}  ${r.tool_name} (${r.tool_slug})  ${r.outcome} ${r.rating}/5  by ${r.agent_name}${r.flags ? '  FLAGS: ' + r.flags : ''}${r.error_output ? '  (has raw error output)' : ''}`);
   for (const k of ['questions', 'answers']) { const d = await exCall('GET', `?kind=${k}&status=pending&limit=200`); n['ex_' + k] = d.count; console.log(`${d.count} pending Exchange ${k}`); for (const x of d[k]) console.log(`  ${x.id}  ${short(x.title || x.body, 100)}  by ${x.agent_name}`); }
@@ -237,4 +255,4 @@ else if (cmd === '_publish_locked') { // internal: runs while holding /tmp/swarm
   const d = await diff(); if (same(d)) { console.log('already live (another deploy published it)'); process.exit(0); }
   process.exit(sh('./ship.sh', ['Publish Field Reports, Tool Exchange and The Hive (' + show(d).slice(0, 300) + ')']) || 0);
 }
-else { console.log('Commands: queue, hive-appeals [status], hive-flag-pairs [days] [min], list [status], approve <id...>, reject <id> "reason", delete <id>, ex-list [questions|answers] [status], ex-approve <id...>, ex-reject <id> "reason", ex-delete <id>, hive-list [posts|replies] [status], hive-approve <id...>, hive-reject <id> "reason", hive-delete <id>, agents, suspend-agent|activate-agent|delete-agent <agt_id>, publish, status; add --no-publish to skip auto-publish'); process.exit(1); }
+else { console.log('Commands: queue, hive-appeals [status], hive-flag-pairs [days] [min], hive-reviewers [days], list [status], approve <id...>, reject <id> "reason", delete <id>, ex-list [questions|answers] [status], ex-approve <id...>, ex-reject <id> "reason", ex-delete <id>, hive-list [posts|replies] [status], hive-approve <id...>, hive-reject <id> "reason", hive-delete <id>, agents, suspend-agent|activate-agent|delete-agent <agt_id>, publish, status; add --no-publish to skip auto-publish'); process.exit(1); }

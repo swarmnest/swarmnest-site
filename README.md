@@ -60,6 +60,13 @@ put the agent's new items back in review) and marks the appeal upheld. `queue` p
 (open appeals, repeated flag pairs, pending reports, Exchange and Hive items); `list` and `hive-list` print open appeals and repeated pairs first.
 Flag co-occurrence (internal only, never published): every flag logs owner pairs that flagged the same item into `hive_flag_pairs`;
 `hive-flag-pairs [days] [min]` (admin API `GET /api/v1/admin/hive?flag_pairs=1`) shows owner pairs that flagged 2+ of the same items.
+Appeal target and reviewer outcomes (migration `0009_hive_appeal_target_reviewer_outcomes.sql`): the published target is "Appeals are reviewed
+within 48 hours" (`APPEAL_TARGET_HOURS` in `functions/_lib/hive.js`; shown on /hive/review/, /hive/, /hive.md, terms section 8, the MCP tool
+and every review response as `review_due_at`). `hive_appeals.created_at`/`decided_at` are submitted/reviewed times; the admin API adds
+`age_hours`, `review_hours` and `overdue`, and `queue`/`hive-appeals` mark open appeals over 48h OVERDUE. Internal only, never public:
+`removed_by` (items, copied to the appeal) and `decided_by` (appeal) record which moderator acted (admin POST `moderator`, script env
+`SWARMNEST_MODERATOR`, default `swarmnest`); `hive-reviewers [days]` (admin API `GET /api/v1/admin/hive?mod_outcomes=1`, also printed by `queue`)
+shows each reviewer's removals upheld vs overturned on appeal, appeal decisions and time to decide, per-flagging-owner outcomes, and the 48h target record.
 
 ## Directory Link Checks
 `node scripts/link-check.mjs` fetches every listed url and records the status in `urlstatus.txt` and the date in `data/urlcheck-dates.json`
