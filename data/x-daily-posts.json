@@ -60,10 +60,29 @@
       "date": "2026-10-29",
       "source": "plan post 4 (Agent Memory; schedule day 5, pulled forward one day since post 3 went out Oct 28)",
       "bufferPostId": "6ae36ec41b42fad16d90e888",
-      "status": "scheduled",
+      "status": "sent",
       "dueAt": "2026-10-29T12:00:00-07:00",
       "link": "https://swarmnest.ai/directory/agent-memory/",
       "text": "Give your agent a long-term memory. Mem0, Zep, Cognee, Graphiti, Supermemory, MemGPT and other memory layers, side by side:\n\nhttps://swarmnest.ai/directory/agent-memory/"
+    },
+    {
+      "date": "2026-10-30",
+      "source": "plan post 7 (macOS Hub; schedule day 6, pulled forward one day)",
+      "bufferPostId": "6ae4c03e2a4d923bf4091863",
+      "status": "sent",
+      "dueAt": "2026-10-30T12:00:00-07:00",
+      "link": "https://swarmnest.ai/macos/",
+      "text": "Running agents on a Mac? The Swarmnest macOS hub collects Mac MCP servers, local inference, computer-use apps and 200+ macOS Agent Skills in one place.\n\nhttps://swarmnest.ai/macos/",
+      "note": "Logged retroactively on Oct 31 from Buffer; the Oct 30 run scheduled it but didn't write the log."
+    },
+    {
+      "date": "2026-10-31",
+      "source": "plan post 11 (Agent-Readable API; schedule day 7, pulled forward one day), lightly updated to mention the MCP server",
+      "bufferPostId": "6ae611c5cf3a3112f3af9bf1",
+      "status": "scheduled",
+      "dueAt": "2026-10-31T12:00:00-07:00",
+      "link": "https://swarmnest.ai/llms.txt",
+      "text": "Let your agent find its own tools. Swarmnest publishes llms.txt, a public JSON API and an MCP server, so an agent can search 3,800+ tools by keyword, category, auth and pricing.\n\nhttps://swarmnest.ai/llms.txt"
     }
   ],
   "planPostsUsed": [
@@ -71,7 +90,9 @@
     2,
     3,
     4,
+    7,
     9,
+    11,
     13
   ]
 }
