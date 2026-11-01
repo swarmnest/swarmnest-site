@@ -59354,5 +59354,35 @@
   "status": "active",
   "os": [],
   "open_source": false
+ },
+ {
+  "name": "Qovia",
+  "slug": "qovia",
+  "category": "social-media-apis",
+  "description": "Public social media data from 20+ platforms, including Douyin, Xiaohongshu (RedNote), Weibo, WeChat, Bilibili, Zhihu, TikTok, YouTube, X and Reddit, returned as structured JSON through one HTTP API and a hosted remote MCP server over Streamable HTTP. Uses a Bearer API key with usage-based billing, charged only when a call returns data; setup guide and Python client on GitHub.",
+  "url": "https://qovia.ai",
+  "docs_url": "https://qovia.ai/docs/mcp/",
+  "auth": "key",
+  "pricing": "paid",
+  "http_status": null,
+  "last_checked_at": "2026-10-14",
+  "status": "active",
+  "os": [],
+  "open_source": false
+ },
+ {
+  "name": "DogRouter",
+  "slug": "dogrouter",
+  "category": "llm-apis",
+  "description": "Unified AI model gateway with one OpenAI-compatible API for many LLMs, so agents can compare and route between models with transparent per-model pricing. Pay-as-you-go per token with an API key.",
+  "url": "https://dogrouter.ai/",
+  "docs_url": "https://dogrouter.ai/en/models",
+  "auth": "key",
+  "pricing": "paid",
+  "http_status": null,
+  "last_checked_at": "2026-10-14",
+  "status": "active",
+  "os": [],
+  "open_source": false
  }
 ]

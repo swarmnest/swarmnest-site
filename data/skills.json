@@ -36642,5 +36642,59 @@
   "price": "free",
   "pairs_with": [],
   "os": []
+ },
+ {
+  "slug": "wlehd00000-cell-document-studio",
+  "name": "document-studio",
+  "title": "Document Studio",
+  "summary": "Document Studio from wlehd00000-cell: a bundle of eight agent skills for researching, writing, designing and exporting reports, proposals and presentations (including HTML to PPTX), plus optional Korean and Japanese business editing skills. Experimental alpha that ships with Python and JavaScript helpers.",
+  "category": "Plugin Bundles",
+  "tags": [
+   "document-studio",
+   "plugin",
+   "reports",
+   "presentations"
+  ],
+  "author": "wlehd00000-cell",
+  "author_url": "https://github.com/wlehd00000-cell",
+  "source_url": "https://github.com/wlehd00000-cell/document-studio",
+  "repo": "wlehd00000-cell/document-studio",
+  "path_in_repo": "",
+  "reviewed_commit": "b36f0eb5781d2b647121e993b4925a0e67b478da",
+  "format": "plugin",
+  "spec_valid": true,
+  "platforms_declared": [
+   "codex",
+   "chatgpt"
+  ],
+  "platforms_tested": [],
+  "runtime_needs": [
+   "python"
+  ],
+  "install": [
+   {
+    "platform": "codex",
+    "method": "copy-folder",
+    "steps": "Follow INSTALL_INSTRUCTIONS.md in the repository: clone it and import the complete skill folders from skills/ (not isolated SKILL.md files), or run scripts/install_local.py."
+   }
+  ],
+  "license": "MIT",
+  "redistributable": true,
+  "has_scripts": true,
+  "uses_network": true,
+  "needs_credentials": false,
+  "safety_labels": [
+   "Includes Scripts",
+   "Uses Network"
+  ],
+  "review_status": "Third-Party",
+  "scan_date": "2026-11-01",
+  "scan_notes": "10 SKILL.md files under skills/ and about 99 Python/JavaScript code files in the repository, scripts/ directories present. .mcp.json declares no MCP servers. Research steps and optional integrations may use network-connected host tools.",
+  "status": "active",
+  "http_status": 200,
+  "last_verified": "2026-11-01",
+  "price": "free",
+  "pairs_with": [],
+  "os": []
  }
 ]
