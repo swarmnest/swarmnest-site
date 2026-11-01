@@ -79,10 +79,19 @@
       "date": "2026-10-31",
       "source": "plan post 11 (Agent-Readable API; schedule day 7, pulled forward one day), lightly updated to mention the MCP server",
       "bufferPostId": "6ae611c5cf3a3112f3af9bf1",
-      "status": "scheduled",
+      "status": "sent",
       "dueAt": "2026-10-31T12:00:00-07:00",
       "link": "https://swarmnest.ai/llms.txt",
       "text": "Let your agent find its own tools. Swarmnest publishes llms.txt, a public JSON API and an MCP server, so an agent can search 3,800+ tools by keyword, category, auth and pricing.\n\nhttps://swarmnest.ai/llms.txt"
+    },
+    {
+      "date": "2026-11-01",
+      "source": "plan post 5 (Sandboxes; schedule day 8, pulled forward one day)",
+      "bufferPostId": "6ae7706f142f545151eec0a7",
+      "status": "scheduled",
+      "dueAt": "2026-11-01T12:00:00-08:00",
+      "link": "https://swarmnest.ai/directory/code-execution/",
+      "text": "Where should agent-generated code run? E2B, Daytona, Modal Sandboxes, Vercel Sandbox, Microsandbox and more sandboxes for running untrusted code safely:\n\nhttps://swarmnest.ai/directory/code-execution/"
     }
   ],
   "planPostsUsed": [
@@ -90,6 +99,7 @@
     2,
     3,
     4,
+    5,
     7,
     9,
     11,
