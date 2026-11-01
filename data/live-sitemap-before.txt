@@ -4058,7 +4058,6 @@ https://swarmnest.ai/directory/blockchain-infrastructure/web3js/
 https://swarmnest.ai/directory/blockchain-infrastructure/solana-web3js/
 https://swarmnest.ai/directory/blockchain-infrastructure/covalent/
 https://swarmnest.ai/directory/blockchain-infrastructure/thirdweb/
-https://swarmnest.ai/directory/avatar-video/hedra/
 https://swarmnest.ai/directory/avatar-video/elaiio/
 https://swarmnest.ai/directory/avatar-video/liveportrait/
 https://swarmnest.ai/directory/avatar-video/sadtalker/

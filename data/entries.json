@@ -51093,21 +51093,6 @@
   "open_source": false
  },
  {
-  "name": "Hedra",
-  "slug": "hedra",
-  "category": "avatar-video",
-  "description": "Character video generation.",
-  "url": "https://www.hedra.com/",
-  "docs_url": "https://www.hedra.com/docs",
-  "auth": "key",
-  "pricing": "freemium",
-  "http_status": 200,
-  "last_checked_at": "2026-11-01",
-  "status": "active",
-  "os": [],
-  "open_source": false
- },
- {
   "name": "Elai.io",
   "slug": "elaiio",
   "category": "avatar-video",

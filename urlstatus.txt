@@ -3228,7 +3228,6 @@
 403 https://www.hathitrust.org/data
 200 https://www.hcaptcha.com/
 200 https://www.heap.io/
-200 https://www.hedra.com/
 200 https://www.helicone.ai/
 200 https://www.helius.dev/
 200 https://www.helpscout.com/

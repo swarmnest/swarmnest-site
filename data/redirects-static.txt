@@ -33,3 +33,4 @@
 /directory/group/ /directory/ 301
 /directory/group/dev-infrastructure/ /directory/group/coding-developer-tools/ 301
 /directory/group/finance-markets/ /directory/group/business/ 301
+/directory/avatar-video/hedra /directory/avatar-video/ 301

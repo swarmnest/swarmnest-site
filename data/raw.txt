@@ -3401,7 +3401,6 @@ blockchain-infrastructure|web3.js|https://web3js.org/|https://docs.web3js.org/|n
 blockchain-infrastructure|Solana Web3.js|https://solana.com/|https://solana.com/docs|none|free|Solana JavaScript SDK.
 blockchain-infrastructure|Covalent|https://www.covalenthq.com/|https://goldrush.dev/docs/|key|freemium|Unified blockchain data API.
 blockchain-infrastructure|Thirdweb|https://thirdweb.com/|https://portal.thirdweb.com/|key|freemium|Web3 development platform.
-avatar-video|Hedra|https://www.hedra.com/|https://www.hedra.com/docs|key|freemium|Character video generation.
 avatar-video|Elai.io|https://elai.io/|https://elai.io/api/|key|paid|AI avatar videos.
 avatar-video|LivePortrait|https://github.com/KwaiVGI/LivePortrait|https://github.com/KwaiVGI/LivePortrait|none|free|Portrait animation.
 avatar-video|SadTalker|https://github.com/OpenTalker/SadTalker|https://github.com/OpenTalker/SadTalker|none|free|Talking-head from image and audio.

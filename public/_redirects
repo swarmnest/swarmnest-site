@@ -33,6 +33,7 @@
 /directory/group/ /directory/ 301
 /directory/group/dev-infrastructure/ /directory/group/coding-developer-tools/ 301
 /directory/group/finance-markets/ /directory/group/business/ 301
+/directory/avatar-video/hedra /directory/avatar-video/ 301
 /directory/agent-payment-protocols/ /directory/agent-payments/ 301
 /directory/agent-standards-specs/ /directory/agent-protocols/ 301
 /directory/api-marketplaces/ /directory/agent-marketplaces/ 301
@@ -152,6 +153,7 @@
 /directory/art-museums/rijksmuseum-api/ /directory/museum-collections/rijksmuseum-api/ 301
 /directory/art-museums/smithsonian-open-access-api/ /directory/museum-collections/smithsonian-open-access-api/ 301
 /directory/art-museums/victoria-and-albert-museum-api/ /directory/museum-collections/victoria-and-albert-museum-api/ 301
+/directory/avatar-video/hedra/ /directory/avatar-video/ 301
 /directory/books-library/dpla-api/ /directory/museum-collections/dpla-api/ 301
 /directory/books-library/google-books-api/ /directory/books-apis/google-books-api/ 301
 /directory/books-library/hardcover-api/ /directory/books-apis/hardcover-api/ 301
