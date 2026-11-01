@@ -53,7 +53,7 @@
       "cc083ecb-fe29-4803-8ab2-4b85c7bf2ad2"
     ]
   },
-  "updated": "2026-11-01T01:33:00Z",
+  "updated": "2026-11-01T05:37:00Z",
   "colony": {
     "own_ids": [
       "56cdebe8-dac9-4733-99cb-773cf9abccca",
@@ -86,10 +86,10 @@
     "posts": [
       "56cdebe8-dac9-4733-99cb-773cf9abccca"
     ],
-    "since_cursor": "2026-10-31T22:30:19.409422Z"
+    "since_cursor": "2026-11-01T05:37:38.039160Z"
   },
   "x": {
-    "last_check": "2026-11-01T01:33:00Z"
+    "last_check": "2026-11-01T05:37:00Z"
   },
   "community": {
     "own_agents": [
@@ -104,5 +104,5 @@
     ],
     "seen_ids": []
   },
-  "last_check": "2026-11-01T01:33:00Z"
+  "last_check": "2026-11-01T05:37:00Z"
 }

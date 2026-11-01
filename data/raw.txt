@@ -138,7 +138,7 @@ finance-market-data|Plaid|https://plaid.com/|https://plaid.com/docs/|key|paid|Co
 merchant-of-record|Gumroad|https://gumroad.com/|https://gumroad.com/api|oauth|free|Simple storefront for selling digital goods, with a small API for sales and products.
 translation-apis|DeepL API|https://www.deepl.com/pro-api|https://developers.deepl.com/docs|key|freemium|Neural text and document translation API with glossaries and formality control. A free plan has a monthly character limit; paid plans are usage-based.
 translation-apis|Google Cloud Translation|https://cloud.google.com/translate|https://cloud.google.com/translate/docs|key|freemium|Google's text, document and batch translation service with basic and advanced editions and custom glossaries. Billed per character, with a monthly free allowance.
-translation-apis|Azure AI Translator|https://azure.microsoft.com/products/ai-services/ai-translator|https://learn.microsoft.com/azure/ai-services/translator/|key|freemium|Microsoft's REST translation service for text and documents with language detection and transliteration. Has a free tier with a monthly character limit, then pay as you go.
+translation-apis|Azure AI Translator|https://azure.microsoft.com/en-us/products/ai-foundry/tools/translator|https://learn.microsoft.com/azure/ai-services/translator/|key|freemium|Microsoft's REST translation service for text and documents with language detection and transliteration. Has a free tier with a monthly character limit, then pay as you go.
 translation-apis|Amazon Translate|https://aws.amazon.com/translate/|https://docs.aws.amazon.com/translate/|key|freemium|AWS neural machine translation for real-time and batch text and documents, with custom terminology. Billed per character, with a limited free tier for new accounts.
 translation-apis|LibreTranslate|https://libretranslate.com/|https://docs.libretranslate.com/|none|freemium|Open-source translation API built on Argos Translate that you can self-host for free. A hosted service with API keys is also offered for a fee.
 translation-apis|Argos Translate|https://github.com/argosopentech/argos-translate|https://argos-translate.readthedocs.io/|none|free|Open-source offline translation library for Python, with a command line tool and downloadable language packages. Runs locally with no API key.
@@ -1582,6 +1582,9 @@ games-data|IGDB API|https://api-docs.igdb.com/|https://api-docs.igdb.com/|oauth|
 movies-tv-data|RAWG|https://rawg.io/apidocs|https://rawg.io/apidocs|key|freemium|Video games database API.
 games-data|Steam Web API|https://steamcommunity.com/dev|https://partner.steamgames.com/doc/webapi|key|free|Steam player and game data API.
 movies-tv-data|PokéAPI|https://pokeapi.co/|https://pokeapi.co/docs/v2|none|free|Pokémon data API.
+movies-tv-data|Simkl API|https://simkl.com/|https://simkl.docs.apiary.io/|key|free|TV, anime and movie tracking API with watch history sync, ratings and metadata lookups.
+movies-tv-data|IMDb API (AWS Data Exchange)|https://developer.imdb.com/|https://developer.imdb.com/documentation/|key|paid|Licensed IMDb title, cast, ratings and box office data delivered through a GraphQL API on AWS Data Exchange.
+movies-tv-data|Streaming Availability API|https://www.movieofthenight.com/about/api|https://docs.movieofthenight.com/|key|freemium|Which streaming services carry a movie or show in 60 countries, with deep links, prices and leaving dates.
 games-data|Scryfall API|https://scryfall.com/docs/api|https://scryfall.com/docs/api|none|free|Magic: The Gathering card data.
 medical-data-apis|openFDA|https://open.fda.gov/|https://open.fda.gov/apis/|key|free|FDA drug, device and food data APIs.
 medical-data-apis|RxNorm API|https://lhncbc.nlm.nih.gov/RxNav/|https://lhncbc.nlm.nih.gov/RxNav/APIs/RxNormAPIs.html|none|free|Normalized drug names API from NLM.
@@ -1708,6 +1711,12 @@ web-analytics|Hotjar|https://contentsquare.com/hotjar/|https://help.hotjar.com/|
 web-analytics|Microsoft Clarity|https://clarity.microsoft.com/|https://learn.microsoft.com/clarity/|none|free|Free heatmaps and recordings.
 web-analytics|Google Search Console API|https://developers.google.com/webmaster-tools|https://developers.google.com/webmaster-tools/v1/how-tos/search_analytics|oauth|free|Search performance data.
 web-analytics|Bing Webmaster API|https://www.bing.com/webmasters|https://learn.microsoft.com/bingwebmaster/|key|free|Bing search performance and URL submission.
+web-analytics|Pirsch|https://pirsch.io/|https://docs.pirsch.io/api-sdks/api|key|paid|Cookie-free, privacy-friendly web analytics with server-side tracking and a statistics API.
+web-analytics|GoatCounter|https://www.goatcounter.com/|https://www.goatcounter.com/help/api|key|free|Open-source, privacy-friendly web analytics with no tracking cookies, free hosted or self-hosted, with an API.
+web-analytics|Rybbit|https://rybbit.io/|https://rybbit.io/docs|key|freemium|Open-source, cookieless web and product analytics with funnels, session replay and self-hosting.
+web-analytics|Swetrix|https://swetrix.com/|https://docs.swetrix.com/|key|freemium|Open-source, cookieless web analytics with performance monitoring, error tracking and a statistics API.
+web-analytics|OpenPanel|https://openpanel.dev/|https://openpanel.dev/docs|key|freemium|Open-source product and web analytics, an alternative to Mixpanel with events, funnels and retention.
+web-analytics|Heap|https://www.heap.io/|https://developers.heap.io/|key|freemium|Digital analytics that autocaptures user interactions, with server-side track and user properties APIs.
 seo-tools|Ahrefs API|https://ahrefs.com/api|https://docs.ahrefs.com/|key|paid|Backlink and SEO data.
 seo-tools|Semrush API|https://www.semrush.com/api-analytics/|https://developer.semrush.com/api/|key|paid|SEO and competitive data.
 seo-tools|Moz API|https://moz.com/products/api|https://moz.com/help/links-api|key|freemium|Domain authority and link data.
@@ -1893,6 +1902,10 @@ code-hosting-apis|Gitee Open API|https://gitee.com/|https://gitee.com/api/v5/swa
 code-hosting-apis|Launchpad API|https://launchpad.net/|https://help.launchpad.net/API|oauth|free|Canonical's code hosting and bug tracking service with a web service API.
 code-hosting-apis|SourceForge API|https://sourceforge.net/|https://sourceforge.net/p/forge/documentation/Allura%20API/|key|free|Allura-based REST API for projects, tickets and files on SourceForge.
 code-hosting-apis|Packagist API|https://packagist.org/|https://packagist.org/apidoc|none|free|Search and metadata API for PHP Composer packages.
+code-hosting-apis|Gerrit REST API|https://www.gerritcodereview.com/|https://gerrit-review.googlesource.com/Documentation/rest-api.html|key|free|REST API of the Gerrit code review server for changes, reviews, projects and accounts.
+code-hosting-apis|Radicle|https://radicle.xyz/|https://radicle.xyz/guides|none|free|Peer-to-peer code collaboration stack built on Git, with local-first issues and patches and an HTTP API.
+code-hosting-apis|Gogs|https://gogs.io/|https://github.com/gogs/docs-api|key|free|Lightweight self-hosted Git service written in Go, with a REST API for repositories, users and issues.
+code-hosting-apis|OneDev|https://onedev.io/|https://docs.onedev.io/|key|freemium|Self-hosted Git server with built-in CI/CD, issue boards, code search and a RESTful API.
 company-registries|Companies House API (UK)|https://www.gov.uk/government/organisations/companies-house|https://developer.company-information.service.gov.uk/|key|free|Official UK registry data on companies, officers, filings and charges.
 company-registries|GLEIF LEI API|https://www.gleif.org/|https://www.gleif.org/en/lei-data/gleif-api|none|free|Global Legal Entity Identifier records with ownership relationships.
 company-registries|Open Ownership Register|https://bods-data.openownership.org/|https://bods-data.openownership.org/|none|free|Bulk beneficial ownership datasets from Open Ownership in the Beneficial Ownership Data Standard (the hosted register was retired in 2024).
@@ -2081,6 +2094,10 @@ knowledge-bases|Zendesk Guide API|https://www.zendesk.com/service/help-center/|h
 knowledge-bases|Slite|https://slite.com/|https://developers.slite.com/|key|paid|Knowledge base with API and AI search.
 knowledge-bases|Logseq|https://logseq.com/|https://docs.logseq.com/|none|free|Open-source outliner knowledge base with plugin API.
 knowledge-bases|Tettra|https://tettra.com/|https://tettra.com/|key|paid|Internal knowledge base.
+knowledge-bases|Document360 API|https://document360.com/|https://apidocs.document360.com/|key|paid|Knowledge base platform API for articles, categories, versions and readers.
+knowledge-bases|XWiki|https://www.xwiki.org/|https://www.xwiki.org/xwiki/bin/view/Documentation/UserGuide/Features/XWikiRESTfulAPI|key|free|Open-source enterprise wiki with structured data, extensions and a RESTful API.
+knowledge-bases|Docmost|https://docmost.com/|https://docmost.com/docs/|key|freemium|Open-source collaborative wiki and documentation software, an alternative to Confluence and Notion.
+knowledge-bases|Trilium Notes|https://github.com/TriliumNext/Trilium|https://docs.triliumnotes.org/|key|free|Open-source hierarchical note-taking app for personal knowledge bases, with an ETAPI REST interface.
 local-inference|MLX LM|https://github.com/ml-explore/mlx-lm|https://github.com/ml-explore/mlx-lm|none|free|Run LLMs on Apple silicon.
 local-inference|Text Generation WebUI|https://github.com/oobabooga/text-generation-webui|https://github.com/oobabooga/text-generation-webui/wiki|none|free|Gradio UI and API for local LLMs.
 local-inference|KoboldCpp|https://github.com/LostRuins/koboldcpp|https://github.com/LostRuins/koboldcpp/wiki|none|free|Single-file llama.cpp distribution with API.
@@ -2309,6 +2326,10 @@ space-astronomy|Open Meteo Space Weather (NOAA SWPC)|https://www.spaceweather.go
 space-astronomy|Astropy|https://www.astropy.org/|https://docs.astropy.org/|none|free|Python astronomy library.
 space-astronomy|Stellarium Web|https://stellarium-web.org/|https://stellarium-labs.com/|none|free|Online planetarium.
 space-astronomy|Gaia Archive|https://gea.esac.esa.int/archive/|https://gea.esac.esa.int/archive/|none|free|ESA Gaia star catalog with TAP access.
+space-astronomy|Spaceflight News API|https://www.spaceflightnewsapi.net/|https://api.spaceflightnewsapi.net/v4/docs/|none|free|Free API aggregating spaceflight news articles, blogs and reports, linked to launches and events.
+space-astronomy|Le Système Solaire API|https://api.le-systeme-solaire.net/|https://api.le-systeme-solaire.net/en/|key|free|Data on solar system bodies including planets, moons and asteroids, with mass, density, orbits and discovery info.
+space-astronomy|Skyfield|https://rhodesmill.org/skyfield/|https://rhodesmill.org/skyfield/api.html|none|free|Python library for high-precision positions of planets, stars and Earth satellites.
+space-astronomy|Minor Planet Center API|https://data.minorplanetcenter.net/|https://data.minorplanetcenter.net/|none|free|Official data and APIs for asteroid and comet observations, orbits and designations from the IAU Minor Planet Center.
 books-apis|Project Gutenberg (Gutendex)|https://gutendex.com/|https://gutendex.com/|none|free|JSON API for Gutenberg books.
 museum-collections|Library of Congress API|https://www.loc.gov/apis/|https://www.loc.gov/apis/json-and-yaml/|none|free|Digital collections.
 books-apis|Hardcover API|https://hardcover.app/|https://docs.hardcover.app/api/getting-started/|key|free|GraphQL book tracking API.
@@ -2762,6 +2783,10 @@ graph-databases|ArangoDB|https://arango.ai/|https://docs.arangodb.com/|key|freem
 graph-databases|Apache AGE|https://age.apache.org/|https://age.apache.org/age-manual/master/index.html|none|free|Graph database extension for PostgreSQL.
 graph-databases|Stardog|https://www.stardog.com/|https://docs.stardog.com/|key|paid|Enterprise knowledge graph platform.
 graph-databases|Apache Jena Fuseki|https://jena.apache.org/|https://jena.apache.org/documentation/fuseki2/|none|free|SPARQL server for RDF data.
+graph-databases|TypeDB|https://typedb.com/|https://typedb.com/docs|none|freemium|Polymorphic database with a strongly typed schema and the TypeQL query language, open source or managed in the cloud.
+graph-databases|Oxigraph|https://github.com/oxigraph/oxigraph|https://oxigraph.org/|none|free|Rust graph database implementing SPARQL 1.1 over RDF, usable as a server, library or Python package.
+graph-databases|PuppyGraph|https://www.puppygraph.com/|https://docs.puppygraph.com/|none|freemium|Graph query engine that runs Gremlin and openCypher directly over existing SQL databases and data lakes without ETL.
+graph-databases|Apache HugeGraph|https://hugegraph.apache.org/|https://hugegraph.apache.org/docs/|none|free|Open-source distributed graph database compatible with Apache TinkerPop and Gremlin, built for billions of vertices.
 speech-datasets|VoxCeleb|https://www.robots.ox.ac.uk/~vgg/data/voxceleb/|https://www.robots.ox.ac.uk/~vgg/data/voxceleb/|none|free|Large speaker identification dataset from celebrity interviews.
 speech-datasets|LJ Speech|https://keithito.com/LJ-Speech-Dataset/|https://keithito.com/LJ-Speech-Dataset/|none|free|Public domain single-speaker dataset for TTS training.
 speech-datasets|LibriTTS|https://www.openslr.org/60/|https://www.openslr.org/60/|none|free|Multi-speaker English corpus designed for text-to-speech.
@@ -2782,6 +2807,13 @@ public-transit|Deutsche Bahn Open Data|https://data.deutschebahn.com/opendata|ht
 public-transit|TransLink Open API|https://developer.translink.ca/|https://developer.translink.ca/ServicesRtti|key|free|Vancouver transit real-time data.
 public-transit|OneBusAway|https://opentransitsoftwarefoundation.org/onebusaway/|https://developer.onebusaway.org/|key|free|Open-source real-time transit information platform.
 public-transit|Trafiklab|https://www.trafiklab.se/|https://www.trafiklab.se/api|key|free|Swedish public transport APIs.
+public-transit|Transit App API|https://transitapp.com/apis|https://api-doc.transitapp.com/|key|freemium|Realtime departures, nearby stops and trip planning across hundreds of cities, from the Transit app.
+public-transit|Entur API|https://developer.entur.org/|https://developer.entur.org/pages-journeyplanner-journeyplanner|none|free|Norway's national journey planner, stop place registry and realtime transit data over GraphQL and REST.
+public-transit|Open Transport Data Swiss|https://opentransportdata.swiss/|https://opentransportdata.swiss/en/cookbook/|key|free|Switzerland's open data platform for GTFS, realtime and trip-planning APIs covering SBB and other operators.
+public-transit|NS API Portal|https://apiportal.ns.nl/|https://apiportal.ns.nl/|key|free|Dutch Railways APIs for departures, trip planning, disruptions and station information.
+public-transit|511 SF Bay Open Data|https://511.org/open-data|https://511.org/open-data/transit|key|free|San Francisco Bay Area transit and traffic APIs with GTFS, GTFS-Realtime and SIRI feeds for regional operators.
+public-transit|CTA Developer APIs|https://www.transitchicago.com/developers/|https://www.transitchicago.com/developers/ttdocs/|key|free|Chicago Transit Authority Train Tracker and Bus Tracker APIs for realtime arrivals and vehicle positions.
+public-transit|Transport for NSW Open Data|https://opendata.transport.nsw.gov.au/|https://opendata.transport.nsw.gov.au/developers|key|free|New South Wales open data hub with GTFS, realtime and trip planner APIs for Sydney and regional transport.
 podcasts|Podchaser API|https://www.podchaser.com/|https://api-docs.podchaser.com/|oauth|freemium|GraphQL API of podcast, episode and creator data.
 podcasts|Spotify Podcasts API|https://developer.spotify.com/documentation/web-api/reference/get-a-show|https://developer.spotify.com/documentation/web-api|oauth|free|Shows and episodes through the Spotify Web API.
 podcasts|Apple Podcasts Connect|https://podcasters.apple.com/|https://podcasters.apple.com/support|none|free|Submit and manage podcasts in Apple Podcasts.
@@ -2960,6 +2992,11 @@ message-queues|Sidekiq|https://sidekiq.org/|https://github.com/sidekiq/sidekiq/w
 message-queues|ZeroMQ|https://zeromq.org/|https://zeromq.org/get-started/|none|free|Embeddable messaging library.
 message-queues|NSQ|https://nsq.io/|https://nsq.io/overview/design.html|none|free|Realtime distributed messaging platform.
 message-queues|Alibaba Cloud MNS|https://www.alibabacloud.com/product/message-queue|https://www.alibabacloud.com/help/en/mns|oauth|paid|Alibaba message service.
+message-queues|Apache RocketMQ|https://rocketmq.apache.org/|https://rocketmq.apache.org/docs/|none|free|Distributed messaging and streaming platform with transactional and scheduled messages, originally built at Alibaba.
+message-queues|Beanstalkd|https://beanstalkd.github.io/|https://github.com/beanstalkd/beanstalkd/blob/master/doc/protocol.txt|none|free|Simple, fast work queue with a plain-text protocol, priorities, delays and job reservation.
+message-queues|pgmq|https://github.com/pgmq/pgmq|https://pgmq.github.io/pgmq/|none|free|Lightweight message queue built as a Postgres extension, with SQS-like visibility timeouts and archiving.
+message-queues|River|https://riverqueue.com/|https://riverqueue.com/docs|none|free|Fast, transactional background job queue for Go and Postgres, with retries, scheduling and a web UI.
+message-queues|Graphile Worker|https://worker.graphile.org/|https://worker.graphile.org/docs|none|free|Job queue for PostgreSQL and Node.js using LISTEN/NOTIFY, with cron tasks, retries and batching.
 web-scraping-apis|Zyte API|https://www.zyte.com/zyte-api/|https://docs.zyte.com/zyte-api/get-started.html|key|paid|Managed web scraping with unblocking.
 web-scraping-apis|ScrapingAnt|https://scrapingant.com/|https://docs.scrapingant.com/|key|freemium|Web scraping API with headless Chrome.
 web-scraping-apis|WebScrapingAPI|https://www.webscrapingapi.com/|https://docs.webscrapingapi.com/|key|freemium|Scraping API with proxies and rendering.
@@ -3202,6 +3239,10 @@ backend-as-a-service|Hasura|https://hasura.io/|https://hasura.io/docs/|key|freem
 backend-as-a-service|PostgREST|https://postgrest.org/|https://docs.postgrest.org/|none|free|REST API directly from a Postgres schema.
 backend-as-a-service|Back4App|https://www.back4app.com/|https://www.back4app.com/docs/|key|freemium|Parse-based managed backend.
 backend-as-a-service|Instant|https://www.instantdb.com/|https://www.instantdb.com/docs|key|freemium|Real-time client-side database.
+backend-as-a-service|TrailBase|https://trailbase.io/|https://trailbase.io/getting-started/install|key|free|Open-source single-binary application server on SQLite with auth, type-safe REST and realtime APIs and an admin UI.
+backend-as-a-service|Jazz|https://jazz.tools/|https://jazz.tools/docs|key|freemium|Open-source framework for local-first apps with synced collaborative data, auth, permissions and file storage.
+backend-as-a-service|Manifest|https://manifest.build/|https://manifest.build/docs|none|free|Open-source backend defined in a single YAML file, generating a database, REST API, auth and admin panel.
+backend-as-a-service|Kuzzle|https://kuzzle.io/|https://docs.kuzzle.io/|key|freemium|Open-source backend with a realtime API, auth, geospatial search and IoT support, self-hosted or managed.
 proxy-services|Smartproxy|https://decodo.com/|https://help.smartproxy.com/|key|paid|Residential and datacenter proxies.
 proxy-services|SOAX|https://soax.com/|https://helpcenter.soax.com/|key|paid|Proxy network.
 proxy-services|Rayobyte|https://rayobyte.com/|https://rayobyte.com/|key|paid|Proxies and scraping.
@@ -3335,10 +3376,22 @@ energy-climate|Octopus Energy API|https://developer.octopus.energy/|https://deve
 animals-nature|Dog CEO API|https://dog.ceo/dog-api/|https://dog.ceo/dog-api/documentation/|none|free|Dog images by breed.
 animals-nature|RandomFox|https://randomfox.ca/|https://randomfox.ca/floof/|none|free|Random fox images.
 animals-nature|NatureServe Explorer|https://explorer.natureserve.org/|https://explorer.natureserve.org/api-docs/|none|free|Biodiversity data.
+animals-nature|BirdNET|https://birdnet.cornell.edu/|https://github.com/birdnet-team/BirdNET-Analyzer|none|free|Cornell Lab and TU Chemnitz bird sound identification model, with an open-source analyzer that detects species in audio recordings.
+animals-nature|IUCN Red List API|https://api.iucnredlist.org/|https://api.iucnredlist.org/api-docs|key|free|Conservation status, threats and habitat data for species assessed on the IUCN Red List, with a free token for non-commercial use.
+animals-nature|OBIS API|https://obis.org/|https://api.obis.org/|none|free|Ocean Biodiversity Information System REST API for marine species occurrence records, checklists and dataset metadata.
+animals-nature|Catalogue of Life (ChecklistBank API)|https://www.catalogueoflife.org/|https://api.checklistbank.org/|none|free|The global species checklist behind Catalogue of Life, queryable for names, synonyms and classification through the ChecklistBank API.
+animals-nature|ITIS Web Services|https://www.itis.gov/|https://www.itis.gov/ws_description.html|none|free|Integrated Taxonomic Information System web services for authoritative scientific names, common names and taxonomic hierarchy.
+animals-nature|Perenual Plant API|https://perenual.com/|https://perenual.com/docs/api|key|freemium|Plant species database with care guides, watering and sunlight needs, hardiness zones and pest and disease info.
+animals-nature|Global Names Verifier|https://verifier.globalnames.org/|https://github.com/gnames/gnverifier|none|free|Checks and reconciles scientific names against more than 100 biodiversity data sources, with fuzzy matching for misspellings.
 read-later-bookmarks|Readwise Reader|https://readwise.io/read|https://readwise.io/reader_api|key|paid|Reader library API.
 read-later-bookmarks|Obsidian Web Clipper|https://obsidian.md/clipper|https://help.obsidian.md/web-clipper|none|free|Clip web pages to Obsidian.
 read-later-bookmarks|Notion Web Clipper|https://www.notion.com/web-clipper|https://www.notion.com/help/web-clipper|none|free|Clip to Notion.
 read-later-bookmarks|Diigo API|https://www.diigo.com/api_dev|https://www.diigo.com/api_dev|key|freemium|Bookmarks and highlights.
+read-later-bookmarks|linkding|https://github.com/sissbruecker/linkding|https://linkding.link/api/|key|free|Minimal self-hosted bookmark manager with tags, archiving and a REST API for adding and searching bookmarks.
+read-later-bookmarks|Readeck|https://readeck.org/|https://readeck.org/en/docs/|key|free|Self-hosted read-later app that saves the readable content of web pages, with highlights, labels, e-book export and an API.
+read-later-bookmarks|LinkAce|https://www.linkace.org/|https://api-docs.linkace.org/|key|free|Self-hosted bookmark archive with lists, tags, link monitoring and Internet Archive backups, plus a REST API.
+read-later-bookmarks|buku|https://github.com/jarun/buku|https://github.com/jarun/buku|none|free|Command-line bookmark manager with a local SQLite store, full-text search, tags and browser import.
+read-later-bookmarks|Floccus|https://floccus.org/|https://floccus.org/guides|none|free|Open-source browser extension that syncs bookmarks and tabs across browsers through Nextcloud, WebDAV, Git or Google Drive.
 blockchain-infrastructure|QuickNode|https://www.quicknode.com/|https://www.quicknode.com/docs|key|freemium|Blockchain node provider.
 blockchain-infrastructure|Ankr|https://www.ankr.com/|https://www.ankr.com/docs/|key|freemium|RPC and Web3 APIs.
 blockchain-infrastructure|Chainstack|https://chainstack.com/|https://docs.chainstack.com/|key|freemium|Managed blockchain nodes.
@@ -3362,6 +3415,9 @@ captcha-bot-protection|Prosopo Procaptcha|https://prosopo.io/|https://docs.proso
 forex-rates|CurrencyFreaks|https://currencyfreaks.com/|https://currencyfreaks.com/documentation.html|key|freemium|Currency rates API.
 forex-rates|ECB Data Portal API|https://data.ecb.europa.eu/|https://data.ecb.europa.eu/help/api/overview|none|free|ECB rates.
 forex-rates|Frankfurter|https://frankfurter.dev/|https://www.frankfurter.app/docs/|none|free|Free ECB-based rates.
+forex-rates|Xe Currency Data API|https://www.xe.com/xecurrencydata/|https://xecdapi.xe.com/docs/v1/|key|paid|Commercial mid-market exchange rates for currencies and metals, with live, historical and monthly average endpoints.
+forex-rates|NBP Web API|https://api.nbp.pl/|https://api.nbp.pl/en.html|none|free|National Bank of Poland API for official average exchange rates and gold prices, with historical tables.
+forex-rates|Abstract Exchange Rates API|https://www.abstractapi.com/api/exchange-rate-api|https://www.abstractapi.com/api/exchange-rate-api|key|freemium|Live and historical exchange rates plus currency conversion for 150+ currencies over a simple REST API.
 prompt-management|OpenAI Cookbook|https://cookbook.openai.com/|https://github.com/openai/openai-cookbook|none|free|Examples and guides.
 prompt-management|Anthropic Cookbook|https://github.com/anthropics/anthropic-cookbook|https://github.com/anthropics/anthropic-cookbook|none|free|Claude recipes.
 prompt-management|PromptPerfect|https://promptperfect.jina.ai/|https://promptperfect.jina.ai/|none|freemium|Prompt optimiser.
@@ -3391,6 +3447,12 @@ no-code-databases|Zoho Creator|https://www.zoho.com/creator/|https://www.zoho.co
 no-code-databases|Knack|https://www.knack.com/|https://docs.knack.com/|key|paid|No-code database apps.
 no-code-databases|Stackby|https://stackby.com/|https://stackby.com/developers/|key|freemium|Spreadsheet-database hybrid.
 no-code-databases|Ragic|https://www.ragic.com/|https://www.ragic.com/intl/en/doc-api|key|freemium|Database builder.
+no-code-databases|Quickbase API|https://www.quickbase.com/|https://developer.quickbase.com/|key|paid|Low-code business app platform with a JSON REST API for tables, records, fields and reports.
+no-code-databases|Caspio|https://www.caspio.com/|https://howto.caspio.com/web-services-api/|oauth|paid|Low-code database and app builder with a REST API for tables, views and files.
+no-code-databases|Ninox|https://ninox.com/|https://docs.ninox.com/|key|paid|No-code database for custom business apps, with a public REST API for tables and records.
+no-code-databases|NocoBase|https://www.nocobase.com/|https://docs.nocobase.com/|key|freemium|Open-source, plugin-based no-code platform for building data models, internal tools and AI-assisted workflows.
+no-code-databases|Tadabase|https://tadabase.io/|https://developer.tadabase.io/|key|paid|No-code database app builder with role-based portals and a REST API for records and tables.
+no-code-databases|Fibery API|https://fibery.io/|https://the.fibery.io/@public/User_Guide/Guide/Fibery-API-Overview-279|key|freemium|Work-management database with custom types and relations, exposing GraphQL and command APIs.
 government-statistics|Our World in Data Health|https://ourworldindata.org/health-meta|https://ourworldindata.org/|none|free|Health data and charts.
 legal-data|Free Law Project RECAP|https://free.law/recap|https://www.courtlistener.com/help/api/|key|free|Court documents API.
 legal-data|Legislation.gov.uk API|https://www.legislation.gov.uk/|https://www.legislation.gov.uk/developer|none|free|UK legislation.
@@ -3487,6 +3549,10 @@ local-inference|Msty Studio|https://msty.ai/|https://docs.msty.studio/|none|free
 local-inference|AnythingLLM|https://anythingllm.com/|https://docs.anythingllm.com/|none|free|Local AI workspace.
 local-inference|Ollama Python|https://github.com/ollama/ollama-python|https://github.com/ollama/ollama-python|none|free|Ollama client.
 workflow-automation|Apache Camel|https://camel.apache.org/|https://camel.apache.org/manual/|none|free|Integration framework.
+workflow-automation|Integrately|https://integrately.com/|https://integrately.com/integrations|none|freemium|No-code automation platform with ready-made one-click integrations between 1,000+ apps.
+workflow-automation|Albato|https://albato.com/|https://albato.com/help|none|freemium|No-code integration platform for connecting SaaS apps, with an embedded white-label option for SaaS vendors.
+workflow-automation|Latenode|https://latenode.com/|https://docs.latenode.com/|none|freemium|Low-code automation platform mixing visual workflows with JavaScript nodes and built-in AI model access.
+workflow-automation|Pabbly Connect|https://www.pabbly.com/connect/|https://www.pabbly.com/connect/integrations/|none|paid|Workflow automation tool connecting apps with triggers and actions, sold on flat pricing without per-task fees.
 agent-protocols|OpenAPI Overlay Spec|https://spec.openapis.org/overlay/latest.html|https://spec.openapis.org/overlay/latest.html|none|free|Overlay for OpenAPI.
 agent-protocols|Schema.org Action|https://schema.org/Action|https://schema.org/Action|none|free|Action vocabulary.
 agent-protocols|security.txt|https://securitytxt.org/|https://www.rfc-editor.org/rfc/rfc9116|none|free|Security contact standard.
@@ -3503,6 +3569,11 @@ project-management|Teamwork API|https://apidocs.teamwork.com/|https://apidocs.te
 project-management|Redmine|https://www.redmine.org/|https://www.redmine.org/projects/redmine/wiki/rest_api|key|free|Open-source tracker.
 project-management|GitHub Projects|https://docs.github.com/en/issues/planning-and-tracking-with-projects|https://docs.github.com/en/graphql|oauth|free|Project planning.
 applicant-tracking|Pinpoint|https://www.pinpointhq.com/|https://developers.pinpointhq.com/|key|paid|ATS.
+applicant-tracking|Zoho Recruit API|https://www.zoho.com/recruit/|https://www.zoho.com/recruit/developer-guide/apiv2/|oauth|freemium|REST API for Zoho Recruit candidates, job openings, interviews and placements, for agencies and in-house hiring teams.
+applicant-tracking|Bullhorn REST API|https://www.bullhorn.com/|https://bullhorn.github.io/rest-api-docs/|oauth|paid|Staffing-agency ATS and CRM API for candidates, job orders, submissions and placements.
+applicant-tracking|OpenCATS|https://www.opencats.org/|https://github.com/opencats/OpenCATS|none|free|Free open-source applicant tracking system you can self-host to manage job orders, candidates and pipelines.
+applicant-tracking|JobAdder API|https://jobadder.com/|https://developers.jobadder.com/|oauth|paid|Recruitment software API covering candidates, jobs, applications, placements and job board postings.
+applicant-tracking|Comeet API|https://www.comeet.com/|https://developers.comeet.com/|key|paid|Collaborative hiring platform API for positions, candidates and careers-page job feeds.
 form-builders|Formsubmit.io Ajax|https://formsubmit.co/ajax-documentation|https://formsubmit.co/ajax-documentation|none|free|AJAX form submit.
 form-builders|Pageclip|https://pageclip.co/|https://pageclip.co/|key|freemium|Form service.
 form-builders|Formbold|https://formbold.com/|https://formbold.com/docs|key|freemium|Form backend.
@@ -3567,6 +3638,10 @@ prompt-management|Prompt Flow|https://microsoft.github.io/promptflow/|https://mi
 prompt-management|Guardrails Hub|https://hub.guardrailsai.com/|https://www.guardrailsai.com/docs|none|free|Validators for LLM outputs.
 content-extraction|Readability Python|https://github.com/buriy/python-readability|https://github.com/buriy/python-readability|none|free|Readability port in Python.
 content-extraction|Defuddle|https://github.com/kepano/defuddle|https://github.com/kepano/defuddle|none|free|Extract the main content of web pages.
+content-extraction|jusText|https://github.com/miso-belica/jusText|https://github.com/miso-belica/jusText|none|free|Python boilerplate-removal tool that keeps the main text of HTML pages and drops navigation, ads and footers.
+content-extraction|html2text|https://github.com/Alir3z4/html2text|https://github.com/Alir3z4/html2text|none|free|Python library and CLI that converts HTML into clean Markdown-structured plain text.
+content-extraction|go-readability|https://github.com/go-shiori/go-readability|https://pkg.go.dev/github.com/go-shiori/go-readability|none|free|Go port of Mozilla Readability that extracts the main article content and metadata from web pages.
+content-extraction|Article Extractor (extractus)|https://github.com/extractus/article-extractor|https://github.com/extractus/article-extractor|none|free|Node.js library that pulls the title, author, main content and images from news and blog article URLs.
 open-data|Japan e-Stat|https://www.e-stat.go.jp/en|https://www.e-stat.go.jp/api|key|free|Japanese government statistics.
 open-data|Brazil Dados Abertos|https://dados.gov.br/|https://dados.gov.br/|none|free|Brazilian open data portal.
 government-statistics|WHO Data API|https://www.who.int/data|https://www.who.int/data/gho/info/gho-odata-api|none|free|WHO data.
@@ -3862,8 +3937,11 @@ model-hosting-inference|SpicyAPI|https://spicyapi.ai/|https://docs.spicyapi.ai/d
 domains-dns|StableDomains|https://stabledomains.net/agents|https://stabledomains.net/mcp|key|paid|Agent-first domain registrar whose MCP server and REST API let AI agents search, price, register and renew domains and manage DNS on their own. Payment is in USDC or USDT on seven chains, per call over x402 on Base, or from a prepaid balance, with OAuth 2.1 or API key sign-in.
 mcp-servers|Pipedream MCP|https://mcp.pipedream.com/|https://pipedream.com/docs/connect/mcp/|oauth|freemium|Hosted MCP servers for 3,000+ apps with more than 10,000 pre-built tools and fully managed OAuth through Pipedream Connect. Free for your own use; developers can add it to their own agents to act for their users, free in development mode.
 mcp-sdks-dev-tools|Cloudflare Remote MCP Hosting|https://developers.cloudflare.com/agents/model-context-protocol/|https://developers.cloudflare.com/agents/model-context-protocol/guides/remote-mcp-server/|oauth|freemium|Build and deploy your own remote MCP server on Cloudflare Workers over Streamable HTTP, from a template for an open server or one behind OAuth sign-in with the Workers OAuth Provider. The Workers Free plan includes 100,000 requests a day.
+mcp-sdks-dev-tools|mcptoon|https://github.com/activeing123/mcptoon|https://github.com/activeing123/mcptoon|none|free|Zero-dependency Python CLI that runs all your configured MCP servers and agent skills behind one gateway endpoint, keeping tool schemas out of context to save tokens.
 search-apis|Desearch|https://www.desearch.ai/|https://www.desearch.ai/docs/guide|key|paid|Search API for AI agents that searches the web and X with source links, extracts clean content from any URL and adds people and company search, all under one API key. Its MCP server runs remotely or locally through npx. Pay as you go, with $5 in starter credits once a card is added.
 accounting-tax|Melso Fiscal MCP|https://melso.ai/en/mcp|https://docs.melso.ai/mcp/overview|oauth|paid|Hosted MCP server for Melso, a Spanish tax and accounting service for freelancers, that lets agents read tax records, organise invoices and expenses and check the Spanish tax calendar, limited to the records the customer authorizes. Approvals and filing stay in Melso with its tax professionals. Part of a paid Melso plan.
 seo-tools|FlashCrafter Growth Briefs MCP|https://briefs.flashcrafter.ai/chatgpt|https://briefs.flashcrafter.ai/chatgpt|oauth|freemium|Remote MCP server and ChatGPT app for FlashCrafter, a marketing platform for local service businesses, that lets agents explain a business's Growth Brief and saved reports on local search visibility, competitors and reputation, then save a plan. Needs a FlashCrafter account with access to the business; the first Growth Brief is free.
 mcp-servers|AI Deprecations|https://aideprecations.neocities.org/|https://aideprecations.neocities.org/llms.txt|none|free|Free MCP server and API for AI model deprecation and shutdown dates across OpenAI, Anthropic, Google Gemini and Vertex, Azure OpenAI, AWS Bedrock, Mistral and Cohere, with replacements, the official source for every record, a change feed and webhook alerts.
 mcp-servers|Kilobat CLI|https://github.com/seifip/kilobat-cli|https://kilobat.app/agents/|none|free|macOS command-line tool and local stdio MCP server with 43 tools for network diagnostics: which apps use the network, Wi-Fi signal and channels, latency, DNS, speed tests, why a host won't connect and metered hotspot budgets, plus keeping the Mac awake while long agent jobs run. Read-only tools run freely; tools that change settings ask first. Free and open source under GPL-3.0; needs macOS 14 or later.
+mcp-servers|Cesium ion MCP Server|https://cesium.com/blog/2026/10/12/introducing-the-cesium-ion-mcp-server/|https://cesium.com/blog/2026/10/12/introducing-the-cesium-ion-mcp-server/|key|freemium|Official MCP server for Cesium ion that lets AI assistants work with your 3D geospatial assets, tilesets and imagery.
+mcp-servers|Make MCP Server|https://developers.make.com/mcp-server|https://developers.make.com/mcp-server|oauth|freemium|Make-hosted remote MCP server over stateless Streamable HTTP that exposes your Make scenarios as tools, with OAuth or API key auth.

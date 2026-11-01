@@ -1,5 +1,6 @@
 200 https://2captcha.com/
 200 https://2slides.com/
+200 https://511.org/open-data
 200 https://a2a-protocol.org/
 200 https://ably.com/
 200 https://about.gitea.com/
@@ -53,6 +54,7 @@
 200 https://aiven.io/postgresql
 200 https://akaunting.com/
 200 https://akool.com/
+200 https://albato.com/
 200 https://aleph-alpha.com/
 200 https://alice.io/
 200 https://almapay.com/
@@ -88,12 +90,15 @@
 200 https://api.congress.gov/
 200 https://api.faa.gov/
 200 https://api.govinfo.gov/docs/
+200 https://api.iucnredlist.org/
 200 https://api.jotform.com/docs/
+200 https://api.le-systeme-solaire.net/
 200 https://api.mangadex.org/docs/
 200 https://api.market/
 200 https://api.met.no/
 200 https://api.mta.info/
 200 https://api.nasa.gov/
+200 https://api.nbp.pl/
 200 https://api.ncloud-docs.com/docs/en/ai-naver-papagonmt
 200 https://api.opencorporates.com/
 200 https://api.reporter.nih.gov/
@@ -113,6 +118,7 @@
 200 https://apify.com/
 200 https://apify.com/store
 200 https://apilayer.com/
+200 https://apiportal.ns.nl/
 200 https://apis.guru/
 200 https://apis.io/
 200 https://apitracker.io/
@@ -216,7 +222,6 @@
 200 https://azure.microsoft.com/products/ai-services/ai-content-understanding
 200 https://azure.microsoft.com/products/ai-services/ai-document-intelligence
 200 https://azure.microsoft.com/products/ai-services/ai-language
-200 https://azure.microsoft.com/products/ai-services/ai-translator
 200 https://azure.microsoft.com/products/ai-services/text-to-speech
 200 https://azure.microsoft.com/products/api-management
 200 https://azure.microsoft.com/products/azure-sql/database
@@ -237,6 +242,7 @@
 200 https://basicmemory.com/
 200 https://batch.com/
 200 https://bazel.build/
+200 https://beanstalkd.github.io/
 200 https://beeceptor.com/
 200 https://beerxml.com/
 200 https://bensbites.com/
@@ -248,6 +254,7 @@
 200 https://bird.com/
 200 https://bird.com/email-api
 200 https://birdeye.so/
+200 https://birdnet.cornell.edu/
 200 https://bitbucket.org/
 200 https://bitwarden.com/products/secrets-manager/
 200 https://blaxel.ai/
@@ -317,6 +324,7 @@
 200 https://cds.climate.copernicus.eu/
 200 https://celestrak.org/
 200 https://censys.com/
+200 https://cesium.com/blog/2026/10/12/introducing-the-cesium-ion-mcp-server/
 200 https://chainlit.io/
 200 https://chainstack.com/
 403 https://character.ai/
@@ -471,6 +479,7 @@
 200 https://data.gov/
 202 https://data.humdata.org/
 200 https://data.imf.org/
+200 https://data.minorplanetcenter.net/
 200 https://data.nasa.gov/
 200 https://data.nasdaq.com/
 403 https://data.oecd.org/
@@ -564,6 +573,7 @@
 200 https://developer.edamam.com/food-database-api
 200 https://developer.edamam.com/meal-planner-api
 200 https://developer.edmunds.com/
+200 https://developer.entur.org/
 200 https://developer.fedex.com/
 200 https://developer.garmin.com/gc-developer-program/
 200 https://developer.godaddy.com/
@@ -573,6 +583,7 @@
 200 https://developer.here.com/
 200 https://developer.hotelbeds.com/
 200 https://developer.icims.com/
+200 https://developer.imdb.com/
 200 https://developer.intuit.com/
 200 https://developer.jamendo.com/
 200 https://developer.justgiving.com/
@@ -726,6 +737,7 @@
 200 https://developers.idealista.com/
 200 https://developers.intercom.com/
 200 https://developers.kit.com/
+200 https://developers.make.com/mcp-server
 200 https://developers.meethue.com/
 200 https://developers.miro.com/
 200 https://developers.naver.com/products/service-api/search/search.md
@@ -773,6 +785,7 @@
 200 https://disease.sh/
 200 https://dlthub.com/
 403 https://doaj.org/api/v3/docs
+200 https://docmost.com/
 200 https://docraptor.com/
 200 https://docs.adyen.com/api-explorer
 200 https://docs.affirm.com/
@@ -846,6 +859,7 @@
 200 https://docs.worldpay.com/access/
 200 https://doctranslate.io/
 200 https://documenso.com/
+200 https://document360.com/
 200 https://documentation.bamboohr.com/
 200 https://docusaurus.io/
 200 https://dodopayments.com/
@@ -941,6 +955,7 @@
 200 https://fellow.app/
 200 https://ffmpeg.org/
 200 https://fhir.epic.com/
+200 https://fibery.io/
 202 https://figshare.com/
 200 https://fin.ai/
 200 https://findwork.dev/
@@ -958,6 +973,7 @@
 200 https://fixer.io/
 200 https://flagd.dev/
 200 https://flink.apache.org/
+200 https://floccus.org/
 200 https://flock.com/
 403 https://flowgpt.com/
 200 https://flowiseai.com/
@@ -1036,6 +1052,7 @@
 200 https://github.com/a2aproject/a2a-python
 200 https://github.com/abetlen/llama-cpp-python
 200 https://github.com/ace-step/ACE-Step
+200 https://github.com/activeing123/mcptoon
 200 https://github.com/adbar/trafilatura
 200 https://github.com/addok/addok
 200 https://github.com/advisories
@@ -1047,6 +1064,7 @@
 200 https://github.com/AI4Bharat/IndicTrans2
 200 https://github.com/AILab-CVC/YOLO-World
 200 https://github.com/airsonic-advanced/airsonic-advanced
+200 https://github.com/Alir3z4/html2text
 200 https://github.com/All-Hands-AI/OpenHands
 200 https://github.com/allenai/dolma
 200 https://github.com/allenai/olmocr
@@ -1171,6 +1189,7 @@
 200 https://github.com/exceljs/exceljs
 200 https://github.com/exo-explore/exo
 200 https://github.com/explodinggradients/ragas
+200 https://github.com/extractus/article-extractor
 200 https://github.com/f/awesome-chatgpt-prompts
 200 https://github.com/facebookresearch/audiocraft
 200 https://github.com/facebookresearch/detectron2
@@ -1210,6 +1229,7 @@
 200 https://github.com/gitleaks/gitleaks
 200 https://github.com/gitpod-io/gitpod
 200 https://github.com/gluonfield/enchanted
+200 https://github.com/go-shiori/go-readability
 200 https://github.com/go-shiori/shiori
 200 https://github.com/go-telegram-bot-api/telegram-bot-api
 200 https://github.com/gocolly/colly
@@ -1252,6 +1272,7 @@
 200 https://github.com/JaidedAI/EasyOCR
 200 https://github.com/janeczku/calibre-web
 200 https://github.com/janhq/cortex.cpp
+200 https://github.com/jarun/buku
 200 https://github.com/jaywalnut310/glow-tts
 200 https://github.com/jaywalnut310/vits
 200 https://github.com/jesseduffield/lazygit
@@ -1342,6 +1363,7 @@
 200 https://github.com/mindee/doctr
 200 https://github.com/mindsdb/mindshub
 200 https://github.com/ming024/FastSpeech2
+200 https://github.com/miso-belica/jusText
 200 https://github.com/mixmark-io/turndown
 200 https://github.com/ml-explore/mlx
 200 https://github.com/ml-explore/mlx-lm
@@ -1436,11 +1458,13 @@
 200 https://github.com/opentraveldata/opentraveldata
 200 https://github.com/osaurus-ai/osaurus
 200 https://github.com/owid/covid-19-data
+200 https://github.com/oxigraph/oxigraph
 200 https://github.com/PaddlePaddle/PaddleOCR
 200 https://github.com/PaddlePaddle/PaddleSpeech
 200 https://github.com/papercups-io/papercups
 200 https://github.com/parallax/jsPDF
 200 https://github.com/pemistahl/lingua-py
+200 https://github.com/pgmq/pgmq
 200 https://github.com/pgvector/pgvector
 200 https://github.com/pipecat-ai/pipecat
 200 https://github.com/Podcastindex-org/podcast-namespace
@@ -1499,6 +1523,7 @@
 200 https://github.com/searx/searx
 200 https://github.com/searxng/searxng
 200 https://github.com/security/advanced-security
+200 https://github.com/seifip/kilobat-cli
 200 https://github.com/sensepost/gowitness
 200 https://github.com/sentriz/gonic
 200 https://github.com/sgl-project/sglang
@@ -1509,6 +1534,7 @@
 200 https://github.com/signalapp/Signal-Desktop
 200 https://github.com/Significant-Gravitas/AutoGPT
 200 https://github.com/simular-ai/Agent-S
+200 https://github.com/sissbruecker/linkding
 200 https://github.com/slackapi/java-slack-sdk
 200 https://github.com/slackapi/node-slack-sdk
 200 https://github.com/slackapi/python-slack-sdk
@@ -1551,6 +1577,7 @@
 200 https://github.com/traceloop/openllmetry
 200 https://github.com/TransformerOptimus/SuperAGI
 200 https://github.com/translated/lara-mcp
+200 https://github.com/TriliumNext/Trilium
 200 https://github.com/trufflesecurity/trufflehog
 200 https://github.com/trycua/cua
 200 https://github.com/trycua/cua/tree/main/libs/lume
@@ -1606,6 +1633,7 @@
 200 https://godotengine.org/
 200 https://gofastmcp.com/
 200 https://goflightlabs.com/
+200 https://gogs.io/
 200 https://google.github.io/osv-scanner/
 200 https://googlechromelabs.github.io/chrome-for-testing/
 200 https://goqr.me/api/
@@ -1676,6 +1704,7 @@
 200 https://hub.guardrailsai.com/
 200 https://hub.huwise.com/pages/home/
 200 https://hubot.github.com/
+200 https://hugegraph.apache.org/
 200 https://huggingface.co/
 200 https://huggingface.co/autotrain
 200 https://huggingface.co/CohereLabs/aya-101
@@ -1757,6 +1786,7 @@
 200 https://inspirehep.net/
 200 https://instantly.ai/
 200 https://instatus.com/
+200 https://integrately.com/
 200 https://integrator.getyourguide.com/
 200 https://intento.com/
 200 https://intl.cloud.tencent.com/products/tts
@@ -1779,6 +1809,7 @@
 200 https://isbndb.com/apidocs/v2
 200 https://janus.conf.meetecho.com/
 200 https://janusgraph.org/
+200 https://jazz.tools/
 200 https://jellyfin.org/
 200 https://jena.apache.org/
 200 https://jikan.moe/
@@ -1786,6 +1817,7 @@
 200 https://jina.ai/embeddings/
 200 https://jina.ai/reader/
 200 https://jitsi.github.io/handbook/docs/dev-guide/dev-guide-iframe/
+200 https://jobadder.com/
 200 https://jobicy.com/jobs-rss-feed
 200 https://jobsuche.api.bund.dev/
 200 https://join-lemmy.org/
@@ -1833,6 +1865,7 @@
 200 https://kroki.io/
 200 https://kubernetes.io/
 403 https://kutt.it/
+200 https://kuzzle.io/
 200 https://kwesforms.com/
 200 https://kx.com/
 200 https://labelbox.com/
@@ -1849,6 +1882,7 @@
 200 https://langwatch.ai/
 200 https://laratranslate.com/
 200 https://lastexam.ai/
+200 https://latenode.com/
 200 https://latitude.so/
 200 https://launchdarkly.com/
 200 https://launchpad.net/
@@ -1926,6 +1960,7 @@
 200 https://mailpit.axllent.org/
 200 https://mailtrap.io/
 200 https://mailtrap.io/email-sandbox/
+200 https://manifest.build/
 200 https://maplibre.org/
 200 https://mapsplatform.google.com/
 200 https://marginalia-search.com/
@@ -2052,6 +2087,7 @@
 200 https://ngrok.com/
 200 https://nhost.io/
 200 https://nifi.apache.org/
+200 https://ninox.com/
 200 https://nixos.org/
 200 https://nocodb.com/
 200 https://nodered.org/
@@ -2075,6 +2111,7 @@
 200 https://nwc.dev/
 200 https://oauth.net/2.1/
 200 https://oauth.net/2/
+200 https://obis.org/
 429 https://observablehq.com/
 200 https://obsidian.md/clipper
 200 https://obsproject.com/
@@ -2088,6 +2125,7 @@
 200 https://omwn.org/
 200 https://ona.com/
 200 https://once.com/campfire
+200 https://onedev.io/
 200 https://onesignal.com/
 200 https://open-meteo.com/
 200 https://open-meteo.com/en/docs/air-quality-api
@@ -2124,6 +2162,7 @@
 200 https://opendata-ajuntament.barcelona.cat/en
 200 https://opendata.cern.ch/
 200 https://opendata.swiss/
+200 https://opendata.transport.nsw.gov.au/
 200 https://opendatakit.org/
 202 https://openedx.org/
 200 https://openexchangerates.org/
@@ -2140,6 +2179,7 @@
 200 https://openmoji.org/
 200 https://openneuro.org/
 200 https://opennmt.net/
+200 https://openpanel.dev/
 200 https://openpipe.ai/
 200 https://openpyxl.readthedocs.io/
 200 https://openrouter.ai/
@@ -2154,6 +2194,7 @@
 200 https://opentelemetry.io/docs/specs/semconv/gen-ai/
 200 https://opentools.com/
 200 https://opentransitsoftwarefoundation.org/onebusaway/
+200 https://opentransportdata.swiss/
 200 https://opentreeoflife.github.io/
 403 https://openverse.org/
 200 https://openvidu.io/
@@ -2163,7 +2204,7 @@
 200 https://opnform.com/
 200 https://optiview.dolby.com/
 200 https://opus.nlpl.eu/
-502 https://oqmd.org/
+200 https://oqmd.org/
 200 https://originality.ai/
 200 https://orq.ai/
 200 https://osf.io/
@@ -2202,6 +2243,7 @@
 200 https://peerjs.com/
 200 https://pelagios.org/
 200 https://pelias.io/
+200 https://perenual.com/
 200 https://performance-partners.apple.com/search-api
 200 https://perspectiveapi.com/
 200 https://phantombuster.com/
@@ -2226,6 +2268,7 @@
 200 https://pipedream.com/apps/openai
 200 https://pipedream.com/connect
 200 https://pirateweather.net/
+200 https://pirsch.io/
 200 https://pitch.com/
 200 https://pixabay.com/api/docs/
 403 https://pixabay.com/sound-effects/
@@ -2334,6 +2377,7 @@
 200 https://radar.cloudflare.com/
 200 https://radar.com/
 200 https://radarr.video/
+200 https://radicle.xyz/
 200 https://radimrehurek.com/gensim/
 200 https://railway.com/
 200 https://raindrop.io/
@@ -2352,6 +2396,7 @@
 200 https://reacher.email/
 200 https://react-hook-form.com/
 200 https://react-pdf.org/
+200 https://readeck.org/
 200 https://readwise.io/
 200 https://readwise.io/read
 200 https://reap.video/ai-dubbing
@@ -2387,20 +2432,24 @@
 200 https://restream.io/
 200 https://retool.com/products/database
 200 https://revealjs.com/
+200 https://rhodesmill.org/skyfield/
 200 https://rig.rs/
 200 https://risk.lexisnexis.com/products/health-intelligence-ehr
 200 https://rive.app/
+200 https://riverqueue.com/
 200 https://rivery.io/
 200 https://rivet.ironcladapp.com/
 200 https://riza.io/
 200 https://roboflow.com/annotate
 200 https://robottraining.jobs
+200 https://rocketmq.apache.org/
 200 https://rocketreach.co/
 200 https://rocksdb.org/
 200 https://rows.com/
 200 https://rss2json.com/
 200 https://rucaptcha.com/
 200 https://runway.com/
+200 https://rybbit.io/
 200 https://rye.com/
 200 https://safebrowsing.google.com/
 200 https://salad.com/
@@ -2473,6 +2522,7 @@
 200 https://signal.org/
 200 https://signal.org/docs/
 200 https://signrequest.com/
+200 https://simkl.com/
 200 https://simpleicons.org/
 200 https://simpler.grants.gov/developer
 200 https://simplescraper.io/
@@ -2590,6 +2640,7 @@
 200 https://surveyjs.io/
 200 https://surveyjs.io/form-library
 200 https://swagger.io/tools/swagger-ui/
+200 https://swetrix.com/
 200 https://swiftype.com/
 200 https://swiftype.com/site-search
 200 https://swisscows.com/en
@@ -2600,6 +2651,7 @@
 200 https://tabby.ai/
 200 https://tabler.io/icons
 200 https://tactiq.io/
+200 https://tadabase.io/
 200 https://taddy.org/
 200 https://taiga.io/
 200 https://tailscale.com/
@@ -2661,8 +2713,10 @@
 200 https://tox.chat/
 200 https://traceloop.com/
 200 https://trafilatura.readthedocs.io/
+200 https://trailbase.io/
 200 https://trakt.docs.apiary.io/
 200 https://transistor.fm/
+200 https://transitapp.com/apis
 200 https://transparency.entsoe.eu/
 200 https://tray.ai/
 200 https://trefle.io/
@@ -2680,6 +2734,7 @@
 200 https://twelvedata.com/
 200 https://twenty.com/
 200 https://twist.com/
+200 https://typedb.com/
 200 https://typesense.org/
 200 https://typesense.org/docs/0.24.0/api/
 200 https://typst.app/
@@ -2734,6 +2789,7 @@
 200 https://vercel.com/docs/sandbox
 200 https://vercel.com/storage/blob
 200 https://verifalia.com/
+200 https://verifier.globalnames.org/
 200 https://vespa.ai/
 200 https://victoriametrics.com/
 200 https://viem.sh/
@@ -2785,6 +2841,7 @@
 200 https://woodpecker-ci.org/
 403 https://wordnet.princeton.edu/
 200 https://workable.readme.io/
+200 https://worker.graphile.org/
 200 https://workers.cloudflare.com/
 200 https://workos.com/
 200 https://world.openbeautyfacts.org/
@@ -2799,6 +2856,7 @@
 200 https://www.2checkout.com/
 200 https://www.abs.gov.au/about/data-services/application-programming-interfaces-apis
 200 https://www.abstractapi.com/api/email-verification-validation-api
+200 https://www.abstractapi.com/api/exchange-rate-api
 200 https://www.abstractapi.com/api/holidays-api
 200 https://www.abstractapi.com/api/ip-geolocation-api
 403 https://www.abuseipdb.com/
@@ -2911,6 +2969,7 @@
 200 https://www.browserbase.com/
 200 https://www.browserless.io/
 200 https://www.brreg.no/
+200 https://www.bullhorn.com/
 200 https://www.buzzsprout.com/
 200 https://www.camel-ai.org/
 200 https://www.campaignmonitor.com/
@@ -2924,6 +2983,8 @@
 200 https://www.carboninterface.com/
 200 https://www.careerjet.com/partners/api
 200 https://www.carfax.com/
+200 https://www.caspio.com/
+200 https://www.catalogueoflife.org/
 200 https://www.census.gov/data/developers.html
 200 https://www.census.gov/data/developers/data-sets.html
 200 https://www.cerebras.ai/
@@ -2968,6 +3029,7 @@
 403 https://www.collinsdictionary.com/api/v1
 200 https://www.collletttivo.it/
 200 https://www.colossyan.com/
+200 https://www.comeet.com/
 200 https://www.comet.com/
 200 https://www.comet.com/site/products/opik/
 200 https://www.cometchat.com/
@@ -3127,6 +3189,7 @@
 200 https://www.geocod.io/
 200 https://www.geojs.io/
 200 https://www.geonames.org/
+200 https://www.gerritcodereview.com/
 200 https://www.getdbt.com/
 200 https://www.geteppo.com/
 200 https://www.getgrist.com/
@@ -3141,6 +3204,7 @@
 200 https://www.gladia.io/
 200 https://www.gleif.org/
 200 https://www.globalgiving.org/api/
+200 https://www.goatcounter.com/
 200 https://www.gong.io/
 200 https://www.goodreads.com/
 200 https://www.google.com/
@@ -3163,6 +3227,7 @@
 403 https://www.hathitrust.org/
 403 https://www.hathitrust.org/data
 200 https://www.hcaptcha.com/
+200 https://www.heap.io/
 200 https://www.hedra.com/
 200 https://www.helicone.ai/
 200 https://www.helius.dev/
@@ -3212,6 +3277,7 @@
 200 https://www.irs.gov/charities-non-profits/exempt-organizations-business-master-file-extract-eo-bmf
 200 https://www.irs.gov/charities-non-profits/form-990-series-downloads
 200 https://www.istockphoto.com/
+200 https://www.itis.gov/
 200 https://www.j-platpat.inpit.go.jp/
 200 https://www.jambonz.org/
 200 https://www.jamendo.com/
@@ -3267,6 +3333,7 @@
 200 https://www.limesurvey.org/
 200 https://www.lindy.ai/
 200 https://www.linguee.com/
+200 https://www.linkace.org/
 200 https://www.linkpreview.net/
 200 https://www.linkup.so/
 200 https://www.listennotes.com/api/
@@ -3343,6 +3410,7 @@
 200 https://www.mongodb.com/
 200 https://www.mongodb.com/docs/vector-search/
 200 https://www.movebank.org/
+200 https://www.movieofthenight.com/about/api
 200 https://www.mturk.com/
 200 https://www.mumble.info/
 200 https://www.mux.com/
@@ -3374,6 +3442,7 @@
 200 https://www.nist.gov/itl/ai-risk-management-framework
 200 https://www.nist.gov/itl/iad/mltg/speaker-recognition
 200 https://www.nltk.org/
+200 https://www.nocobase.com/
 200 https://www.nomic.ai/
 200 https://www.nomnoml.com/
 200 https://www.notion.com/web-clipper
@@ -3399,6 +3468,7 @@
 200 https://www.openapis.org/arazzo-specification
 429 https://www.openbankingtracker.com/
 200 https://www.openbrewerydb.org/
+200 https://www.opencats.org/
 200 https://www.opendatanetwork.com/
 200 https://www.opendota.com/
 200 https://www.openfaas.com/
@@ -3426,6 +3496,7 @@
 200 https://www.ory.com/
 200 https://www.oscr.org.uk/
 200 https://www.oysterhr.com/
+200 https://www.pabbly.com/connect/
 200 https://www.paddle.com/
 200 https://www.paddle.com/billing
 200 https://www.page2images.com/
@@ -3490,6 +3561,7 @@
 200 https://www.pulsemcp.com/
 200 https://www.pulumi.com/docs/iac/concepts/automation-api/
 200 https://www.pulumi.com/product/esc/
+200 https://www.puppygraph.com/
 200 https://www.pushwoosh.com/
 200 https://www.pyannote.ai/
 200 https://www.python-httpx.org/
@@ -3498,6 +3570,7 @@
 200 https://www.qrcode-monkey.com/qr-code-api-with-logo/
 200 https://www.qrcode-tiger.com/
 200 https://www.qualtrics.com/
+200 https://www.quickbase.com/
 200 https://www.quicknode.com/
 200 https://www.qwant.com/
 200 https://www.qwant.com/api
@@ -3573,7 +3646,7 @@
 200 https://www.sembly.ai/
 200 https://www.semrush.com/api-analytics/
 200 https://www.setmore.com/
-403 https://www.ship24.com/tracking-api
+200 https://www.ship24.com/tracking-api
 200 https://www.shipengine.com/docs/
 200 https://www.shipstation.com/fulfillment/api/shipping/
 200 https://www.shodan.io/
@@ -3604,6 +3677,7 @@
 200 https://www.sonarsource.com/products/sonarqube/
 200 https://www.songkick.com/developer
 200 https://www.soundsnap.com/
+200 https://www.spaceflightnewsapi.net/
 200 https://www.spaceweather.gov/
 200 https://www.speechmatics.com/
 200 https://www.spikeapi.com/
@@ -3661,7 +3735,7 @@
 403 https://www.thestorygraph.com/
 200 https://www.thum.io/
 200 https://www.thumbor.org/
-202 https://www.thunes.com/
+200 https://www.thunes.com/
 200 https://www.tidio.com/
 200 https://www.tigerdata.com/
 200 https://www.tigerdata.com/cloud
@@ -3681,6 +3755,7 @@
 200 https://www.trafiklab.se/
 200 https://www.transifex.com/
 200 https://www.transit.land/
+200 https://www.transitchicago.com/developers/
 200 https://www.transportapi.com/
 200 https://www.travis-ci.com/
 200 https://www.trinet.com/
@@ -3771,7 +3846,9 @@
 200 https://www.wowza.com/
 200 https://www.wufoo.com/
 200 https://www.x402.org/
+200 https://www.xe.com/xecurrencydata/
 200 https://www.ximilar.com/
+200 https://www.xwiki.org/
 200 https://www.yext.com/platform/search
 200 https://www.yugabyte.com/
 200 https://www.zaproxy.org/
@@ -3791,6 +3868,7 @@
 200 https://www.zoho.com/crm/
 200 https://www.zoho.com/crm/developer/
 403 https://www.zoho.com/invoice/api/
+200 https://www.zoho.com/recruit/
 200 https://www.zoho.com/sign/
 200 https://www.zoho.com/survey/
 200 https://www.zoom.com/en/ai-assistant/
