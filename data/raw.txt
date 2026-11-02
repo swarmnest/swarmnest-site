@@ -354,7 +354,7 @@ content-extraction|turndown|https://github.com/mixmark-io/turndown|https://githu
 browser-automation|Crawlee|https://crawlee.dev/|https://crawlee.dev/|unknown|unknown|Crawlee helps you build and maintain your crawlers. It's open source, but built by developers who scrape millions of pages every day for a living.
 browser-automation|Nodriver|https://github.com/ultrafunkamsterdam/nodriver|https://github.com/ultrafunkamsterdam/nodriver/tree/main/docs|none|free|Successor of Undetected-Chromedriver. Providing a blazing fast framework for web automation, webscraping, bots and any other creative ideas which are normally hindered by annoying anti bot.
 browser-automation|undetected-chromedriver|https://github.com/ultrafunkamsterdam/undetected-chromedriver|https://github.com/ultrafunkamsterdam/undetected-chromedriver|none|free|Custom Selenium Chromedriver / Zero-Config / Passes ALL bot mitigation systems (like Distil / Imperva/ Datadadome / CloudFlare IUAM)
-browser-automation|Patchright|https://github.com/Kaliiiiiiiiii-Vinyzu/patchright|https://scrappey.com/docs?utm_source=patchright&utm_medium=github&utm_campaign=repo_readme|none|free|Undetected version of the Playwright testing and automation library.
+browser-automation|Patchright|https://github.com/Kaliiiiiiiiii-Vinyzu/patchright|https://github.com/Kaliiiiiiiiii-Vinyzu/patchright-python|none|free|Undetected version of the Playwright testing and automation library.
 proxy-services|HAProxy|https://www.haproxy.org/|https://docs.haproxy.org/|unknown|unknown|Reliable, High Performance TCP/HTTP Load Balancer
 scraping-libraries|Colly|https://github.com/gocolly/colly|https://github.com/gocolly/colly|none|free|Elegant Scraper and Crawler Framework for Golang.
 scraping-libraries|Goutte|https://github.com/FriendsOfPHP/Goutte|https://github.com/FriendsOfPHP/Goutte|none|free|Goutte, a simple PHP Web Scraper.
@@ -1145,7 +1145,7 @@ weather|Tomorrow.io|https://www.tomorrow.io/weather-api/|https://docs.tomorrow.i
 weather|Meteomatics|https://www.meteomatics.com/|https://www.meteomatics.com/en/api/overview/|key|paid|High-resolution weather API.
 weather|Meteostat|https://meteostat.net/|https://dev.meteostat.net/|key|freemium|Historical weather data from stations.
 weather|MET Norway Locationforecast|https://api.met.no/|https://api.met.no/weatherapi/locationforecast/2.0/documentation|none|free|Free forecast API from the Norwegian Meteorological Institute.
-weather|Pirate Weather|https://pirateweather.net/|https://docs.pirateweather.net/|key|freemium|Dark Sky compatible weather API.
+weather|Pirate Weather|https://pirateweather.net/|https://docs.pirateweather.net/en/latest/|key|freemium|Dark Sky compatible weather API.
 weather|wttr.in|https://wttr.in/|https://github.com/chubin/wttr.in|none|free|Console-friendly keyless weather service.
 weather|AccuWeather API|https://developer.accuweather.com/|https://developer.accuweather.com/apis|key|freemium|Weather forecasts and alerts API.
 weather|Weatherbit|https://www.weatherbit.io/|https://www.weatherbit.io/api|key|freemium|Weather forecast and history API.
@@ -2486,7 +2486,7 @@ animals-nature|Encyclopedia of Life|https://eol.org/|https://eol.org/docs/what-i
 animals-nature|Trefle Plants API|https://trefle.io/|https://docs.trefle.io/|key|freemium|Plant data.
 animals-nature|Pl@ntNet API|https://my.plantnet.org/|https://my.plantnet.org/doc/openapi|key|freemium|Plant identification.
 animals-nature|Movebank|https://www.movebank.org/|https://github.com/movebank/movebank-api-doc|key|free|Animal tracking data.
-animals-nature|Fishbase|https://www.fishbase.se/|https://fishbase.ropensci.org/|none|free|Fish species data.
+animals-nature|Fishbase|https://www.fishbase.se/|https://docs.ropensci.org/rfishbase/|none|free|Fish species data.
 voice-agents|LiveKit Agents|https://docs.livekit.io/agents/|https://docs.livekit.io/agents/|key|freemium|Framework for realtime voice agents.
 voice-agents|ElevenLabs Conversational AI|https://elevenlabs.io/conversational-ai|https://elevenlabs.io/docs/conversational-ai/overview|key|freemium|Voice agent platform.
 voice-agents|Daily Pipecat Cloud|https://www.daily.co/products/pipecat-cloud/|https://docs.pipecat.daily.co/|key|paid|Hosting for Pipecat agents.
@@ -2511,7 +2511,7 @@ real-estate|Estated|https://estated.com/|https://estated.com/developers/docs|key
 real-estate|HUD User API|https://www.huduser.gov/portal/dataset/fmr-api.html|https://www.huduser.gov/portal/dataset/fmr-api.html|key|free|Fair market rents data.
 real-estate|Domain API (Australia)|https://developer.domain.com.au/|https://developer.domain.com.au/docs/latest/apis|oauth|freemium|Australian property data.
 real-estate|Idealista API|https://developers.idealista.com/|https://developers.idealista.com/access-request|key|free|Spanish property listings.
-real-estate|UK Land Registry Open Data|https://landregistry.data.gov.uk/|https://landregistry.data.gov.uk/app/root/doc/ppd|none|free|UK property prices.
+real-estate|UK Land Registry Open Data|https://landregistry.data.gov.uk/|https://www.gov.uk/guidance/about-the-price-paid-data|none|free|UK property prices.
 real-estate|Zillow Research Data|https://www.zillow.com/research/data/|https://www.zillow.com/research/data/|none|free|Housing datasets.
 video-editing|OpenShot|https://www.openshot.org/|https://www.openshot.org/developers|none|free|Open-source video editor.
 video-editing|Kdenlive|https://kdenlive.org/|https://docs.kdenlive.org/|none|free|Open-source video editor.
@@ -3076,7 +3076,7 @@ billing-invoicing|Zoho Invoice API|https://www.zoho.com/invoice/api/|https://www
 billing-invoicing|InvoiceShelf|https://invoiceshelf.com/|https://docs.invoiceshelf.com/|key|free|Open-source invoicing.
 video-hosting|JW Player|https://jwx.com/|https://docs.jwplayer.com/|key|paid|Video hosting, player and streaming platform, now branded JWX, with APIs for media management and delivery.
 video-hosting|Brightcove|https://www.brightcove.com/|https://apis.support.brightcove.com/|oauth|paid|Enterprise video platform.
-video-hosting|Panopto|https://www.panopto.com/|https://support.panopto.com/s/article/api-docs|oauth|paid|Lecture video platform.
+video-hosting|Panopto|https://www.panopto.com/|https://demo.hosted.panopto.com/Panopto/api/docs/index.html|oauth|paid|Lecture video platform.
 video-hosting|Kaltura|https://developer.kaltura.com/|https://developer.kaltura.com/api-docs/|key|paid|Video platform APIs.
 video-hosting|Loom SDK|https://www.loom.com/sdk|https://www.loom.com/sdk|key|free|Embed recording.
 video-hosting|Dacast|https://www.dacast.com/|https://developer.dacast.com/|key|paid|Live and VOD video hosting.
@@ -3426,7 +3426,7 @@ prompt-management|PromptSource|https://github.com/bigscience-workshop/promptsour
 content-extraction|Trafilatura Web Extraction|https://trafilatura.readthedocs.io/|https://trafilatura.readthedocs.io/en/latest/|none|free|Python tool for web text extraction.
 content-extraction|Goose3|https://github.com/goose3/goose3|https://github.com/goose3/goose3|none|free|Article extractor in Python.
 content-extraction|Boilerpipe|https://github.com/kohlschutter/boilerpipe|https://github.com/kohlschutter/boilerpipe|none|free|Boilerplate removal in Java.
-open-data|Stats NZ|https://www.stats.govt.nz/|https://api.stats.govt.nz/|key|free|New Zealand statistics.
+open-data|Stats NZ|https://www.stats.govt.nz/|https://portal.apis.stats.govt.nz/api-guide|key|free|New Zealand statistics.
 open-data|Open Data Switzerland|https://opendata.swiss/|https://handbook.opendata.swiss/en/content/nutzen/api-nutzen.html|none|free|Swiss open data.
 prompt-management|Dust|https://dust.tt/|https://docs.dust.tt/|key|paid|Agents with prompt management.
 data-etl|Rivery|https://rivery.io/|https://docs.rivery.io/|key|paid|ELT platform.
