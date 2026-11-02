@@ -105,7 +105,7 @@ const BAD_TLDS = ['zip', 'mov', 'tk', 'ml', 'ga', 'cf', 'gq', 'click', 'country'
 const LINKRX = /\[([^\]\n]{0,200})\]\((https?:\/\/[^\s)]+)\)|https?:\/\/[^\s<>"'`]+/gi;
 export const LINK_TOKEN = /\[link (\d{1,2})\]/g;
 const onList = (host, list) => list.some((d) => host === d || host.endsWith('.' + d));
-function linkProblem(u) {
+export function linkProblem(u) {
   const host = u.hostname.toLowerCase();
   if (u.protocol !== 'https:') return 'Only https links are allowed. Use the https:// address.';
   if (u.username || u.password) return 'Links with a user name or password in them are not allowed.';

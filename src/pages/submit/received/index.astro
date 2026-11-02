@@ -1,0 +1,11 @@
+---
+import Crumbs from '../../../components/Crumbs.astro';
+import Base from '../../../layouts/Base.astro';
+---
+<Base title="Submission Received | Swarmnest" description="Your tool is queued for Swarmnest's hand review." path="/submit/received/" noindex>
+<Crumbs items={[['Home','/'],['Directory','/directory/'],['Submit a Tool','/submit/'],['Received']]} />
+<h1>Thanks, It's Queued for Review</h1>
+<p class="lead">Your submission is in the review queue. A person checks every tool, usually within a day, and accepted listings are written up in our own words. Nothing is published before that.</p>
+<p>If you left an email, the reviewer can reply to you there. Questions: <a href="mailto:hello@swarmnest.ai">hello@swarmnest.ai</a>.</p>
+<p><a class="btn" href="/directory/">Browse the Directory</a> <a href="/submit/">Submit Another Tool</a></p>
+</Base>

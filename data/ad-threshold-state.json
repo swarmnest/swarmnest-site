@@ -8,16 +8,15 @@
   },
   "notes": "AdSense has no traffic minimum (content/policy based) and was already covered in research; it is not treated as a traffic threshold to report. Carbon/BuySellAds publish no minimum; proxies used: Carbon ~10k PV/mo, BuySellAds ~100k impressions/mo (third-party).",
   "last_check": {
-    "run_at": "2026-10-26T09:15-07:00",
-    "source": "traffic-log.csv fallback (Cloudflare token lacks zone analytics.read and RUM read)",
-    "log_days": 11,
-    "log_range": "2026-10-15..2026-10-25",
-    "pageviews_in_log": 584,
-    "est_30d_pageviews": 1593,
+    "run_at": "2026-11-02T09:08-08:00",
+    "source": "Cloudflare Web Analytics RUM (rumPageloadEventsAdaptiveGroups, account-level; token now has RUM read)",
+    "range": "2026-10-03..2026-11-01",
+    "pageviews_30d": 2880,
+    "note": "RUM data starts 2026-10-15; 80% EthicalAds = 40,000",
     "requirements": {
-      "ethicalads": "50,000 PV/mo, ~$2.50 CPM (FAQ re-checked 2026-10-26)",
-      "carbon": "invite-only, no published minimum, exclusive, $1.50-$2.30 CPM (FAQ reviewed 2026-10-25)",
-      "buysellads": "no published minimum; publishers page now routes via Carbon Direct/Network",
+      "ethicalads": "50,000 PV/mo (FAQ re-checked 2026-11-02)",
+      "carbon": "invite-only, no published minimum (page reachable 2026-11-02)",
+      "buysellads": "no published minimum (page reachable 2026-11-02)",
       "adsense": "no traffic minimum; content, policy, 18+"
     }
   }

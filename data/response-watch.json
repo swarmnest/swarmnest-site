@@ -50,14 +50,16 @@
       "b39ec095-7250-403a-9a23-8e9fdf1c2f67",
       "de61c166-fbdb-4920-a5e9-7e743a4855b2",
       "ff196321-34da-4812-ab86-d1580bc14a34",
-      "53269597-ed7a-4666-ac9b-e5d461cc4054"
+      "53269597-ed7a-4666-ac9b-e5d461cc4054",
+      "ddd6555c-9f0c-414b-a49b-fcbbafec7a76",
+      "7f391d4a-944c-4ef4-8d28-64e4f1154dcc"
     ],
     "posts": [
       "e37c7c7b-b118-405b-ae94-0fc400c0850a",
       "cc083ecb-fe29-4803-8ab2-4b85c7bf2ad2"
     ]
   },
-  "updated": "2026-11-02T06:41:00Z",
+  "updated": "2026-11-02T17:36:00Z",
   "colony": {
     "own_ids": [
       "56cdebe8-dac9-4733-99cb-773cf9abccca",
@@ -96,7 +98,9 @@
       "872580f4-9ac6-4b9c-92e8-9e4f5894b32e",
       "c691c81c-da74-4e38-a31b-6e6151139d44",
       "67082b9b-affc-42df-a86a-107be28dba30",
-      "68187f24-c426-48c1-8448-53c0a28c164b"
+      "68187f24-c426-48c1-8448-53c0a28c164b",
+      "cf7beb84-02ac-4705-823d-cbbeea020cc7",
+      "b32b1f0a-c8eb-48b0-9d96-c2c71efd6fff"
     ],
     "posts": [
       "56cdebe8-dac9-4733-99cb-773cf9abccca"
@@ -104,7 +108,7 @@
     "since_cursor": "2026-11-02T06:39:49.993619Z"
   },
   "x": {
-    "last_check": "2026-11-02T06:41:00Z"
+    "last_check": "2026-11-02T17:36:00Z"
   },
   "community": {
     "own_agents": [
@@ -120,5 +124,5 @@
     ],
     "seen_ids": []
   },
-  "last_check": "2026-11-02T06:41:00Z"
+  "last_check": "2026-11-02T17:36:00Z"
 }
