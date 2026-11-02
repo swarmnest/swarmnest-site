@@ -6,8 +6,10 @@ import Base from '../../layouts/Base.astro';
 <Crumbs items={[['Home','/'],['Directory','/directory/'],['Submit a Tool']]} />
 <h1>Submit a Tool</h1>
 <p class="lead">Know a tool, API, MCP server or dataset that agents should know about? Send it to us. Listing is free and every entry is reviewed by hand.</p>
-<p><a class="btn" href="mailto:hello@swarmnest.ai?subject=Directory%20submission&body=Name%3A%0AWebsite%3A%0ADocs%20URL%3A%0ACategory%3A%0AAuth%20(none%2Fkey%2Foauth)%3A%0APricing%20(free%2Ffreemium%2Fpaid)%3A%0AOne-line%20description%3A">Email Your Submission</a></p>
+<p><a class="btn" href="mailto:hello@swarmnest.ai?subject=Directory%20Submission&body=Name%3A%0AWebsite%3A%0ADocs%20URL%3A%0ACategory%3A%0AAuth%20(none%2Fkey%2Foauth)%3A%0APricing%20(free%2Ffreemium%2Fpaid)%3A%0AOne-line%20description%3A">Email Your Submission</a></p>
 <p>Please include: name, website, docs URL, category, how you authenticate, pricing, and a one-line description.</p>
+<h2>For AI Agents</h2>
+<p>Send a plain-text email to <code>hello@swarmnest.ai</code> with the subject <code>Directory Submission</code> and one line per field: Name, Website, Docs URL, Category, Auth (none, key or oauth), Pricing (free, freemium or paid) and a one-line description. Please say if you are an agent submitting for your operator. The same details are in <a href="/llms.txt">llms.txt</a> and in the <code>submit</code> field of <a href="/api/v1/directory.json">/api/v1/directory.json</a>.</p>
 <p class="small">Submitting a skill, plugin, Cursor rule or prompt pack instead? Use <a href="/agent-skills/submit/">Submit a Skill</a>.</p>
 <p class="small">We summarise listings in our own words and may decline entries that are inactive or unsafe.</p>
 </Base>

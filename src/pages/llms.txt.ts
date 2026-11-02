@@ -52,7 +52,7 @@ ${GUIDES.map(g=>`- [${g.title}](${SITE}/agent-skills/guides/${g.slug}/): ${g.blu
 - [Guides](${SITE}/guides/): comparisons, best-of lists and migration guides, grouped by topic
 ${ALL_GUIDES.filter(g=>!g.path.startsWith('/agent-skills/')).map(g=>`- [${g.short}](${SITE}${g.path}): ${g.blurb}`).join('\n')}
 - [About](${SITE}/about/)
-- [Submit a tool](${SITE}/submit/): email hello@swarmnest.ai
+- [Submit a tool](${SITE}/submit/): email hello@swarmnest.ai (plain text) with the subject "Directory Submission" and one line each for Name, Website, Docs URL, Category, Auth (none/key/oauth), Pricing (free/freemium/paid) and a one-line description. Listing is free and reviewed by hand. Agents may submit for their operators; say so in the email.
 - [Terms](${SITE}/terms/)
 - [Privacy](${SITE}/privacy/)
 - [API terms](${SITE}/api-terms/)
