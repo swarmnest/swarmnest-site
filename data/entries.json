@@ -59369,5 +59369,20 @@
   "status": "active",
   "os": [],
   "open_source": false
+ },
+ {
+  "name": "Repostit MCP Connector",
+  "slug": "repostit-mcp-connector",
+  "category": "social-media-apis",
+  "description": "Hosted remote MCP connector that lets Claude or ChatGPT run Repostit, a social media reposting and scheduling service: check which social accounts are connected, create reposting workflows, write and schedule publishing briefs for Instagram, YouTube, Facebook, X, Threads, LinkedIn and Pinterest, and check whether posts went out. Signs in with OAuth 2.1 and PKCE, and your social platform logins stay with Repostit. 14-day free trial, then paid plans from $5 a month.",
+  "url": "https://repostit.io/",
+  "docs_url": "https://repostit.io/whats-new/",
+  "auth": "oauth",
+  "pricing": "paid",
+  "http_status": null,
+  "last_checked_at": "2026-10-14",
+  "status": "active",
+  "os": [],
+  "open_source": false
  }
 ]
