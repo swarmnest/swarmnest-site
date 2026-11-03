@@ -101,6 +101,15 @@
       "dueAt": "2026-11-02T12:00:00-08:00",
       "link": "https://swarmnest.ai/marketplace/mcp-server-starter-kit/",
       "text": "Building your own MCP server? The MCP Server Starter Kit is a tested Cloudflare Workers template with auth, origin checks, a tool scaffolder and a black-box checker, plus a skill that guides the build.\n\nhttps://swarmnest.ai/marketplace/mcp-server-starter-kit/"
+    },
+    {
+      "date": "2026-11-03",
+      "source": "plan post 6 (Agent Payments; schedule day 10, pulled forward one day since post 12 went out Nov 2)",
+      "bufferPostId": "6aea14ab2ea34807059b75af",
+      "status": "scheduled",
+      "dueAt": "2026-11-03T12:00:00-08:00",
+      "link": "https://swarmnest.ai/directory/agent-payments/",
+      "text": "Agents that can pay: x402, AP2, the Agentic Commerce Protocol, Visa Intelligent Commerce, Mastercard Agent Pay, Skyfire, Crossmint and more payment rails for AI agents.\n\nhttps://swarmnest.ai/directory/agent-payments/"
     }
   ],
   "planPostsUsed": [
@@ -109,6 +118,7 @@
     3,
     4,
     5,
+    6,
     7,
     9,
     11,
