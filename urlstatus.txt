@@ -3915,3 +3915,7 @@
 200 https://zulip.com/api/
 200 https://zulko.github.io/moviepy/
 403 https://zylalabs.com/
+200 https://sfxmint.com/
+200 https://www.raomusic.com/
+200 https://www.aieffect.art/
+200 https://duami.ai/
