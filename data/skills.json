@@ -36696,5 +36696,70 @@
   "price": "free",
   "pairs_with": [],
   "os": []
+ },
+ {
+  "slug": "footalytics",
+  "name": "footalytics",
+  "title": "Footalytics",
+  "summary": "Footalytics from Farvor: a skill that answers football questions with graded match predictions (win/draw/loss, over/under 2.5, both teams to score), fixtures, team ratings and settled results from the Footalytics API. Instructions only; needs a Footalytics API key, or use its MCP server instead.",
+  "category": "Data Analysis Skills",
+  "tags": [
+   "footalytics",
+   "agent-skill",
+   "football",
+   "sports-data",
+   "predictions"
+  ],
+  "author": "Farvor",
+  "author_url": "https://gitlab.com/footalytics",
+  "source_url": "https://gitlab.com/footalytics/footalytics-skill",
+  "repo": "footalytics/footalytics-skill",
+  "path_in_repo": "",
+  "reviewed_commit": "25f5e07137c5675886afbd491274327ec2f07601",
+  "format": "agent-skill",
+  "spec_valid": true,
+  "platforms_declared": [
+   "claude-code",
+   "cursor",
+   "codex"
+  ],
+  "platforms_tested": [],
+  "runtime_needs": [],
+  "install": [
+   {
+    "platform": "claude-code",
+    "method": "copy-folder",
+    "steps": "git clone https://gitlab.com/footalytics/footalytics-skill ~/.claude/skills/footalytics, or add it as a plugin marketplace with /plugin marketplace add https://gitlab.com/footalytics/footalytics-skill and then /plugin install footalytics@footalytics."
+   },
+   {
+    "platform": "cursor",
+    "method": "plugin-install",
+    "steps": "Import the repository under Customize > Skills; it ships .cursor-plugin/marketplace.json."
+   },
+   {
+    "platform": "any-skills-client",
+    "method": "copy-folder",
+    "steps": "Copy skills/footalytics/SKILL.md into your client's skills folder, then set FOOTALYTICS_API_KEY."
+   }
+  ],
+  "license": "MIT",
+  "redistributable": true,
+  "has_scripts": false,
+  "uses_network": true,
+  "needs_credentials": true,
+  "safety_labels": [
+   "Instructions Only",
+   "Uses Network",
+   "Needs Credentials"
+  ],
+  "review_status": "Third-Party",
+  "scan_date": "2026-11-03",
+  "scan_notes": "SKILL.md only (root copy identical to skills/footalytics/SKILL.md), no code files. Calls the Footalytics API at footalytics.farvor.com with a bearer key; 5 free calls per account, then paid credits.",
+  "status": "active",
+  "http_status": 200,
+  "last_verified": "2026-11-03",
+  "price": "free",
+  "pairs_with": [],
+  "os": []
  }
 ]

@@ -8,7 +8,7 @@ const { s } = Astro.props; const f = fmtByKey(s.format); const cs = slugify(s.ca
 const related = SKILLS.filter(x=>x.category===s.category&&x.slug!==s.slug).slice(0,4);
 const path = skillPath(s);
 const ld=[{'@context':'https://schema.org','@type':'BreadcrumbList',itemListElement:[{'@type':'ListItem',position:1,name:'Home',item:SITE+'/'},{'@type':'ListItem',position:2,name:'Agent Skills',item:SITE+'/agent-skills/'},{'@type':'ListItem',position:3,name:s.category,item:`${SITE}/agent-skills/category/${cs}/`},{'@type':'ListItem',position:4,name:s.title,item:SITE+path}]},
-{'@context':'https://schema.org','@type':'SoftwareSourceCode',name:s.title,description:s.summary,codeRepository:`https://github.com/${s.repo}`,url:SITE+path,author:{'@type':'Organization',name:s.author,url:s.author_url},...(s.license&&!/None|Source/.test(s.license)?{license:`https://spdx.org/licenses/${s.license}`}:{}),isAccessibleForFree:true}];
+{'@context':'https://schema.org','@type':'SoftwareSourceCode',name:s.title,description:s.summary,codeRepository:/^https:\/\/github\.com\//.test(s.source_url)?`https://github.com/${s.repo}`:s.source_url,url:SITE+path,author:{'@type':'Organization',name:s.author,url:s.author_url},...(s.license&&!/None|Source/.test(s.license)?{license:`https://spdx.org/licenses/${s.license}`}:{}),isAccessibleForFree:true}];
 const short = s.reviewed_commit.slice(0,7);
 const desc = `${s.title}: ${s.summary}`.slice(0,155);
 ---
