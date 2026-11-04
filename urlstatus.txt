@@ -3919,3 +3919,11 @@
 200 https://www.raomusic.com/
 200 https://www.aieffect.art/
 200 https://duami.ai/
+200 https://pragor.net/welcome
+200 https://www.adscrawl.net/
+200 https://alfie.family/agent-guide.html
+200 https://siebly.io/
+200 https://www.walletmaster.tools/
+200 https://github.com/GeminiGeorge22/ats-jobs-mcp
+200 https://github.com/GeminiGeorge22/etsy-sales-mcp
+200 https://github.com/GeminiGeorge22/sports-odds-mcp
