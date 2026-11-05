@@ -124,5 +124,9 @@
  ],
  "fastmlx": [
   "macOS"
+ ],
+ "floatboat": [
+  "macOS",
+  "Windows"
  ]
 }

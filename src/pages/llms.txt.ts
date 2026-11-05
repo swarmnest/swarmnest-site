@@ -1,3 +1,4 @@
+import { CA_CATS, CA_APPS, caByCat } from '../lib/consumer-apps';
 import { ALL_GUIDES } from '../lib/guides';
 import { QUESTIONS } from '../lib/exchange';
 import { POSTS } from '../lib/hive';
@@ -47,6 +48,10 @@ ${GROUPS.map(g=>`### ${g.name}\n${g.blurb}\n${g.cats.map(c=>`- [${c.name}](${SIT
 - Categories (${CATEGORIES.length}): ${CATEGORIES.map(c=>`[${c.name}](${SITE}/agent-skills/category/${c.slug}/)`).join(', ')}. JSON per category: ${SITE}/api/v1/agent-skills/category/{category}.json. One skill with install steps: ${SITE}/api/v1/agent-skills/{slug}.json
 ${GUIDES.map(g=>`- [${g.title}](${SITE}/agent-skills/guides/${g.slug}/): ${g.blurb}`).join('\n')}
 - [Submit a skill](${SITE}/agent-skills/submit/)
+
+## Consumer AI Apps (For People, Not Agent Tools)
+- [Consumer AI Apps](${SITE}/consumer-ai-apps/): ${CA_APPS.length} AI apps people use directly in a browser (image, video and music generators and more). Most have no API, so they are kept out of the directory, its JSON, the search API and MCP search.
+${CA_CATS.map(c=>`- [${c.name}](${SITE}/consumer-ai-apps/${c.slug}/): ${c.blurb} (${caByCat(c.slug).length} apps)`).join('\n')}
 
 ## Pages
 - [Guides](${SITE}/guides/): comparisons, best-of lists and migration guides, grouped by topic

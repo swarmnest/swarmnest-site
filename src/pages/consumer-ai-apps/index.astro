@@ -1,0 +1,18 @@
+---
+import Base from '../../layouts/Base.astro';
+import Crumbs from '../../components/Crumbs.astro';
+import { SITE } from '../../lib/data';
+import { CA_CATS, CA_APPS, caByCat } from '../../lib/consumer-apps';
+const ld=[{'@context':'https://schema.org','@type':'BreadcrumbList',itemListElement:[{'@type':'ListItem',position:1,name:'Home',item:SITE+'/'},{'@type':'ListItem',position:2,name:'Consumer AI Apps',item:SITE+'/consumer-ai-apps/'}]}];
+---
+<Base title="Consumer AI Apps: Image, Video and Music Generators for People | Swarmnest" description={`${CA_APPS.length} AI apps people use directly in the browser: image, video and music generators, ad makers and more. Separate from the agent tools directory.`} path="/consumer-ai-apps/" jsonld={ld}>
+<Crumbs items={[['Home','/'],['Consumer AI Apps']]} />
+<h1>Consumer AI Apps</h1>
+<p class="lead">AI apps for people: you open them in a browser, type a prompt or upload a photo, and get a picture, video or song. These are not agent tools and most have no API. For tools agents can call, see the <a href="/directory/">Directory</a>.</p>
+{CA_CATS.map(c=>(
+<section aria-labelledby={`c-${c.slug}`}>
+<div class="grp-h"><h2 id={`c-${c.slug}`}><a href={`/consumer-ai-apps/${c.slug}/`} style="color:inherit;text-decoration:none">{c.name}</a></h2><a class="small" href={`/consumer-ai-apps/${c.slug}/`}>{caByCat(c.slug).length} Apps</a></div>
+<div class="grid">{caByCat(c.slug).map(a=><a class="card" href={a.url} rel="nofollow noopener" target="_blank"><h3>{a.name}</h3><p>{a.description}</p><span class="badge">Consumer App</span></a>)}</div>
+</section>))}
+<p class="small">Apps are checked by hand before they're added. Swarmnest is not affiliated with them. Have an AI app for people? <a href="/submit/">Submit it</a>.</p>
+</Base>

@@ -59564,5 +59564,23 @@
   "status": "active",
   "os": [],
   "open_source": true
+ },
+ {
+  "name": "Floatboat",
+  "slug": "floatboat",
+  "category": "mac-ai-agent-apps",
+  "description": "Desktop agent app for Mac and Windows that runs DeepSeek models on your local files, browser tasks and scheduled automations, saving results back into your folders. Made by Floatboat, an independent team not affiliated with DeepSeek.",
+  "url": "https://deepseek-agent.com/",
+  "docs_url": "https://deepseek-agent.com/download",
+  "auth": "none",
+  "pricing": "paid",
+  "http_status": null,
+  "last_checked_at": "2026-10-14",
+  "status": "active",
+  "os": [
+   "macOS",
+   "Windows"
+  ],
+  "open_source": false
  }
 ]

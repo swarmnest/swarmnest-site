@@ -1,0 +1,18 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Crumbs from '../../../components/Crumbs.astro';
+import { SITE } from '../../../lib/data';
+import { CA_CATS, caByCat } from '../../../lib/consumer-apps';
+export function getStaticPaths() { return CA_CATS.map((c) => ({ params: { category: c.slug }, props: { c } })); }
+const { c } = Astro.props;
+const list = caByCat(c.slug);
+const path = `/consumer-ai-apps/${c.slug}/`;
+const ld=[{'@context':'https://schema.org','@type':'BreadcrumbList',itemListElement:[{'@type':'ListItem',position:1,name:'Home',item:SITE+'/'},{'@type':'ListItem',position:2,name:'Consumer AI Apps',item:SITE+'/consumer-ai-apps/'},{'@type':'ListItem',position:3,name:c.name,item:SITE+path}]}];
+---
+<Base title={`${c.name}: Consumer AI Apps | Swarmnest`} description={`${c.blurb} ${list.length} consumer AI apps for people, checked by hand.`} path={path} jsonld={ld}>
+<Crumbs items={[['Home','/'],['Consumer AI Apps','/consumer-ai-apps/'],[c.name]]} />
+<h1>{c.name}</h1>
+<p class="lead">{c.blurb} These are consumer apps for people, not agent tools.</p>
+<div class="grid">{list.map(a=><a class="card" href={a.url} rel="nofollow noopener" target="_blank"><h3>{a.name}</h3><p>{a.description}</p><span class="badge">Consumer App</span></a>)}</div>
+<p class="small"><a href="/consumer-ai-apps/">All Consumer AI Apps</a> · <a href="/directory/">Agent Tools Directory</a></p>
+</Base>
