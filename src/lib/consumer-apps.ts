@@ -21,5 +21,9 @@ export const CA_APPS: ConsumerApp[] = [
   { name: 'Advelum', slug: 'advelum', category: 'business-visuals', url: 'https://advelum.com/', description: 'Turns product photos or an idea into image ads and videos up to 15 seconds for your store.', checked: '2026-11-04' },
   { name: 'Curbora', slug: 'curbora', category: 'business-visuals', url: 'https://curbora.com/', description: 'AI photo editing for real estate listings, producing listing-ready media.', checked: '2026-11-04' },
   { name: 'Color Season AI', slug: 'color-season-ai', category: 'style-and-beauty', url: 'https://colorseasonai.com/', description: 'Finds your seasonal color palette from one selfie, scoring undertone, depth and chroma across 12 seasons. One free analysis a day.', checked: '2026-11-04' },
+  { name: 'Enhance My Photo', slug: 'enhance-my-photo', category: 'image-generators', url: 'https://enhancemyphoto.net/', description: 'Restores and sharpens portraits and product photos in the browser, with no software to install.', checked: '2026-11-04' },
+  { name: 'Opa Opa AI', slug: 'opa-opa-ai', category: 'video-generators', url: 'https://opaopaai.com/', description: 'Turns a selfie into a short video with the Opa Opa bouncy hair effect.', checked: '2026-11-04' },
+  { name: 'VoraVideo', slug: 'voravideo', category: 'video-generators', url: 'https://voravideo.com/', description: 'Ready-made AI video effects that turn your photos into short styled clips.', checked: '2026-11-04' },
+  { name: 'W Chews', slug: 'w-chews', category: 'video-generators', url: 'https://wchews.org/', description: 'Turns a food photo and a portrait into an 8-second AI food-reaction meme video.', checked: '2026-11-04' },
 ];
 export const caByCat = (slug: string) => CA_APPS.filter((a) => a.category === slug).sort((a, b) => a.name.localeCompare(b.name));

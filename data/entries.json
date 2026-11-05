@@ -59582,5 +59582,35 @@
    "Windows"
   ],
   "open_source": false
+ },
+ {
+  "name": "ShareOfAsk",
+  "slug": "shareofask",
+  "category": "mcp-servers",
+  "description": "Hosted remote MCP server that tracks how AI assistants mention your brand, your competitors and the sources they cite, over Streamable HTTP with OAuth. Plans from $49 a month.",
+  "url": "https://www.shareofask.com/",
+  "docs_url": "https://github.com/ShareOfAsk/shareofask-mcp",
+  "auth": "oauth",
+  "pricing": "paid",
+  "http_status": null,
+  "last_checked_at": "2026-10-14",
+  "status": "active",
+  "os": [],
+  "open_source": false
+ },
+ {
+  "name": "Irmu",
+  "slug": "irmu",
+  "category": "web-scraping-apis",
+  "description": "Web data APIs for scraping, JavaScript rendering, screenshots and AI-structured JSON extraction, available over REST and a hosted MCP server with OAuth or API key. Free credits, paid plans from $19 a month.",
+  "url": "https://irmu.com/",
+  "docs_url": "https://irmu.com/docs/mcp",
+  "auth": "key",
+  "pricing": "freemium",
+  "http_status": null,
+  "last_checked_at": "2026-10-14",
+  "status": "active",
+  "os": [],
+  "open_source": false
  }
 ]
