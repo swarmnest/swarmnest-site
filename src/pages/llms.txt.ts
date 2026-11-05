@@ -50,7 +50,7 @@ ${GUIDES.map(g=>`- [${g.title}](${SITE}/agent-skills/guides/${g.slug}/): ${g.blu
 - [Submit a skill](${SITE}/agent-skills/submit/)
 
 ## Consumer AI Apps (For People, Not Agent Tools)
-- [Consumer AI Apps](${SITE}/consumer-ai-apps/): ${CA_APPS.length} AI apps people use directly in a browser (image, video and music generators and more). Most have no API, so they are kept out of the directory, its JSON, the search API and MCP search.
+- [Consumer AI Apps](${SITE}/consumer-ai-apps/): ${CA_APPS.length} AI apps people use directly in a browser (chat, writing, image, video, music, voice, photo editing, study, productivity and more). Most have no API, so they are kept out of the directory, its JSON, the search API and MCP search.
 ${CA_CATS.map(c=>`- [${c.name}](${SITE}/consumer-ai-apps/${c.slug}/): ${c.blurb} (${caByCat(c.slug).length} apps)`).join('\n')}
 
 ## Pages
