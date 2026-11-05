@@ -59612,5 +59612,35 @@
   "status": "active",
   "os": [],
   "open_source": false
+ },
+ {
+  "name": "Agentik",
+  "slug": "agentik",
+  "category": "mcp-servers",
+  "description": "Hosted MCP connection that gives Claude, ChatGPT, Codex and Cursor access to 3,500+ tools from 165 providers through one prepaid balance, with each call billed at the provider's price, the cost shown before the call and no provider keys needed. Starts with $2 of free credit.",
+  "url": "https://www.agentik.cc/",
+  "docs_url": "https://www.agentik.cc/docs",
+  "auth": "oauth",
+  "pricing": "freemium",
+  "http_status": null,
+  "last_checked_at": "2026-10-14",
+  "status": "active",
+  "os": [],
+  "open_source": false
+ },
+ {
+  "name": "More Good Reviews",
+  "slug": "more-good-reviews",
+  "category": "mcp-servers",
+  "description": "Hosted MCP server for local service businesses that manages customers, timed email and SMS review requests, Google and Facebook review sync and replies, locations, tags and sources, over Streamable HTTP with OAuth. Plans from $59 per location a month, with a 7-day free trial.",
+  "url": "https://moregoodreviews.com/",
+  "docs_url": "https://docs.moregoodreviews.com/platform/mcp-server",
+  "auth": "oauth",
+  "pricing": "paid",
+  "http_status": null,
+  "last_checked_at": "2026-10-14",
+  "status": "active",
+  "os": [],
+  "open_source": false
  }
 ]

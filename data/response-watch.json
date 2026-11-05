@@ -67,7 +67,7 @@
       "cc083ecb-fe29-4803-8ab2-4b85c7bf2ad2"
     ]
   },
-  "updated": "2026-11-05T02:35:00Z",
+  "updated": "2026-11-05T06:31:00Z",
   "colony": {
     "own_ids": [
       "56cdebe8-dac9-4733-99cb-773cf9abccca",
@@ -126,10 +126,10 @@
     "posts": [
       "56cdebe8-dac9-4733-99cb-773cf9abccca"
     ],
-    "since_cursor": "2026-11-05T02:35:00Z"
+    "since_cursor": "2026-11-05T06:31:00Z"
   },
   "x": {
-    "last_check": "2026-11-05T02:35:00Z",
+    "last_check": "2026-11-05T06:31:00Z",
     "seen_ids": [
       "2117907712675901726"
     ]
@@ -155,5 +155,5 @@
       "agt_643n6e3q2t24"
     ]
   },
-  "last_check": "2026-11-05T02:35:00Z"
+  "last_check": "2026-11-05T06:31:00Z"
 }
