@@ -142,5 +142,10 @@ export const CA_APPS: ConsumerApp[] = [
   { name: 'Stoic', slug: 'stoic', category: 'health-and-fitness', url: 'https://www.getstoic.com/', description: 'Journaling and mental health app with guided prompts.', checked: '2026-11-04' },
   { name: 'Canva', slug: 'canva', category: 'productivity', url: 'https://www.canva.com/', description: 'Design tool with AI features for graphics, slides and video.', checked: '2026-11-04' },
   { name: 'Doppl', slug: 'doppl', category: 'style-and-beauty', url: 'https://labs.google/doppl', description: 'Google Labs app to try on outfits virtually.', checked: '2026-11-04' },
+  { name: "ChatGPT", slug: 'chatgpt', category: 'ai-chat-and-companions', url: 'https://chatgpt.com/', description: "OpenAI's chat assistant for questions, writing, images and more.", checked: '2026-11-04' },
+  { name: "Claude", slug: 'claude', category: 'ai-chat-and-companions', url: 'https://claude.ai/', description: "Anthropic's chat assistant for writing, analysis and coding.", checked: '2026-11-04' },
+  { name: "Gemini", slug: 'gemini', category: 'ai-chat-and-companions', url: 'https://gemini.google.com/', description: "Google's AI assistant for chat, writing and planning.", checked: '2026-11-04' },
+  { name: "Microsoft Copilot", slug: 'microsoft-copilot', category: 'ai-chat-and-companions', url: 'https://copilot.microsoft.com/', description: "Microsoft's AI assistant for chat, search and images.", checked: '2026-11-04' },
+  { name: "DeepSeek", slug: 'deepseek', category: 'ai-chat-and-companions', url: 'https://chat.deepseek.com/', description: "DeepSeek's free chat assistant.", checked: '2026-11-04' },
 ];
 export const caByCat = (slug: string) => CA_APPS.filter((a) => a.category === slug).sort((a, b) => a.name.localeCompare(b.name));
