@@ -181,11 +181,11 @@ a.badge.hv-tag{text-decoration:none;min-height:24px;display:inline-flex;align-it
 .catlist a .row-l{display:inline-flex;align-items:center;gap:8px;min-width:0}
 .gjump a{display:inline-flex;align-items:center;gap:6px}
 .group summary .gicon{margin-right:8px;vertical-align:-3px}
-@media(max-width:640px){.listing-h{gap:12px}.listing-h .llogo{width:44px;height:44px;flex-basis:44px}}
 
 .grp-row{display:flex;align-items:center;gap:10px}
 .dp-gh{display:inline-flex;align-items:center;gap:6px}
 .mm-list a .row-l{display:inline-flex;align-items:center;gap:8px}
+@media(max-width:640px){.listing-h{gap:12px}.listing-h .llogo{width:44px;height:44px;flex-basis:44px}}
 /* ---- Living Hive Chamber homepage hero ---- */
 .hero-hive{padding:.85rem 0 .6rem}
 .hero-hive-stage{position:relative;isolation:isolate;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:#05070c;min-height:280px}
@@ -210,12 +210,18 @@ a.badge.hv-tag{text-decoration:none;min-height:24px;display:inline-flex;align-it
     linear-gradient(90deg,rgba(5,7,12,.96) 0%,rgba(5,7,12,.9) 28%,rgba(5,7,12,.55) 48%,rgba(5,7,12,.18) 68%,rgba(5,7,12,0) 86%),
     linear-gradient(180deg,rgba(5,7,12,.35) 0%,rgba(5,7,12,.08) 45%,rgba(5,7,12,.4) 100%)}
 }
+/* Mobile: keep true overlay; text raised into darker upper area; shorter stage */
 @media(max-width:640px){
-  .hero-hive-stage{min-height:0}
-  .hero-hive-media{position:relative;inset:auto;height:150px}
-  .hero-hive-img{object-position:center 38%;min-height:150px}
+  .hero-hive{padding:.7rem 0 .5rem}
+  .hero-hive-stage{min-height:0;height:auto}
+  .hero-hive-media{position:absolute;inset:0;height:auto}
+  .hero-hive-img{object-position:68% 28%;min-height:100%}
   .hero-hive-scrim{background:
-    linear-gradient(180deg,rgba(5,7,12,.2) 0%,rgba(5,7,12,.55) 42%,rgba(5,7,12,.94) 72%,rgba(5,7,12,.98) 100%)}
-  .hero-hive-copy{margin-top:-4.25rem;padding:1rem .95rem 1.05rem;max-width:none}
-  .hero-hive-copy h1{font-size:1.55rem}
+    linear-gradient(180deg,rgba(5,7,12,.82) 0%,rgba(5,7,12,.72) 28%,rgba(5,7,12,.55) 52%,rgba(5,7,12,.62) 100%),
+    linear-gradient(90deg,rgba(5,7,12,.9) 0%,rgba(5,7,12,.55) 55%,rgba(5,7,12,.18) 100%)}
+  .hero-hive-copy{margin-top:0;padding:.85rem .9rem .9rem;max-width:none}
+  .hero-hive-copy h1{font-size:1.42rem;line-height:1.2;margin:0 0 .35rem}
+  .hero-hive-copy .lead{font-size:.98rem;margin:0}
+  .hero-hive .hsearch{margin-top:.65rem}
+  .hero-hive .chips{margin:.45rem 0 0}
 }
