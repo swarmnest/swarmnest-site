@@ -85,6 +85,7 @@ html.menu-open,html.menu-open body{overflow:hidden}
 .tile-chamber:hover{border-color:var(--acc);box-shadow:0 0 0 1px rgba(251,191,36,.22),0 8px 22px rgba(0,0,0,.28)}
 .tile-chamber-img{display:block;width:100%;height:auto;aspect-ratio:2.6/1;max-height:100px;object-fit:cover;object-position:center 42%;background:#05070c}
 @media(min-width:760px){.tile-chamber-img{height:90px;max-height:90px;aspect-ratio:auto}}
+.tile-chamber-img--dir{object-position:58% 48%}
 .tile-chamber-body{display:flex;flex-direction:column;gap:2px;padding:8px 12px 10px;border-top:2px solid var(--acc)}
 .tile-chamber-body strong{font-size:1rem;line-height:1.2}
 .tile-chamber-body>span{margin:0;color:var(--mut);font-size:.82rem;line-height:1.3}
