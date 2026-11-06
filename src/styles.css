@@ -210,16 +210,18 @@ a.badge.hv-tag{text-decoration:none;min-height:24px;display:inline-flex;align-it
     linear-gradient(90deg,rgba(5,7,12,.96) 0%,rgba(5,7,12,.9) 28%,rgba(5,7,12,.55) 48%,rgba(5,7,12,.18) 68%,rgba(5,7,12,0) 86%),
     linear-gradient(180deg,rgba(5,7,12,.35) 0%,rgba(5,7,12,.08) 45%,rgba(5,7,12,.4) 100%)}
 }
-/* Mobile: keep true overlay; text raised into darker upper area; shorter stage */
+/* Mobile: raised text position kept; hive clearer via lighter global scrim + local text panel */
 @media(max-width:640px){
   .hero-hive{padding:.7rem 0 .5rem}
   .hero-hive-stage{min-height:0;height:auto}
   .hero-hive-media{position:absolute;inset:0;height:auto}
-  .hero-hive-img{object-position:68% 28%;min-height:100%}
+  .hero-hive-img{object-position:72% 30%;min-height:100%;filter:brightness(1.18) contrast(1.06) saturate(1.08)}
   .hero-hive-scrim{background:
-    linear-gradient(180deg,rgba(5,7,12,.82) 0%,rgba(5,7,12,.72) 28%,rgba(5,7,12,.55) 52%,rgba(5,7,12,.62) 100%),
-    linear-gradient(90deg,rgba(5,7,12,.9) 0%,rgba(5,7,12,.55) 55%,rgba(5,7,12,.18) 100%)}
-  .hero-hive-copy{margin-top:0;padding:.85rem .9rem .9rem;max-width:none}
+    linear-gradient(180deg,rgba(5,7,12,.28) 0%,rgba(5,7,12,.18) 40%,rgba(5,7,12,.32) 100%),
+    linear-gradient(90deg,rgba(5,7,12,.42) 0%,rgba(5,7,12,.16) 48%,rgba(5,7,12,.05) 100%)}
+  .hero-hive-copy{margin-top:0;padding:.85rem .9rem .9rem;max-width:none;
+    background:linear-gradient(180deg,rgba(5,7,12,.78) 0%,rgba(5,7,12,.62) 70%,rgba(5,7,12,.28) 100%);
+    border-radius:10px;box-shadow:0 8px 28px rgba(0,0,0,.28)}
   .hero-hive-copy h1{font-size:1.42rem;line-height:1.2;margin:0 0 .35rem}
   .hero-hive-copy .lead{font-size:.98rem;margin:0}
   .hero-hive .hsearch{margin-top:.65rem}
