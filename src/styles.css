@@ -187,15 +187,35 @@ a.badge.hv-tag{text-decoration:none;min-height:24px;display:inline-flex;align-it
 .dp-gh{display:inline-flex;align-items:center;gap:6px}
 .mm-list a .row-l{display:inline-flex;align-items:center;gap:8px}
 /* ---- Living Hive Chamber homepage hero ---- */
-.hero-hive{display:flex;flex-direction:column;gap:1rem;padding:1rem 0 .6rem}
-.hero-hive-media{order:-1;margin:0;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#0a0c12;aspect-ratio:16/9;max-height:168px}
-.hero-hive-img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 40%}
-.hero-hive-copy{min-width:0;order:0}
-.hero-hive .hsearch{max-width:640px;position:relative;z-index:2}
-.hero-hive #results{position:relative;z-index:2}
+.hero-hive{padding:.85rem 0 .6rem}
+.hero-hive-stage{position:relative;isolation:isolate;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:#05070c;min-height:280px}
+.hero-hive-media{position:absolute;inset:0;z-index:0}
+.hero-hive-img{display:block;width:100%;height:100%;object-fit:cover;object-position:72% center}
+.hero-hive-scrim{position:absolute;inset:0;z-index:1;pointer-events:none;background:
+  linear-gradient(90deg,rgba(5,7,12,.94) 0%,rgba(5,7,12,.88) 34%,rgba(5,7,12,.48) 58%,rgba(5,7,12,.12) 78%,rgba(5,7,12,.04) 100%),
+  linear-gradient(180deg,rgba(5,7,12,.55) 0%,rgba(5,7,12,.18) 42%,rgba(5,7,12,.55) 100%)}
+.hero-hive-copy{position:relative;z-index:2;max-width:34rem;padding:1.35rem 1.15rem 1.25rem;box-sizing:border-box}
+.hero-hive-copy h1{margin:.15rem 0 .45rem;text-shadow:0 1px 18px rgba(0,0,0,.55)}
+.hero-hive-copy .lead{color:#d1d5db;text-shadow:0 1px 12px rgba(0,0,0,.5)}
+.hero-hive .hsearch{max-width:100%;margin-top:.85rem}
+.hero-hive .hsearch input[type=search]{background:rgba(11,15,23,.92);border-color:#4b5563;box-shadow:0 8px 28px rgba(0,0,0,.35)}
+.hero-hive .hsearch input[type=search]:focus{border-color:var(--acc);outline:none}
+.hero-hive .chips a{background:rgba(17,24,39,.88);backdrop-filter:blur(4px)}
+.hero-hive #results{position:relative;z-index:3}
 @media(min-width:900px){
-  .hero-hive{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(300px,.92fr);gap:1.5rem 1.75rem;align-items:center;padding:1.25rem 0 .85rem}
-  .hero-hive-copy,.hero-hive-media{order:0}
-  .hero-hive-media{max-height:none;min-height:280px;aspect-ratio:16/9}
-  .hero-hive-img{object-fit:cover;object-position:center center}
+  .hero-hive-stage{min-height:340px}
+  .hero-hive-copy{padding:2rem 1.6rem 1.8rem;max-width:36rem}
+  .hero-hive-img{object-position:78% center}
+  .hero-hive-scrim{background:
+    linear-gradient(90deg,rgba(5,7,12,.96) 0%,rgba(5,7,12,.9) 28%,rgba(5,7,12,.55) 48%,rgba(5,7,12,.18) 68%,rgba(5,7,12,0) 86%),
+    linear-gradient(180deg,rgba(5,7,12,.35) 0%,rgba(5,7,12,.08) 45%,rgba(5,7,12,.4) 100%)}
+}
+@media(max-width:640px){
+  .hero-hive-stage{min-height:0}
+  .hero-hive-media{position:relative;inset:auto;height:150px}
+  .hero-hive-img{object-position:center 38%;min-height:150px}
+  .hero-hive-scrim{background:
+    linear-gradient(180deg,rgba(5,7,12,.2) 0%,rgba(5,7,12,.55) 42%,rgba(5,7,12,.94) 72%,rgba(5,7,12,.98) 100%)}
+  .hero-hive-copy{margin-top:-4.25rem;padding:1rem .95rem 1.05rem;max-width:none}
+  .hero-hive-copy h1{font-size:1.55rem}
 }
