@@ -8,6 +8,8 @@ import Base from '../layouts/Base.astro';
 import { ALL, CATS } from '../lib/data';
 import { NAV_GROUPS, POPULAR_CATS, CHIPS, groupPath } from '../lib/nav';
 import { ALL_GUIDES } from '../lib/guides';
+import ListingLogo from '../components/ListingLogo.astro';
+import GroupIcon from '../components/GroupIcon.astro';
 // Deadline callouts: wording switches to past tense the day after each date (pages rebuild daily).
 const today = new Date().toISOString().slice(0, 10);
 const smitheryPast = today > '2026-10-31'; const builderPast = today > '2026-11-30';
@@ -17,7 +19,26 @@ const minPrice = Math.min(...PRODUCTS.map(p=>p.cents))/100;
 const featured = ['openai-api','anthropic-api','firecrawl','tavily','github-mcp-server','langgraph','qdrant','stripe'].map(s=>ALL.find(e=>e.slug===s)!).filter(Boolean);
 ---
 <Base title="Swarmnest — AI Agent Tools, MCP Servers and Agent Skills" description={`Browse ${ALL.length} hand-checked tools, MCP servers, APIs and data sources for AI agents, plus ${SKILLS.length} Agent Skills, with a JSON API for agents.`} path="/">
-<section class="hero" aria-labelledby="home-h1">
+<section class="hero hero-band" aria-labelledby="home-h1">
+<div class="hero-visual" aria-hidden="true">
+<svg viewBox="0 0 340 120" xmlns="http://www.w3.org/2000/svg" role="presentation">
+<defs>
+<linearGradient id="hg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fbbf24" stop-opacity=".55"/><stop offset="1" stop-color="#60a5fa" stop-opacity=".25"/></linearGradient>
+</defs>
+<rect x="12" y="18" width="52" height="52" rx="12" fill="#111827" stroke="#1f2937"/>
+<rect x="76" y="10" width="52" height="52" rx="12" fill="#111827" stroke="#fbbf24" stroke-opacity=".35"/>
+<rect x="140" y="22" width="52" height="52" rx="12" fill="#111827" stroke="#1f2937"/>
+<rect x="204" y="8" width="52" height="52" rx="12" fill="#111827" stroke="#1f2937"/>
+<rect x="268" y="20" width="52" height="52" rx="12" fill="#111827" stroke="#1f2937"/>
+<rect x="44" y="62" width="52" height="52" rx="12" fill="#111827" stroke="#1f2937"/>
+<rect x="108" y="68" width="52" height="52" rx="12" fill="#111827" stroke="#fbbf24" stroke-opacity=".45"/>
+<rect x="172" y="58" width="52" height="52" rx="12" fill="#111827" stroke="#1f2937"/>
+<rect x="236" y="66" width="52" height="52" rx="12" fill="#111827" stroke="#1f2937"/>
+<circle cx="102" cy="36" r="10" fill="url(#hg)"/>
+<circle cx="134" cy="94" r="10" fill="#fbbf24" fill-opacity=".5"/>
+<path d="M38 44h20M90 36h20M154 48h20M218 34h20M282 46h20" stroke="#fbbf24" stroke-opacity=".35" stroke-width="2" stroke-linecap="round"/>
+</svg>
+</div>
 <h1 id="home-h1">The Hub for AI Agents and the People Who Run Them</h1>
 <p class="lead">Tools, MCP servers, Agent Skills and tested packs for building with AI agents.</p>
 <form class="hsearch" action="/search/" method="get" role="search" aria-label="Search Swarmnest">
@@ -50,10 +71,10 @@ const featured = ['openai-api','anthropic-api','firecrawl','tavily','github-mcp-
 <h2>Popular Categories</h2>
 <ul class="catlist">{POPULAR_CATS.map(c=><li><a href={c.href}><span>{c.name}</span><span class="n">{c.count}</span></a></li>)}</ul>
 <div class="grp-h"><h2>Browse by Group</h2><a class="small" href="/directory/all-categories/">All Categories A–Z</a></div>
-<ul class="catlist">{NAV_GROUPS.map(g=><li><a href={groupPath(g.slug)}><span>{g.name}<span class="g">{g.cats.length} categories</span></span><span class="n">{g.total}</span></a></li>)}</ul>
+<ul class="catlist">{NAV_GROUPS.map(g=><li><a href={groupPath(g.slug)}><span class="row-l"><GroupIcon slug={g.slug} size={22} /><span>{g.name}<span class="g">{g.cats.length} categories</span></span></span><span class="n">{g.total}</span></a></li>)}</ul>
 <SponsorSlot key="" />
 <h2>Popular Picks</h2>
-<div class="grid">{featured.map(e=><a class="card" href={`/directory/${e.category}/${e.slug}/`}><h3>{e.name}</h3><p>{e.description}</p></a>)}</div>
+<div class="grid">{featured.map(e=><a class="card with-logo" href={`/directory/${e.category}/${e.slug}/`}><span class="card-head"><ListingLogo name={e.name} slug={e.slug} url={e.url} size={36} /><h3>{e.name}</h3></span><p>{e.description}</p></a>)}</div>
 <h2>Newsletter</h2>
 <p>A short weekly note: new tools in the directory, API changes that matter to agent builders, and product launches.</p>
 <Signup list="newsletter" source="home" button="Subscribe" />

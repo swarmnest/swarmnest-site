@@ -1,11 +1,12 @@
 ---
 import { GROUPS, byCat } from '../lib/data';
+import GroupIcon from './GroupIcon.astro';
 const { open = false } = Astro.props;
 ---
-<nav class="gjump" aria-label="Category groups">{GROUPS.map(g=><a href={`#g-${g.slug}`}>{g.name}</a>)}</nav>
+<nav class="gjump" aria-label="Category groups">{GROUPS.map(g=><a href={`#g-${g.slug}`}><GroupIcon slug={g.slug} size={18} />{g.name}</a>)}</nav>
 {GROUPS.map(g=>(
 <details class="group" id={`g-${g.slug}`} open={open}>
-<summary><h2>{g.name}</h2><span class="small"> {g.cats.length} categories · {g.cats.reduce((n,c)=>n+byCat(c.slug).length,0)} entries — {g.blurb}</span></summary>
+<summary><GroupIcon slug={g.slug} size={22} /><h2>{g.name}</h2><span class="small"> {g.cats.length} categories · {g.cats.reduce((n,c)=>n+byCat(c.slug).length,0)} entries — {g.blurb}</span></summary>
 <div class="grid">{g.cats.map(c=><a class="card" href={`/directory/${c.slug}/`}><h3>{c.name}</h3><p>{c.blurb}</p><span class="badge">{byCat(c.slug).length} entries</span></a>)}</div>
 </details>))}
 <script is:inline>(function(){var m=window.matchMedia('(max-width:700px)').matches;document.querySelectorAll('details.group').forEach(function(d){d.open=!m||location.hash==='#'+d.id});})();</script>

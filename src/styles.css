@@ -162,3 +162,32 @@ a.badge.hv-tag{text-decoration:none;min-height:24px;display:inline-flex;align-it
 .hv-rh{margin:.6rem 0 .3rem;font-size:.85rem;color:var(--mut);font-weight:600}
 .hv-refs{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px}
 .hv-out{overflow-wrap:anywhere}.badge.hv-ext{margin:0 2px 0 5px;padding:0 7px;font-size:.68rem;vertical-align:1px;border-color:var(--acc);color:var(--acc);text-transform:none}
+
+/* ---- Recognition graphics (phases 1–2) ---- */
+.llogo{position:relative;display:inline-flex;align-items:center;justify-content:center;width:var(--logo-size,40px);height:var(--logo-size,40px);flex:0 0 var(--logo-size,40px);border-radius:10px;border:1px solid var(--line);background:var(--bg);overflow:hidden;vertical-align:middle}
+.llogo-img{width:70%;height:70%;object-fit:contain;display:block}
+.llogo-init{font-size:calc(var(--logo-size,40px)*0.36);font-weight:700;letter-spacing:.02em;line-height:1;color:hsl(var(--logo-hue,38) 70% 62%);user-select:none}
+.llogo-lg{border-radius:12px}
+.card-head{display:flex;gap:12px;align-items:flex-start;margin:0 0 4px}
+.card-head h3{margin:0;flex:1;min-width:0}
+.card.with-logo p{margin-top:2px}
+.listing-h{display:flex;gap:16px;align-items:flex-start;margin:1.2rem 0 .5rem}
+.listing-h .llogo{margin-top:.2rem}
+.listing-h h1{margin:0}
+.listing-h .lead{margin:.35rem 0 0}
+.gicon{display:inline-flex;align-items:center;justify-content:center;width:var(--gicon-size,22px);height:var(--gicon-size,22px);flex:0 0 var(--gicon-size,22px);color:var(--acc);opacity:.92}
+.gicon img{width:100%;height:100%;display:block;filter:invert(79%) sepia(61%) saturate(668%) hue-rotate(359deg) brightness(103%) contrast(97%)}
+.catlist a .gicon,.gjump a .gicon,.grp-row .gicon{margin-right:8px}
+.catlist a .row-l{display:inline-flex;align-items:center;gap:8px;min-width:0}
+.gjump a{display:inline-flex;align-items:center;gap:6px}
+.group summary .gicon{margin-right:8px;vertical-align:-3px}
+.hero{position:relative}
+.hero-band{position:relative;isolation:isolate}
+.hero-visual{pointer-events:none;position:absolute;inset:auto 0 -8px auto;width:min(340px,42%);height:120px;opacity:.28;z-index:0;overflow:hidden;border-radius:14px;mask-image:linear-gradient(90deg,transparent,#000 25%);-webkit-mask-image:linear-gradient(90deg,transparent,#000 25%)}
+.hero-visual svg{width:100%;height:100%;display:block}
+.hero-band > *{position:relative;z-index:1}
+@media(max-width:700px){.hero-visual{display:none}.listing-h{gap:12px}.listing-h .llogo{width:44px;height:44px;flex-basis:44px}}
+
+.grp-row{display:flex;align-items:center;gap:10px}
+.dp-gh{display:inline-flex;align-items:center;gap:6px}
+.mm-list a .row-l{display:inline-flex;align-items:center;gap:8px}

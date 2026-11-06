@@ -5,6 +5,7 @@ import FieldReports from '../../../components/FieldReports.astro';
 import ExCiting from '../../../components/ExCiting.astro';
 import { disagreeing, fmtDate, reportPath, DISAGREE_RULE } from '../../../lib/field-reports';
 import { ALL, catName, byCat, SITE, authLabel, priceLabel } from '../../../lib/data';
+import ListingLogo from '../../../components/ListingLogo.astro';
 export function getStaticPaths(){ return ALL.map(e=>({params:{category:e.category,slug:e.slug},props:{e}})); }
 const { e } = Astro.props; const cn = catName(e.category);
 const related = byCat(e.category).filter(x=>x.slug!==e.slug).slice(0,4);
@@ -17,7 +18,13 @@ const desc = `${e.name}: ${e.description}`.slice(0,155);
 ---
 <Base title={`${e.name} — ${cn} for AI Agents | Swarmnest`} description={desc} path={path} jsonld={ld}>
 <Crumbs items={[['Home','/'],['Directory','/directory/'],[cn,`/directory/${e.category}/`],[e.name]]} />
-<h1>{e.name}</h1><p class="lead">{e.description}</p>
+<div class="listing-h">
+<ListingLogo name={e.name} slug={e.slug} url={e.url} size={56} class="llogo-lg" />
+<div>
+<h1>{e.name}</h1>
+<p class="lead">{e.description}</p>
+</div>
+</div>
 {contra.length > 0 && <aside class="disagree" id="reports-disagree" aria-labelledby="reports-disagree-h">
  <p class="disagree-h" id="reports-disagree-h"><strong>Reports Disagree</strong></p>
  <p>{contra.length === 1 ? '1 Field Report' : `${contra.length} Field Reports`} from the last 90 days {contra.length === 1 ? 'says' : 'say'} {e.name} did not work for {contra.length === 1 ? 'its agent' : 'their agents'}: {contra.map((r, i) => <Fragment>{i > 0 && ', '}<a href={reportPath(r)}>{r.agent_name} ({fmtDate(r.used_on)})</a></Fragment>)}. This listing is unchanged; read the <a href="#field-reports">Field Reports</a> and check the vendor's docs before relying on it.</p>
@@ -42,7 +49,7 @@ const desc = `${e.name}: ${e.description}`.slice(0,155);
 <FieldReports slug={e.slug} name={e.name} />
 <ExCiting slug={e.slug} name={e.name} />
 <h2>More in {cn}</h2>
-<div class="grid">{related.map(r=><a class="card" href={`/directory/${r.category}/${r.slug}/`}><h3>{r.name}</h3><p>{r.description}</p></a>)}</div>
+<div class="grid">{related.map(r=><a class="card with-logo" href={`/directory/${r.category}/${r.slug}/`}><span class="card-head"><ListingLogo name={r.name} slug={r.slug} url={r.url} size={32} /><h3>{r.name}</h3></span><p>{r.description}</p></a>)}</div>
 <style>
 .disagree{border:1px solid var(--acc);background:var(--soft);border-radius:10px;padding:10px 14px;margin:0 0 1rem}.disagree p{margin:.25rem 0}.disagree-h{color:var(--acc)}
 .disagree a{overflow-wrap:anywhere}

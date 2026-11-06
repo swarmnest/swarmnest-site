@@ -7,6 +7,7 @@ import DirFilters from '../../../components/DirFilters.astro';
 import { groupForCat, groupPath } from '../../../lib/nav';
 import { guidesForCat } from '../../../lib/guides';
 import { CATS, byCat, SITE, authLabel, priceLabel } from '../../../lib/data';
+import ListingLogo from '../../../components/ListingLogo.astro';
 export function getStaticPaths(){ return CATS.map(c=>({params:{category:c.slug},props:{c}})); }
 const { c } = Astro.props; const list = byCat(c.slug); const gds = guidesForCat(c.slug);
 const grp = groupForCat(c.slug); const sib = grp ? grp.cats.filter(x=>x.slug!==c.slug) : [];
@@ -22,7 +23,7 @@ const ld=[{'@context':'https://schema.org','@type':'BreadcrumbList',itemListElem
 <DirFilters entries={list} label="Search This Category" placeholder={`Search ${c.name}…`} />
 <h2 class="vh">{c.name}</h2>
 <div id="cs-results" class="grid" hidden></div>
-<div class="grid" id="cs-list" data-cat={c.slug}>{list.map(e=><a class="card" data-pricing={e.pricing} data-auth={e.auth} data-oss={e.open_source?'1':'0'} data-os={(e.os||[]).join(' ')} href={`/directory/${c.slug}/${e.slug}/`}><h3>{e.name}</h3><p>{e.description}</p><span class="badge">{priceLabel[e.pricing]}</span><span class="badge">{authLabel[e.auth]}</span>{e.open_source && <span class="badge">Open Source</span>}{(e.os||[]).map(o=><span class="badge os">{o}</span>)}</a>)}</div>
+<div class="grid" id="cs-list" data-cat={c.slug}>{list.map(e=><a class="card with-logo" data-pricing={e.pricing} data-auth={e.auth} data-oss={e.open_source?'1':'0'} data-os={(e.os||[]).join(' ')} href={`/directory/${c.slug}/${e.slug}/`}><span class="card-head"><ListingLogo name={e.name} slug={e.slug} url={e.url} size={36} /><h3>{e.name}</h3></span><p>{e.description}</p><span class="badge">{priceLabel[e.pricing]}</span><span class="badge">{authLabel[e.auth]}</span>{e.open_source && <span class="badge">Open Source</span>}{(e.os||[]).map(o=><span class="badge os">{o}</span>)}</a>)}</div>
 {grp && sib.length>0 && <section aria-labelledby="more-h">
 <div class="grp-h"><h2 id="more-h">More in {grp.name}</h2><a class="small" href={groupPath(grp.slug)}>See the Group</a></div>
 <ul class="catlist c3">{sib.map(x=><li><a href={`/directory/${x.slug}/`}><span>{x.name}</span><span class="n">{x.count}</span></a></li>)}</ul>

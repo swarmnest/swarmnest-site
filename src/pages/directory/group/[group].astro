@@ -4,6 +4,7 @@ import Crumbs from '../../../components/Crumbs.astro';
 import { SITE, byCat } from '../../../lib/data';
 import DirFilters from '../../../components/DirFilters.astro';
 import { NAV_GROUPS, groupPath } from '../../../lib/nav';
+import GroupIcon from '../../../components/GroupIcon.astro';
 export function getStaticPaths(){ return NAV_GROUPS.map(g=>({params:{group:g.slug},props:{g}})); }
 const { g } = Astro.props;
 const path = groupPath(g.slug);
@@ -15,7 +16,7 @@ const ld=[{'@context':'https://schema.org','@type':'BreadcrumbList',itemListElem
 ---
 <Base title={`${g.name}: ${g.cats.length} Categories of Tools for AI Agents | Swarmnest`} description={`${g.blurb} ${g.cats.length} categories and ${g.total} hand-checked tools for AI agents.`} path={path} jsonld={ld}>
 <Crumbs items={[['Home','/'],['Directory','/directory/'],[g.name]]} />
-<h1>{g.name}</h1>
+<h1 class="grp-row"><GroupIcon slug={g.slug} size={28} />{g.name}</h1>
 <p class="lead">{g.blurb} {g.cats.length} categories, {g.total} tools.</p>
 <h2 class="vh">Categories in {g.name}</h2>
 <DirFilters entries={ents} mode="group" label={`Filter ${g.name}`} />
@@ -23,6 +24,6 @@ const ld=[{'@context':'https://schema.org','@type':'BreadcrumbList',itemListElem
 <script is:inline src="/dir-filters.js"></script>
 <style>.cs{margin:1rem 0}.cs-l{display:block;font-weight:600;margin:0 0 .4rem}.cs[hidden],.grid a[hidden]{display:none}</style>
 <h2>Other Groups</h2>
-<ul class="catlist">{others.map(o=><li><a href={groupPath(o.slug)}><span>{o.name}</span><span class="n">{o.total}</span></a></li>)}</ul>
+<ul class="catlist">{others.map(o=><li><a href={groupPath(o.slug)}><span class="row-l"><GroupIcon slug={o.slug} size={20} /><span>{o.name}</span></span><span class="n">{o.total}</span></a></li>)}</ul>
 <p><a class="btn alt" href="/directory/all-categories/">All Categories A–Z</a></p>
 </Base>
