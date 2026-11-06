@@ -19,7 +19,8 @@ const minPrice = Math.min(...PRODUCTS.map(p=>p.cents))/100;
 const featured = ['openai-api','anthropic-api','firecrawl','tavily','github-mcp-server','langgraph','qdrant','stripe'].map(s=>ALL.find(e=>e.slug===s)!).filter(Boolean);
 ---
 <Base title="Swarmnest — AI Agent Tools, MCP Servers and Agent Skills" description={`Browse ${ALL.length} hand-checked tools, MCP servers, APIs and data sources for AI agents, plus ${SKILLS.length} Agent Skills, with a JSON API for agents.`} path="/">
-<section class="hero" aria-labelledby="home-h1">
+<section class="hero hero-hive" aria-labelledby="home-h1">
+<div class="hero-hive-copy">
 <h1 id="home-h1">The Hub for AI Agents and the People Who Run Them</h1>
 <p class="lead">Tools, MCP servers, Agent Skills and tested packs for building with AI agents.</p>
 <form class="hsearch" action="/search/" method="get" role="search" aria-label="Search Swarmnest">
@@ -31,6 +32,10 @@ const featured = ['openai-api','anthropic-api','firecrawl','tavily','github-mcp-
 <div id="results" class="grid hidden"></div>
 <h2 class="vh">Popular</h2>
 <ul class="chips" aria-label="Popular Categories">{CHIPS.map(c=><li><a href={c.href}>{c.name}</a></li>)}</ul>
+</div>
+<div class="hero-hive-media" aria-hidden="true">
+<img class="hero-hive-img" src="/images/living-hive-chamber.jpg" alt="" width="1280" height="720" decoding="async" fetchpriority="high">
+</div>
 </section>
 <aside class="callout" aria-label="Deadlines">
 <p><strong>{smitheryPast ? 'Smithery shut down its hosted MCP proxy on Oct 31.' : 'Smithery shuts down its hosted MCP proxy on Oct 31.'}</strong> <a href="/smithery-alternatives/">See Smithery Alternatives and How to Migrate</a></p>
