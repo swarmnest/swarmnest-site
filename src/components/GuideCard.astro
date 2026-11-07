@@ -1,0 +1,12 @@
+---
+import { guideBadge, type Guide } from '../lib/guides';
+interface Props { g: Guide }
+const { g } = Astro.props;
+const badge = guideBadge(g);
+---
+<a class:list={['card', 'guide-card', g.icon && 'guide-card-hex']} href={g.path}>
+{g.icon && <span class="guide-row"><img src={`/images/guides/icon-${g.icon}.webp`} alt="" width="60" height="60"><h3>{g.short}</h3></span>}
+{!g.icon && <h3>{g.short}</h3>}
+<p>{g.blurb}</p>
+{badge && <span class="badge">{badge}</span>}
+</a>

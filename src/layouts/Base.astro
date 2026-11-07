@@ -46,6 +46,7 @@ const ld = [org, ...(path==='/'?[site]:[]), ...jsonld];
 {ld.map(o => <script type="application/ld+json" set:html={JSON.stringify(o)} />)}
 </head>
 <body>
+<div class="sidehex" aria-hidden="true"></div>
 <a class="skip" href="#main">Skip to Content</a>
 <header class="top" id="top">
 <div class="wrap bar">
@@ -100,4 +101,9 @@ const ld = [org, ...(path==='/'?[site]:[]), ...jsonld];
 </div></footer>
 <script is:inline data-logo-fallback>document.addEventListener('error',function(e){var t=e.target;if(!t||!t.classList||!t.classList.contains('llogo-img'))return;t.hidden=true;var n=t.nextElementSibling;if(n){n.hidden=false}},true);</script>
 <script is:inline src="/nav.js"></script>
+<script is:inline>
+(function(){var W=36,H=20.7846;function m(v,p){return -(((v%p)+p)%p)+'px'}
+function run(){if(innerWidth>=768)return;document.querySelectorAll('.guide-card-hex').forEach(function(c){var r=c.getBoundingClientRect(),cs=getComputedStyle(c);c.style.setProperty('--hx',m(r.left+scrollX+parseFloat(cs.borderLeftWidth),W));c.style.setProperty('--hy',m(r.top+scrollY+parseFloat(cs.borderTopWidth),H))});var f=document.querySelector('footer');if(f){var b=f.getBoundingClientRect();f.style.setProperty('--fx',m(b.left+scrollX,W));f.style.setProperty('--fy',m(b.bottom+scrollY-380,H))}}
+run();addEventListener('resize',run);addEventListener('load',run)})();
+</script>
 </body></html>

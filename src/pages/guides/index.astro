@@ -2,7 +2,8 @@
 import Base from '../../layouts/Base.astro';
 import Crumbs from '../../components/Crumbs.astro';
 import { SITE } from '../../lib/data';
-import { guidesByTopic, ALL_GUIDES, guideBadge } from '../../lib/guides';
+import { guidesByTopic, ALL_GUIDES } from '../../lib/guides';
+import GuideCard from '../../components/GuideCard.astro';
 const topics = guidesByTopic();
 const ld = [
  { '@context':'https://schema.org','@type':'BreadcrumbList',itemListElement:[{'@type':'ListItem',position:1,name:'Home',item:SITE+'/'},{'@type':'ListItem',position:2,name:'Guides',item:SITE+'/guides/'}] },
@@ -17,7 +18,7 @@ const ld = [
 {topics.map((t) => <section aria-labelledby={`t-${t.slug}`}>
 <h2 id={t.slug}><span id={`t-${t.slug}`}>{t.name}</span></h2>
 <p class="small">{t.blurb}</p>
-<div class="grid">{t.guides.map((g) => <a class="card" href={g.path}><h3>{g.short}</h3><p>{g.blurb}</p>{guideBadge(g) && <span class="badge">{guideBadge(g)}</span>}</a>)}</div>
+<div class="grid">{t.guides.map((g) => <GuideCard g={g} />)}</div>
 </section>)}
 <p class="small">Want a comparison we have not covered? Email <a href="mailto:hello@swarmnest.ai">hello@swarmnest.ai</a>.</p>
 </Base>
