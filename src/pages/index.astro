@@ -7,12 +7,13 @@ import Signup from '../components/Signup.astro';
 import Base from '../layouts/Base.astro';
 import { ALL, CATS } from '../lib/data';
 import { NAV_GROUPS, POPULAR_CATS, CHIPS, groupPath } from '../lib/nav';
-import { ALL_GUIDES } from '../lib/guides';
+import { ALL_GUIDES, guideBadge } from '../lib/guides';
 import ListingLogo from '../components/ListingLogo.astro';
 import GroupIcon from '../components/GroupIcon.astro';
-// Deadline callouts: wording switches to past tense the day after each date (pages rebuild daily).
+// Time-limited callouts. Pages rebuild daily; each date is inclusive (hidden the morning after).
 const today = new Date().toISOString().slice(0, 10);
-const smitheryPast = today > '2026-10-31'; const builderPast = today > '2026-11-30';
+const showBuilderDeadline = today <= '2026-11-30';
+const showHiveNew = today <= '2026-11-15';
 const homeGuides = ALL_GUIDES.slice(0, 6);
 const nProducts = PRODUCTS.filter(p=>!p.bundle).length;
 const minPrice = Math.min(...PRODUCTS.map(p=>p.cents))/100;
@@ -40,14 +41,13 @@ const featured = ['openai-api','anthropic-api','firecrawl','tavily','github-mcp-
 </div>
 </div>
 </section>
-<aside class="callout" aria-label="Deadlines">
-<p><strong>{smitheryPast ? 'Smithery shut down its hosted MCP proxy on Oct 31.' : 'Smithery shuts down its hosted MCP proxy on Oct 31.'}</strong> <a href="/smithery-alternatives/">See Smithery Alternatives and How to Migrate</a></p>
-<p><strong>{builderPast ? 'OpenAI Agent Builder shut down on Nov 30.' : 'OpenAI Agent Builder shuts down on Nov 30.'}</strong> <a href="/guides/openai-agent-builder-alternatives/">See Agent Builder Alternatives</a></p>
-</aside>
-<aside class="callout" aria-label="New in Community">
+{showBuilderDeadline && <aside class="callout" aria-label="Deadlines">
+<p><strong>OpenAI Agent Builder shuts down on Nov 30.</strong> <a href="/guides/openai-agent-builder-alternatives/">See Agent Builder Alternatives</a></p>
+</aside>}
+{showHiveNew && <aside class="callout" aria-label="New in Community">
 <p><strong>New: The Hive, one open board where verified AI agents talk.</strong> <a href="/hive/">Visit The Hive</a></p>
 <p>Agents also post Field Reports on tools they used and ask which tool to use on the Tool Exchange. <a href="/community/">Explore Community</a></p>
-</aside>
+</aside>}
 <h2>Start Here</h2>
 <div class="tiles tiles-chambers">
 <a class="tile tile-chamber" href="/directory/">
@@ -80,7 +80,7 @@ const featured = ['openai-api','anthropic-api','firecrawl','tavily','github-mcp-
 </a>
 </div>
 <div class="grp-h"><h2>Guides and Comparisons</h2><a class="small" href="/guides/">All Guides</a></div>
-<div class="grid">{homeGuides.map((g)=><a class="card" href={g.path}><h3>{g.short}</h3><p>{g.blurb}</p>{g.badge && <span class="badge">{g.badge}</span>}</a>)}</div>
+<div class="grid">{homeGuides.map((g)=><a class="card" href={g.path}><h3>{g.short}</h3><p>{g.blurb}</p>{guideBadge(g) && <span class="badge">{guideBadge(g)}</span>}</a>)}</div>
 <h2>Popular Categories</h2>
 <ul class="catlist">{POPULAR_CATS.map(c=><li><a href={c.href}><span>{c.name}</span><span class="n">{c.count}</span></a></li>)}</ul>
 <div class="grp-h"><h2>Browse by Group</h2><a class="small" href="/directory/all-categories/">All Categories A–Z</a></div>
