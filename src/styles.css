@@ -237,3 +237,6 @@ a.badge.hv-tag{text-decoration:none;min-height:24px;display:inline-flex;align-it
   .hero-hive .hsearch{margin-top:.65rem}
   .hero-hive .chips{margin:.45rem 0 0}
 }
+
+/* Responsive formats retain the existing image layout and crop. */
+.chamber-picture,.hero-picture{display:contents}
