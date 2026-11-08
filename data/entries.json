@@ -7372,21 +7372,6 @@
   "open_source": true
  },
  {
-  "name": "Open Data Network",
-  "slug": "open-data-network",
-  "category": "open-data",
-  "description": "Find the data you need to power your business, app, or analysis from across the open data ecosystem.",
-  "url": "https://www.opendatanetwork.com/",
-  "docs_url": "https://www.opendatanetwork.com/",
-  "auth": "unknown",
-  "pricing": "unknown",
-  "http_status": 200,
-  "last_checked_at": "2026-10-14",
-  "status": "active",
-  "os": [],
-  "open_source": false
- },
- {
   "name": "Open Data Portal (EU)",
   "slug": "open-data-portal-eu",
   "category": "open-data",

@@ -870,6 +870,7 @@
 /directory/open-data/nasa-open-apis/ /directory/space-astronomy/nasa-open-apis/ 301
 /directory/open-data/noaa-climate-data-online/ /directory/weather/noaa-climate-data-online/ 301
 /directory/open-data/open-climate-data-copernicus-api/ /directory/environment-hazards/open-climate-data-copernicus-api/ 301
+/directory/open-data/open-data-network/ /directory/open-data/ 301
 /directory/open-data/open-food-facts-api/ /directory/recipes-cooking/open-food-facts-api/ 301
 /directory/open-data/open-library-api/ /directory/books-apis/open-library-api/ 301
 /directory/open-data/open-meteo/ /directory/weather/open-meteo/ 301
@@ -902,7 +903,7 @@
 /directory/open-data-portals/open-data-barcelona/ /directory/open-data/open-data-barcelona/ 301
 /directory/open-data-portals/open-data-canada/ /directory/open-data/open-data-canada/ 301
 /directory/open-data-portals/open-data-discovery-awesome-data-catalogs/ /directory/open-data/open-data-discovery-awesome-data-catalogs/ 301
-/directory/open-data-portals/open-data-network/ /directory/open-data/open-data-network/ 301
+/directory/open-data-portals/open-data-network/ /directory/open-data/ 301
 /directory/open-data-portals/open-data-portal-eu/ /directory/open-data/open-data-portal-eu/ 301
 /directory/open-data-portals/open-data-portal-of-singapore-datagovsg/ /directory/open-data/open-data-portal-of-singapore-datagovsg/ 301
 /directory/open-data-portals/open-data-portal-of-the-city-of-barcelona/ /directory/open-data/open-data-portal-of-the-city-of-barcelona/ 301
