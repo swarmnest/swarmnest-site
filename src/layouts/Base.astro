@@ -45,7 +45,7 @@ const ld = [org, ...(path==='/'?[site]:[]), ...jsonld];
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content={title}><meta name="twitter:description" content={description}>
 {ld.map(o => <script type="application/ld+json" set:html={JSON.stringify(o)} />)}
 </head>
-<body>
+<body class={path === '/' ? 'home' : undefined}>
 <div class="sidehex" aria-hidden="true"></div>
 <a class="skip" href="#main">Skip to Content</a>
 <header class="top" id="top">

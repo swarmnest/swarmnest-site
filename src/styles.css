@@ -230,16 +230,19 @@ a.card.guide-card-hex{overflow:hidden;position:relative;padding-top:16px;backgro
 .guide-row{display:flex;gap:12px;align-items:center;margin:0 0 6px}
 .guide-row h3{flex:1;min-width:0}
 .guide-card h3{margin:0;font-family:"Space Grotesk",system-ui,sans-serif;font-weight:700;font-synthesis:none;line-height:1.25}
-.guide-row img{width:60px;height:60px;flex:none;object-fit:cover;border-radius:0;clip-path:polygon(25% 6.7%,75% 6.7%,100% 50%,75% 93.3%,25% 93.3%,0 50%);transform:scale(1.12)}
+.guide-row img{width:72px;height:72px;flex:none;object-fit:contain;border-radius:0;clip-path:none;transform:none;background:none;filter:drop-shadow(0 0 8px rgba(217,142,31,.35))}
 @media(max-width:767px){
   a.card.guide-card-hex{background-position:var(--hx,0px) var(--hy,0px),0 0}
 }
 
-/* Boxless homepage hero. The hive sits on the right and fades into the page. */
+/* Boxless homepage hero. SIDE11 blend: the photo sits above the edge honeycomb and fades with two masks. */
+body.home .top{border-bottom:0}
+.sidehex{z-index:0}
 .hero-hive{padding:0 0 .2rem;position:relative;z-index:1}
-.hero-hive-stage{position:relative;border:0;border-radius:0;background:transparent;box-shadow:none;min-height:440px;overflow:visible}
-.hero-hive-media{position:absolute;z-index:0;top:0;bottom:0;left:46%;width:calc(50vw + 6% - 24px);pointer-events:none}
-.hero-hive-img{display:block;width:100%;height:100%;object-fit:contain;object-position:right center;background:transparent;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 38%),linear-gradient(#000 78%,transparent),linear-gradient(transparent 0,#000 8%);-webkit-mask-composite:source-in,source-in;mask-image:linear-gradient(90deg,transparent 0,#000 38%),linear-gradient(#000 78%,transparent),linear-gradient(transparent 0,#000 8%);mask-composite:intersect}
+.hero-hive-stage{position:relative;border:0;border-radius:0;background:transparent;box-shadow:none;min-height:520px;overflow:visible}
+.hero-hive-media{position:absolute;z-index:1;top:0;bottom:0;right:calc((100% - 100vw) / 2 + 12px);height:100%;width:auto;aspect-ratio:16/9;pointer-events:none;-webkit-mask-image:linear-gradient(90deg,transparent 0,rgba(0,0,0,.5) 22%,#000 42%,#000 95%,transparent 100%),linear-gradient(180deg,transparent 0,rgba(0,0,0,.45) 5%,#000 12%,#000 72%,rgba(0,0,0,.4) 84%,transparent 100%);-webkit-mask-composite:source-in;mask-image:linear-gradient(90deg,transparent 0,rgba(0,0,0,.5) 22%,#000 42%,#000 95%,transparent 100%),linear-gradient(180deg,transparent 0,rgba(0,0,0,.45) 5%,#000 12%,#000 72%,rgba(0,0,0,.4) 84%,transparent 100%);mask-composite:intersect}
+.hero-hive-media::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(90vw 520px at calc(100% - 50vw) -120px,rgba(217,142,31,.20),transparent 70%),linear-gradient(270deg,rgba(217,142,31,.10),rgba(217,142,31,.035) 140px,transparent 300px),radial-gradient(300px 450px at 100% 50%,rgba(217,142,31,.08),transparent 70%)}
+.hero-hive-img{display:block;width:100%;height:100%;object-fit:contain;object-position:right center;background:transparent}
 .hero-hive-scrim{display:none}
 .hero-hive-copy{position:relative;z-index:2;max-width:34rem;padding:1.6rem 0 1rem;box-sizing:border-box}
 .hero-hive-copy h1{margin:.1rem 0 .45rem;color:#f3f4f6;text-shadow:0 1px 18px rgba(0,0,0,.45)}
@@ -248,18 +251,22 @@ a.card.guide-card-hex{overflow:hidden;position:relative;padding-top:16px;backgro
 .hero-hive .hsearch input[type=search]{background:rgba(15,20,29,.92);border-color:#2a3140;box-shadow:none}
 .hero-hive .chips a{background:rgba(15,20,29,.72)}
 .hero-hive #results{position:relative;z-index:3}
-@media(min-width:900px){
-  .hero-hive-stage{min-height:480px}
-  .hero-hive-copy{padding:2.2rem 0 1.2rem;max-width:34rem}
+@media(max-width:1400px){
+  .hero-hive-media::after{background:radial-gradient(90vw 520px at calc(100% - 50vw) -120px,rgba(217,142,31,.20),transparent 70%),linear-gradient(270deg,rgba(217,142,31,.10),transparent 110px),radial-gradient(110px 450px at 100% 50%,rgba(217,142,31,.07),transparent 70%)}
 }
-@media(max-width:767px){
+@media(max-width:1100px) and (min-width:769px){
+  .hero-hive-media{width:min(54vw,640px);height:auto;aspect-ratio:16/9;bottom:auto;top:.6rem}
+}
+@media(max-width:768px){
+  body.home .top{position:absolute;left:0;right:0;top:0;background:transparent;border-bottom:0;z-index:60}
   .hero-hive{padding:0}
   .hero-hive-stage{min-height:0;overflow:visible}
-  .hero-hive-media{position:absolute;left:calc(50% - 50vw);width:100vw;top:0;bottom:auto;height:210px}
-  .hero-hive-img{object-fit:cover;object-position:72% 28%;-webkit-mask-image:linear-gradient(#000 58%,transparent);mask-image:linear-gradient(#000 58%,transparent);-webkit-mask-composite:source-over;mask-composite:add;filter:none}
-  .hero-hive-scrim{display:block;position:absolute;left:calc(50% - 50vw);width:100vw;top:0;height:168px;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(11,15,23,.62),rgba(11,15,23,.55) 68%,transparent)}
-  .hero-hive-copy{max-width:none;padding:28px 0 0;background:none;border-radius:0;box-shadow:none}
-  .hero-hive-copy h1{position:relative;font-size:1.7rem;line-height:1.15;margin:0 0 .4rem;text-shadow:0 2px 10px rgba(0,0,0,.9),0 0 2px #000}
+  .hero-hive-media{position:absolute;left:calc((100% - 100vw) / 2);right:auto;top:0;width:100vw;height:356px;aspect-ratio:auto;bottom:auto;-webkit-mask-image:linear-gradient(180deg,#000 62%,transparent 100%);mask-image:linear-gradient(180deg,#000 62%,transparent 100%);-webkit-mask-composite:source-over;mask-composite:add}
+  .hero-hive-img{object-fit:cover;object-position:center 30%}
+  .hero-hive-media::after{background:linear-gradient(180deg,rgba(11,15,23,.78) 0,rgba(11,15,23,.35) 46px,rgba(11,15,23,0) 90px)}
+  .hero-hive-scrim{display:none}
+  .hero-hive-copy{max-width:none;padding:84px 0 0;background:none;border-radius:0;box-shadow:none}
+  .hero-hive-copy h1{position:relative;font-size:1.7rem;line-height:1.15;margin:0 0 .4rem;text-shadow:0 2px 12px rgba(0,0,0,.95),0 0 3px #000}
   .hero-hive-copy .lead{position:relative;font-size:1rem;margin:0;text-shadow:0 1px 6px #000}
   .hero-hive .hsearch{margin-top:.85rem;position:relative}
   .hero-hive .chips{margin:.45rem 0 0}
