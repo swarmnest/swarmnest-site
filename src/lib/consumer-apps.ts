@@ -18,7 +18,7 @@ export const CA_CATS = [
   { slug: 'app-and-site-builders', name: 'App & Website Builders', blurb: 'Describe an app or website and get a working one.' },
   { slug: 'translation', name: 'Translation', blurb: 'Translate text, documents, speech and conversations.' },
   { slug: 'built-in-assistants', name: 'Phone & Browser AI', blurb: 'AI built into phones, cameras and web browsers.' },
-  { slug: 'money-and-finance', name: 'Money & Finance', blurb: 'Budgeting, spending insights and subscription tracking.' },
+  { slug: 'money-and-finance', name: 'Money & Finance', blurb: 'Budgeting, spending, subscriptions and investing research.' },
   { slug: 'kids-and-family', name: 'Kids & Family', blurb: 'Reading coaches, learning apps and bedtime stories.' },
   { slug: 'dating-and-social', name: 'Dating & Social', blurb: 'Dating profile feedback and message reply ideas.' },
 ];
@@ -236,6 +236,7 @@ export const CA_APPS: ConsumerApp[] = [
   {"name": "Roast Dating", "slug": "roast-dating", "category": "dating-and-social", "url": "https://roast.dating/", "description": "AI review of your dating profile photos and bio.", "checked": "2026-11-04"},
   {"name": "Cleo", "slug": "cleo", "category": "money-and-finance", "url": "https://web.meetcleo.com/", "description": "AI money assistant for budgeting and spending insights.", "checked": "2026-11-04"},
   {"name": "Copilot Money", "slug": "copilot-money", "category": "money-and-finance", "url": "https://www.copilot.money/", "description": "Budgeting and investment tracking app with AI categorization.", "checked": "2026-11-04"},
+  {"name": "DisconfirmAI", "slug": "disconfirmai", "category": "money-and-finance", "url": "https://disconfirmai.com/en", "description": "Evidence workspace for investing research: check an idea against source-linked evidence and update it as new evidence arrives. Public reading needs no sign-in.", "checked": "2026-11-08"},
   {"name": "Monarch", "slug": "monarch", "category": "money-and-finance", "url": "https://www.monarch.com/", "description": "Budgeting and net worth app with an AI assistant.", "checked": "2026-11-04"},
   {"name": "Rocket Money", "slug": "rocket-money", "category": "money-and-finance", "url": "https://www.rocketmoney.com/", "description": "Tracks spending and subscriptions and helps cancel them.", "checked": "2026-11-04"},
   {"name": "Origin", "slug": "origin", "category": "money-and-finance", "url": "https://useorigin.com/", "description": "Personal finance app with an AI financial adviser.", "checked": "2026-11-04"},
