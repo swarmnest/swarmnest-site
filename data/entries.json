@@ -61070,5 +61070,20 @@
   "status": "active",
   "os": [],
   "open_source": false
+ },
+ {
+  "name": "Kinovi",
+  "slug": "kinovi",
+  "category": "video-generation",
+  "description": "One API for video, image and audio models, with pay-as-you-go credits, published model IDs and rates, and a beta MCP server so agents can discover models, estimate cost, submit tasks and poll results. The same credit balance works in Kinovi Studio.",
+  "url": "https://kinovi.ai/",
+  "docs_url": "https://kinovi.ai/docs",
+  "auth": "key",
+  "pricing": "paid",
+  "http_status": null,
+  "last_checked_at": "2026-10-14",
+  "status": "active",
+  "os": [],
+  "open_source": false
  }
 ]

@@ -303,5 +303,6 @@ export const CA_APPS: ConsumerApp[] = [
   { name: 'Avatiko', slug: 'avatiko', category: 'video-generators', url: 'https://avatiko.com/', description: 'Creates a consistent AI influencer character and places it into a reference video or TikTok link, keeping the original motion and timing.', checked: '2026-11-07' },
   { name: 'Book Cover Generator', slug: 'book-cover-generator', category: 'image-generators', url: 'https://bookcovergenerator.net/', description: 'Turns a book title, author, genre and story summary into two cover concepts that authors can refine and download.', checked: '2026-11-07' },
   { name: 'Polychorus', slug: 'polychorus', category: 'ai-chat-and-companions', url: 'https://polychorus.com/', description: 'Chat app with 27 open-source AI models in one place, where two can answer and a third picks the best reply, plus one-click export to PDF or Word.', checked: '2026-11-07' },
+  { name: 'Text to Video', slug: 'text-to-video', category: 'video-generators', url: 'https://texttovideo.com/', description: 'Turns a text prompt into an AI video clip, with image-to-video, talking-avatar and lip-sync options and a choice of multiple video models.', checked: '2026-11-08' },
 ];
 export const caByCat = (slug: string) => CA_APPS.filter((a) => a.category === slug).sort((a, b) => a.name.localeCompare(b.name));
