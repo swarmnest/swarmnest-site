@@ -1,0 +1,42 @@
+{
+ "_about": "Weekly link-check watch list for directory listings whose listed URL failed. Entries are never removed from the directory automatically: a failure is flagged here, repointed when a legitimate moved URL exists, and anything failing on two consecutive weekly checks is called out as a repeat for the user to decide. checks: [{date, status, note}] newest last.",
+ "updated": "2026-11-08",
+ "listings": {
+  "qwant-api": {
+   "name": "Qwant API", "category": "search-apis", "url": "https://www.qwant.com/api",
+   "checks": [
+    {"date": "2026-11-01", "status": 404, "note": "Flagged; user chose to keep the listing."},
+    {"date": "2026-11-08", "status": 404, "note": "Second consecutive failure of the old URL (retried with both UAs). Repointed to https://staan.ai/ (docs https://docs.staan.ai/): Qwant's own blog describes Staan as its web search API, opened self-serve at VivaTech 2026."}
+   ],
+   "consecutive_failures": 2, "repeat": true, "state": "repointed", "repointed_to": "https://staan.ai/"
+  },
+  "open-data-network": {
+   "name": "Open Data Network", "category": "open-data", "url": "https://www.opendatanetwork.com/",
+   "checks": [
+    {"date": "2026-11-01", "status": 503, "note": "Flagged; user chose to keep the listing."},
+    {"date": "2026-11-08", "status": 503, "note": "Second consecutive failure: https www = 503 then connection failures (000) on retries, apex domain 000, http 500. No official moved URL found (Socrata/Tyler dev docs still link the old domain)."}
+   ],
+   "consecutive_failures": 2, "repeat": true, "state": "flagged-kept"
+  },
+  "icalendar-rfc-5545": {
+   "name": "iCalendar (RFC 5545)", "category": "calendars-scheduling", "url": "https://icalendar.org/",
+   "checks": [{"date": "2026-11-08", "status": 500, "note": "500 on every retry (both UAs). Docs URL (IETF RFC 5545) still answers."}],
+   "consecutive_failures": 1, "repeat": false, "state": "flagged-kept"
+  },
+  "rawg": {
+   "name": "RAWG", "category": "games-data", "url": "https://rawg.io/apidocs",
+   "checks": [{"date": "2026-11-08", "status": 522, "note": "Cloudflare 522 (origin not answering) on rawg.io and /apidocs on every retry. Also moved from movies-tv-data to its dedicated category games-data (old URL redirects)."}],
+   "consecutive_failures": 1, "repeat": false, "state": "flagged-kept"
+  },
+  "gensim": {
+   "name": "Gensim", "category": "nlp-text-analysis", "url": "https://radimrehurek.com/gensim/",
+   "checks": [{"date": "2026-11-08", "status": 404, "note": "Whole radimrehurek.com/gensim docs site returns 404. Repointed to the official repository https://github.com/piskvorky/gensim (docs: PyPI page)."}],
+   "consecutive_failures": 1, "repeat": false, "state": "repointed", "repointed_to": "https://github.com/piskvorky/gensim"
+  },
+  "passio-nutrition-ai": {
+   "name": "Passio Nutrition AI", "category": "recipes-cooking", "url": "https://www.passio.ai/nutrition-ai",
+   "checks": [{"date": "2026-11-08", "status": 404, "note": "Product page removed. Repointed to https://www.passio.ai/ (Nutrition AI platform) with docs https://passio.gitbook.io/nutrition-ai."}],
+   "consecutive_failures": 1, "repeat": false, "state": "repointed", "repointed_to": "https://www.passio.ai/"
+  }
+ }
+}

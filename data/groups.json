@@ -10,6 +10,7 @@
    "agent-memory",
    "code-execution",
    "mac-ai-agent-apps",
+   "ai-browsers",
    "agent-protocols",
    "agent-payments",
    "voice-agents",
@@ -176,6 +177,7 @@
    "shipping-logistics",
    "crm-sales",
    "lead-enrichment",
+   "affiliate-marketing",
    "project-management",
    "e-signature",
    "form-builders",
@@ -187,6 +189,7 @@
    "finance-market-data",
    "forex-rates",
    "crypto-market-data",
+   "prediction-markets",
    "blockchain-infrastructure"
   ]
  },
@@ -202,6 +205,7 @@
    "academic-research",
    "patents",
    "space-astronomy",
+   "satellite-imagery",
    "weather",
    "environment-hazards",
    "energy-climate",
@@ -233,6 +237,7 @@
    "movies-tv-data",
    "games-data",
    "books-apis",
+   "scripture-religious-texts",
    "museum-collections",
    "recipes-cooking",
    "read-later-bookmarks"

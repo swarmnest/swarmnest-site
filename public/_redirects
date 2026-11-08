@@ -831,6 +831,7 @@
 /directory/ml-training-platforms/weights-and-biases/ /directory/fine-tuning/weights-and-biases/ 301
 /directory/movies-tv-data/google-books-api/ /directory/books-apis/google-books-api/ 301
 /directory/movies-tv-data/igdb-api/ /directory/games-data/igdb-api/ 301
+/directory/movies-tv-data/rawg/ /directory/games-data/rawg/ 301
 /directory/movies-tv-data/scryfall-api/ /directory/games-data/scryfall-api/ 301
 /directory/movies-tv-data/steam-web-api/ /directory/games-data/steam-web-api/ 301
 /directory/music-apis/napster-api/ /directory/music-apis/ 301

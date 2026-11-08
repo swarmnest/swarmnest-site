@@ -843,5 +843,30 @@
   "slug": "mac-ai-agent-apps",
   "name": "Mac Agent Apps & Computer Use",
   "blurb": "Native AI agent apps for macOS, and computer-use agents and tools that operate a desktop by seeing the screen."
+ },
+ {
+  "slug": "prediction-markets",
+  "name": "Prediction Markets",
+  "blurb": "Prediction market and forecasting platforms with APIs for market prices, order books, questions and community forecasts."
+ },
+ {
+  "slug": "satellite-imagery",
+  "name": "Satellite & Earth Observation",
+  "blurb": "Satellite imagery catalogs, Earth observation data portals and STAC APIs for searching, ordering and processing imagery."
+ },
+ {
+  "slug": "scripture-religious-texts",
+  "name": "Scripture & Religious Texts",
+  "blurb": "APIs for Bible, Quran, Torah and other religious texts, with translations, commentary and audio."
+ },
+ {
+  "slug": "ai-browsers",
+  "name": "AI Browsers",
+  "blurb": "Web browsers with built-in AI assistants and agent modes that browse, research and complete tasks on websites."
+ },
+ {
+  "slug": "affiliate-marketing",
+  "name": "Affiliate & Referral Programs",
+  "blurb": "Affiliate, referral and partner program platforms with APIs for partners, referrals, conversions and commissions."
  }
 ]

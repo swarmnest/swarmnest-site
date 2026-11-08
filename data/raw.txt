@@ -269,7 +269,7 @@ llm-sdks-structured|LiteLLM|https://github.com/BerriAI/litellm|https://docs.lite
 seo-tools|DataForSEO|https://dataforseo.com/|https://dataforseo.com/|unknown|unknown|We provide comprehensive data solutions for SEO and SEM analytics via API. DataForSEO is a trusted partner for 750+ SEO software companies and agencies.
 web-scraping-apis|ScraperAPI|https://www.scraperapi.com/|https://docs.scraperapi.com/making-requests/structured-data-collection-method/amazon-product-page-api|key|freemium|ScraperAPI is a web scraping API that lets you collect data from any public website without worrying about proxies, browsers, or CAPTCHAs.
 web-scraping-apis|Oxylabs|https://oxylabs.io/|https://oxylabs.io/|unknown|freemium|Access fresh, reliable web data at any scale with APIs built for AI and premium proxies. Power agents and applications with 177M+ IPs and robust infrastructure.
-search-apis|Qwant API|https://www.qwant.com/api|https://www.qwant.com/api|unknown|unknown|Fast, reliable answers and still in trust: Qwant does not store your search data, does not sell your personal data and is hosted in Europe.
+search-apis|Qwant API|https://staan.ai/|https://docs.staan.ai/|key|freemium|Qwant's web search API, now sold self-serve as Staan (built by Qwant and Ecosia): an independent European web index with source-cited results for developers and AI apps, with a monthly free allowance.
 search-apis|Wolfram Alpha API|https://products.wolframalpha.com/api/|https://products.wolframalpha.com/api/|unknown|unknown|Easily add top-of-the-line computational knowledge into your applications with Wolfram/Alpha APIs. Options from free to pre-built and custom solutions.
 site-search-engines|Algolia|https://www.algolia.com/|https://www.algolia.com/doc|unknown|freemium|18,000+ organizations trust Algolia to build intuitive, adaptive, high-performing experiences with a unified AI search & retrieval platform spanning agentic, generative, and search.
 site-search-engines|Typesense|https://typesense.org/|https://typesense.org/docs/guide/#quick-start|key|unknown|Typesense is an open-source search engine for fast, typo-tolerant site and app search, with simple APIs, vector search, and self-hosting.
@@ -1183,6 +1183,8 @@ social-media-apis|Bluesky AT Protocol API|https://docs.bsky.app/|https://docs.bs
 social-media-apis|Mastodon API|https://docs.joinmastodon.org/api/|https://docs.joinmastodon.org/api/|none|free|Open API for the Mastodon fediverse.
 social-media-apis|YouTube Data API|https://developers.google.com/youtube/v3|https://developers.google.com/youtube/v3/docs|key|free|Video, channel and search data from YouTube.
 news|Wikipedia REST API|https://en.wikipedia.org/api/rest_v1/|https://www.mediawiki.org/wiki/Wikimedia_REST_API|none|free|Wikipedia summaries and content.
+news|World News API|https://worldnewsapi.com/|https://worldnewsapi.com/docs/|key|freemium|Search and filter news articles from thousands of sources worldwide by text, entity, location and language.
+news|TheNewsAPI|https://www.thenewsapi.com/|https://www.thenewsapi.com/documentation|key|freemium|News API with headlines, top stories and full-text search across global sources.
 podcasts|Podcast Index|https://podcastindex.org/|https://podcastindex-org.github.io/docs-api/|key|free|Open podcast directory API.
 podcasts|ListenNotes|https://www.listennotes.com/api/|https://www.listennotes.com/api/docs/|key|freemium|Podcast search engine API.
 music-apis|Spotify Web API|https://developer.spotify.com/|https://developer.spotify.com/documentation/web-api|oauth|free|Spotify catalog and playback API.
@@ -1579,7 +1581,7 @@ books-apis|Google Books API|https://developers.google.com/books|https://develope
 movies-tv-data|MusicBrainz API|https://musicbrainz.org/doc/MusicBrainz_API|https://musicbrainz.org/doc/MusicBrainz_API|none|free|Open music encyclopedia API.
 movies-tv-data|Discogs API|https://www.discogs.com/developers|https://www.discogs.com/developers|oauth|free|Music database and marketplace API.
 games-data|IGDB API|https://api-docs.igdb.com/|https://api-docs.igdb.com/|oauth|free|Video game database API.
-movies-tv-data|RAWG|https://rawg.io/apidocs|https://rawg.io/apidocs|key|freemium|Video games database API.
+games-data|RAWG|https://rawg.io/apidocs|https://rawg.io/apidocs|key|freemium|Video games database API.
 games-data|Steam Web API|https://steamcommunity.com/dev|https://partner.steamgames.com/doc/webapi|key|free|Steam player and game data API.
 movies-tv-data|PokéAPI|https://pokeapi.co/|https://pokeapi.co/docs/v2|none|free|Pokémon data API.
 movies-tv-data|Simkl API|https://simkl.com/|https://simkl.docs.apiary.io/|key|free|TV, anime and movie tracking API with watch history sync, ratings and metadata lookups.
@@ -2446,6 +2448,11 @@ ai-coding-assistants|Lovable|https://lovable.dev/|https://docs.lovable.dev/|oaut
 ai-coding-assistants|Devin|https://devin.ai/|https://docs.devin.ai/|oauth|paid|Autonomous software engineer.
 ai-coding-assistants|Qodo|https://www.qodo.ai/|https://docs.qodo.ai/|oauth|freemium|AI code review and testing.
 ai-coding-assistants|Kilo Code|https://kilo.ai/|https://kilocode.ai/docs|key|free|Open-source coding agent.
+ai-coding-assistants|OpenCode|https://opencode.ai/|https://opencode.ai/docs/|key|free|Open-source terminal coding agent that works with many model providers.
+ai-coding-assistants|Crush|https://github.com/charmbracelet/crush|https://github.com/charmbracelet/crush|key|free|Charm's open-source terminal coding agent with multi-model support, LSP context and MCP.
+ai-coding-assistants|Qwen Code|https://github.com/QwenLM/qwen-code|https://github.com/QwenLM/qwen-code|key|free|Open-source command-line coding agent tuned for Qwen coder models.
+ai-coding-assistants|Jules|https://jules.google/|https://jules.google/docs/|unknown|freemium|Google's asynchronous coding agent that works on GitHub repositories in a cloud VM and opens pull requests.
+ai-coding-assistants|Augment Code|https://www.augmentcode.com/|https://docs.augmentcode.com/|unknown|paid|AI coding agent and IDE extensions with a context engine for large codebases.
 message-queues|RabbitMQ|https://www.rabbitmq.com/|https://www.rabbitmq.com/docs|none|free|Message broker.
 message-queues|NATS|https://nats.io/|https://docs.nats.io/|none|free|Cloud-native messaging.
 message-queues|Amazon SQS|https://aws.amazon.com/sqs/|https://docs.aws.amazon.com/sqs/|key|paid|Managed message queues.
@@ -2533,6 +2540,11 @@ environment-hazards|ReliefWeb API|https://reliefweb.int/|https://apidoc.reliefwe
 environment-hazards|OpenFEMA API|https://www.fema.gov/about/openfema|https://www.fema.gov/about/openfema/api|none|free|US disaster data.
 environment-hazards|NOAA Tides and Currents API|https://tidesandcurrents.noaa.gov/api/|https://api.tidesandcurrents.noaa.gov/api/prod/|none|free|Tides and water levels.
 environment-hazards|Copernicus Emergency Management Service|https://emergency.copernicus.eu/|https://emergency.copernicus.eu/|none|free|Emergency mapping.
+environment-hazards|PurpleAir API|https://api.purpleair.com/|https://api.purpleair.com/|key|paid|Real-time air quality readings from PurpleAir's global network of low-cost sensors.
+environment-hazards|Google Air Quality API|https://developers.google.com/maps/documentation/air-quality|https://developers.google.com/maps/documentation/air-quality/overview|key|paid|Current, hourly history and forecast air quality indexes and pollutants for any location.
+environment-hazards|Google Pollen API|https://developers.google.com/maps/documentation/pollen|https://developers.google.com/maps/documentation/pollen/overview|key|paid|Daily pollen forecasts with plant types and indexes for any location.
+environment-hazards|World Air Quality Index API|https://aqicn.org/api/|https://aqicn.org/json-api/doc/|key|free|Real-time air quality data from the World Air Quality Index project's monitoring stations.
+environment-hazards|Ambee|https://www.getambee.com/|https://docs.ambeedata.com/|key|freemium|Environmental APIs for air quality, pollen, wildfire and weather data.
 search-apis|Marginalia Search|https://marginalia-search.com/|https://about.marginalia-search.com/article/api/|key|free|Small-web search engine with API.
 search-apis|Yandex Search API|https://yandex.cloud/en/services/search-api|https://yandex.cloud/en/docs/search-api/|key|paid|Yandex web search API.
 search-apis|Bing Web Search (Azure Grounding)|https://www.microsoft.com/en-us/bing/apis|https://learn.microsoft.com/en-us/bing/search-apis/|key|paid|Microsoft web search APIs.
@@ -2575,6 +2587,8 @@ cloud-dev-environments|Gitpod|https://ona.com/|https://www.gitpod.io/docs|oauth|
 cloud-dev-environments|DevPod|https://devpod.sh/|https://devpod.sh/docs|none|free|Client-only dev environments.
 cloud-dev-environments|code-server|https://coder.com/docs/code-server|https://coder.com/docs/code-server/guide|none|free|VS Code in the browser.
 cloud-dev-environments|Eclipse Che|https://eclipse.dev/che/|https://eclipse.dev/che/docs/|none|free|Kubernetes-native IDE.
+cloud-dev-environments|Firebase Studio|https://firebase.studio/|https://firebase.google.com/docs/studio|unknown|freemium|Google's cloud-based development environment with AI agents for building full-stack apps.
+cloud-dev-environments|Okteto|https://www.okteto.com/|https://www.okteto.com/docs/|unknown|freemium|Production-like, isolated full-stack environments where developers and coding agents can run and verify their work, on your own Kubernetes infrastructure.
 form-builders|Netlify Forms|https://docs.netlify.com/forms/setup/|https://docs.netlify.com/forms/setup/|none|freemium|Built-in form handling.
 workflow-automation|Power Automate|https://www.microsoft.com/en-us/power-platform/products/power-automate|https://learn.microsoft.com/en-us/power-automate/|oauth|freemium|Microsoft automation.
 workflow-automation|Automatisch|https://automatisch.io/|https://automatisch.io/docs/|key|free|Open-source Zapier alternative.
@@ -2750,6 +2764,11 @@ merchant-of-record|Payhip|https://payhip.com/|https://payhip.com/developers|key|
 merchant-of-record|Lemon Squeezy API|https://docs.lemonsqueezy.com/api|https://docs.lemonsqueezy.com/api|key|paid|Lemon Squeezy REST API for products, orders and licenses.
 merchant-of-record|Polar API|https://docs.polar.sh/api-reference|https://docs.polar.sh/|key|paid|API for products, checkout and benefits on Polar.
 merchant-of-record|Sellfy|https://sellfy.com/|https://sellfy.com/|key|paid|Storefront for digital products with an API.
+merchant-of-record|Freemius|https://freemius.com/|https://freemius.com/help/documentation/|key|paid|Merchant of record and licensing platform for selling software, plugins and SaaS.
+merchant-of-record|PayPro Global|https://payproglobal.com/|https://developers.payproglobal.com/|key|paid|Merchant of record e-commerce platform for software and SaaS sales worldwide.
+merchant-of-record|Xsolla|https://xsolla.com/|https://developers.xsolla.com/|key|paid|Merchant of record payments and web shops for video game developers.
+merchant-of-record|Cleverbridge|https://www.cleverbridge.com/|https://www.cleverbridge.com/|key|paid|Merchant of record subscription commerce for software and digital goods companies.
+merchant-of-record|Stripe Managed Payments|https://docs.stripe.com/payments/managed-payments|https://docs.stripe.com/payments/managed-payments|key|paid|Stripe's merchant of record option that handles global tax, fraud and disputes for digital product sales.
 hr-payroll|Workday|https://www.workday.com/|https://community.workday.com/api|oauth|paid|Enterprise HR and finance suite with web service APIs.
 hr-payroll|Paychex Flex API|https://developer.paychex.com/|https://developer.paychex.com/documentation|oauth|paid|Payroll and HR data API from Paychex.
 hr-payroll|ADP Marketplace API|https://developers.adp.com/|https://developers.adp.com/articles/api/hcm-offering|oauth|paid|ADP's APIs for workforce and payroll data.
@@ -2761,6 +2780,10 @@ hr-payroll|Oyster|https://www.oysterhr.com/|https://docs.oysterhr.com/|key|paid|
 hr-payroll|Personio API|https://developer.personio.de/|https://developer.personio.de/reference|key|paid|European HR software with a REST API.
 hr-payroll|Papaya Global|https://www.papayaglobal.com/|https://developers.papayaglobal.com/|key|paid|Global payroll platform.
 hr-payroll|OrangeHRM|https://www.orangehrm.com/|https://orangehrm.github.io/orangehrm-api-doc/|key|freemium|Open-source HR management system with an API.
+hr-payroll|HiBob API|https://apidocs.hibob.com/|https://apidocs.hibob.com/|key|paid|REST API for HiBob's HR platform: employees, time off, payroll data and more.
+hr-payroll|Kombo|https://www.kombo.dev/|https://docs.kombo.dev/|key|paid|Unified API for HRIS, ATS and payroll systems, focused on European providers.
+hr-payroll|Factorial API|https://apidoc.factorialhr.com/|https://apidoc.factorialhr.com/|oauth|paid|API for Factorial's HR software: employees, time off, attendance and payroll.
+hr-payroll|Paylocity API|https://developer.paylocity.com/|https://developer.paylocity.com/|oauth|paid|Developer APIs for Paylocity payroll and HR data.
 cross-border-payouts|PayPal Payouts|https://developer.paypal.com/docs/payouts/|https://developer.paypal.com/docs/api/payments.payouts-batch/v1/|oauth|paid|Send mass payouts to PayPal and Venmo accounts.
 cross-border-payouts|Stripe Connect Payouts|https://docs.stripe.com/connect/payouts|https://docs.stripe.com/connect/payouts-connected-accounts|key|paid|Pay out to connected accounts in many countries.
 cross-border-payouts|Airwallex|https://www.airwallex.com/|https://www.airwallex.com/docs/|key|paid|Global accounts, FX and payouts API.
@@ -2771,6 +2794,9 @@ cross-border-payouts|Rapyd|https://www.rapyd.net/|https://docs.rapyd.net/|key|pa
 cross-border-payouts|dLocal|https://www.dlocal.com/|https://docs.dlocal.com/|key|paid|Payments and payouts in emerging markets.
 cross-border-payouts|Currencycloud|https://www.currencycloud.com/|https://developer.currencycloud.com/|key|paid|Cross-border payments and FX API by Visa.
 cross-border-payouts|Tipalti|https://tipalti.com/|https://documentation.tipalti.com/|key|paid|Global payables and mass payouts.
+cross-border-payouts|Trolley|https://trolley.com/|https://docs.trolley.com/|key|paid|Global payouts API for paying creators, sellers and contractors with tax form collection.
+cross-border-payouts|Nium|https://www.nium.com/|https://docs.nium.com/|key|paid|Global payments infrastructure for real-time cross-border payouts and card issuing.
+cross-border-payouts|Veem|https://developer.veem.com/|https://developer.veem.com/|key|paid|Global business payments network with an API for international payables.
 graph-databases|Memgraph|https://memgraph.com/|https://memgraph.com/docs|key|freemium|In-memory graph database compatible with Cypher and Bolt.
 graph-databases|Amazon Neptune|https://aws.amazon.com/neptune/|https://docs.aws.amazon.com/neptune/|oauth|paid|Managed graph database supporting property graph and RDF.
 graph-databases|TigerGraph|https://www.tigergraph.com/|https://docs.tigergraph.com/|key|freemium|Distributed graph database for deep link analytics.
@@ -2865,7 +2891,7 @@ recipes-cooking|Nutritionix Track API|https://developer.nutritionix.com/|https:/
 recipes-cooking|CalorieNinjas|https://calorieninjas.com/api|https://calorieninjas.com/api|key|freemium|Extract nutrition from free-text queries.
 recipes-cooking|Open Pet Food Facts|https://world.openpetfoodfacts.org/|https://world.openpetfoodfacts.org/data|none|free|Open database of pet food products.
 recipes-cooking|FoodRepo|https://www.foodrepo.org/|https://www.foodrepo.org/|key|free|Open food product database for Switzerland and beyond.
-recipes-cooking|Passio Nutrition AI|https://www.passio.ai/nutrition-ai|https://www.passio.ai/nutrition-ai|key|paid|Food recognition and nutrition SDK.
+recipes-cooking|Passio Nutrition AI|https://www.passio.ai/|https://passio.gitbook.io/nutrition-ai|key|paid|Food recognition and nutrition SDK.
 recipes-cooking|LogMeal API|https://logmeal.com/api/|https://docs.logmeal.com/|key|freemium|Food image recognition API.
 recipes-cooking|Bonjour Nutrition|https://www.foodvisor.io/|https://www.foodvisor.io/|key|paid|Foodvisor API for meal recognition.
 recipes-cooking|Eaternity|https://eaternity.org/|https://eaternity.org/|key|paid|Environmental impact and nutrition data for foods.
@@ -3093,6 +3119,7 @@ newsletters|ConvertKit v4 API|https://developers.kit.com/|https://developers.kit
 newsletters|Campaign Monitor|https://www.campaignmonitor.com/|https://www.campaignmonitor.com/api/v3-3/|key|paid|Email marketing API.
 newsletters|Moosend|https://moosend.com/|https://docs.moosend.com/api-documentation/articles/KnowledgeBase/54561-Introduction-to-the-Moosend-API?lang=en_US|key|paid|Email marketing.
 newsletters|Mautic|https://www.mautic.org/|https://developer.mautic.org/|key|free|Open-source marketing automation.
+newsletters|Selzy|https://selzy.com/|https://selzy.com/en/blog/mcp-for-email-marketing/|key|freemium|Email marketing platform with an MCP server for creating campaigns, managing contacts and analyzing results from AI assistants.
 music-apis|Tidal API|https://developer.tidal.com/|https://developer.tidal.com/documentation|oauth|free|Tidal catalog and playback.
 music-apis|YouTube Music (ytmusicapi)|https://github.com/sigma67/ytmusicapi|https://ytmusicapi.readthedocs.io/|none|free|Unofficial YouTube Music API.
 music-apis|Musixmatch API|https://developer.musixmatch.com/|https://developer.musixmatch.com/documentation|key|freemium|Lyrics API.
@@ -3116,6 +3143,7 @@ calendars-scheduling|SimplyBook.me|https://simplybook.me/|https://simplybook.me/
 calendars-scheduling|Setmore|https://www.setmore.com/|https://www.setmore.com/developers|oauth|freemium|Booking API.
 calendars-scheduling|Square Appointments|https://squareup.com/appointments|https://developer.squareup.com/docs/bookings-api/what-it-is|oauth|freemium|Bookings API.
 calendars-scheduling|ical.js|https://github.com/kewisch/ical.js|https://kewisch.github.io/ical.js/|none|free|JavaScript iCalendar parser.
+calendars-scheduling|Timeero MCP|https://timeero.com/timeero-mcp|https://timeero.com/post/timeero-mcp-server|oauth|paid|MCP server for Timeero workforce data: time, mileage, jobs and timesheets from AI assistants.
 screenshot-apis|ScreenshotAPI.net|https://screenshotapi.net/|https://screenshotapi.net/docs|key|freemium|Screenshot API.
 screenshot-apis|Page2Images|https://www.page2images.com/|https://www.page2images.com/api|key|freemium|Website screenshots.
 science-data|Materials Cloud|https://www.materialscloud.org/|https://www.materialscloud.org/discover|none|free|Computational materials data.
@@ -3494,6 +3522,9 @@ billing-invoicing|Quaderno|https://quaderno.io/|https://developers.quaderno.io/|
 billing-invoicing|Stripe Revenue Recognition|https://stripe.com/revenue-recognition|https://docs.stripe.com/revenue-recognition|key|paid|Revenue accounting.
 programmatic-video|Clipchamp Create|https://clipchamp.com/|https://clipchamp.com/|none|freemium|Video editor.
 programmatic-video|Vidnoz|https://www.vidnoz.com/|https://www.vidnoz.com/|none|freemium|AI video.
+programmatic-video|Editframe|https://www.editframe.com/|https://www.editframe.com/docs|key|paid|Cloud infrastructure for playback, processing and rendering of programmatic and AI-generated video at scale.
+programmatic-video|Placid|https://placid.app/|https://placid.app/docs|key|paid|Template-based API for generating images, PDFs and videos automatically.
+programmatic-video|Diffusion Studio|https://diffusion.studio/|https://github.com/diffusionstudio/core|none|free|Video editing for coding agents such as Claude Code, Codex and Cursor: agents analyze footage, cut clips, transcribe and generate media, with every edit kept in code.
 email-verification|Clearout|https://clearout.io/|https://docs.clearout.io/|key|freemium|Email verification.
 email-verification|DeBounce|https://debounce.com/|https://developers.debounce.io/|key|freemium|Email validation.
 email-verification|Twilio SendGrid Validation|https://sendgrid.com/en-us/solutions/email-validation|https://www.twilio.com/docs/sendgrid/api-reference/email-address-validation|key|paid|Email validation.
@@ -3510,6 +3541,7 @@ visual-agent-builders|OpenAI AgentKit|https://openai.com/index/introducing-agent
 company-registries|Companies House Streaming|https://developer-specs.company-information.service.gov.uk/|https://developer-specs.company-information.service.gov.uk/streaming-api/reference|key|free|UK stream.
 company-registries|Open Ownership|https://www.openownership.org/|https://bods-data.openownership.org/|none|free|Beneficial ownership.
 company-registries|Dun & Bradstreet D&B Direct|https://www.dnb.com/|https://directplus.documentation.dnb.com/|key|paid|Business data.
+company-registries|Statsnet MCP|https://statsnet.co/|https://statsnet.co/en/integrations/mcp|unknown|freemium|Company background checks worldwide (registration, executives, courts and finances) through Statsnet's remote MCP server and API.
 e-signature|Docusign Maestro|https://www.docusign.com/|https://developers.docusign.com/|oauth|paid|Agreement workflows.
 e-signature|Eversign|https://eversign.com/|https://eversign.com/api/documentation|key|freemium|E-signature.
 e-signature|Anvil|https://www.useanvil.com/|https://www.useanvil.com/docs|key|freemium|Paperwork automation.
@@ -3521,7 +3553,12 @@ museum-collections|Pelagios|https://pelagios.org/|https://pelagios.org/|none|fre
 recipes-cooking|Brewfather|https://brewfather.app/|https://docs.brewfather.app/api|key|paid|Homebrew software API.
 nlp-text-analysis|TextRazor|https://www.textrazor.com/|https://www.textrazor.com/docs/rest|key|freemium|Entity extraction.
 nlp-text-analysis|Lexalytics|https://www.lexalytics.com/|https://www.lexalytics.com/|key|paid|Text analytics.
-nlp-text-analysis|Gensim|https://radimrehurek.com/gensim/|https://radimrehurek.com/gensim/auto_examples/index.html|none|free|Topic modelling.
+nlp-text-analysis|Gensim|https://github.com/piskvorky/gensim|https://pypi.org/project/gensim/|none|free|Topic modelling.
+nlp-text-analysis|Stanford CoreNLP|https://stanfordnlp.github.io/CoreNLP/|https://stanfordnlp.github.io/CoreNLP/|none|free|Java NLP toolkit for tokenization, part-of-speech tagging, named entities, parsing and coreference.
+nlp-text-analysis|fastText|https://fasttext.cc/|https://fasttext.cc/docs/en/support.html|none|free|Meta's library for fast text classification and word embeddings, with pretrained models for 157 languages.
+nlp-text-analysis|Spark NLP|https://sparknlp.org/|https://sparknlp.org/docs/en/quickstart|none|free|Open-source NLP library on Apache Spark with thousands of pretrained pipelines and models.
+nlp-text-analysis|KeyBERT|https://github.com/MaartenGr/KeyBERT|https://maartengr.github.io/KeyBERT/|none|free|Keyword and keyphrase extraction using BERT embeddings.
+nlp-text-analysis|YAKE|https://github.com/INESCTEC/yake|https://github.com/INESCTEC/yake|none|free|Unsupervised keyword extraction that works on single documents without training data.
 time-series-databases|TimescaleDB Cloud|https://www.tigerdata.com/cloud|https://docs.timescale.com/|key|paid|Hosted Timescale.
 agent-memory|Pieces|https://pieces.app/|https://docs.pieces.app/|none|freemium|Long-term memory for developers.
 no-code-scrapers|Phantombuster|https://phantombuster.com/|https://hub.phantombuster.com/reference|key|paid|Automation and data extraction.
@@ -3647,6 +3684,9 @@ government-statistics|WHO Data API|https://www.who.int/data|https://www.who.int/
 government-statistics|Global Health Data Exchange|https://ghdx.healthdata.org/|https://ghdx.healthdata.org/|none|free|Health data catalog.
 data-etl|Soda|https://www.soda.io/|https://docs.soda.io/|key|freemium|Data quality checks.
 data-etl|Debezium Server|https://debezium.io/documentation/reference/stable/operations/debezium-server.html|https://debezium.io/documentation/reference/stable/operations/debezium-server.html|none|free|CDC without Kafka.
+data-etl|Sling|https://slingdata.io/|https://docs.slingdata.io/|none|freemium|CLI and platform for moving data between databases, warehouses and files.
+data-etl|Apache SeaTunnel|https://seatunnel.apache.org/|https://seatunnel.apache.org/docs/|none|free|Open-source distributed data integration engine with many source and sink connectors.
+data-etl|Matillion|https://www.matillion.com/|https://docs.matillion.com/|unknown|paid|Cloud data integration and transformation platform for warehouses like Snowflake and Databricks.
 ai-tool-directories|Awesome LLM Agents|https://github.com/kaushikb11/awesome-llm-agents|https://github.com/kaushikb11/awesome-llm-agents|none|free|LLM agent frameworks list.
 ai-tool-directories|Awesome Claude Code|https://github.com/hesreallyhim/awesome-claude-code|https://github.com/hesreallyhim/awesome-claude-code|none|free|Claude Code resources.
 ai-tool-directories|AI Valley|https://www.aivalley.ai/|https://www.aivalley.ai/|none|free|Directory of AI tools.
@@ -3933,12 +3973,15 @@ security-guardrails|HOL Guard|https://hol.org/guard|https://hol.org/guard/docs|n
 medical-data-apis|OMOPHub|https://omophub.com/|https://docs.omophub.com/|key|freemium|Hosted API and MCP server for the OHDSI OMOP vocabularies that lets agents search, map and resolve 11M+ medical concepts across SNOMED CT, ICD-10, LOINC and RxNorm, including FHIR code resolution. Free plan with 3,000 calls a month; paid plans from $39 a month.
 image-generation|InkRoom|https://inkroom.ai/en|https://inkroom.ai/en/docs|key|freemium|AI image studio with a hosted remote MCP server that lets agents generate, batch-generate, reference-edit and upscale images, aimed at e-commerce product photos. Shows estimated credits before each job and also offers OpenAI- and Gemini-compatible image APIs.
 model-hosting-inference|SpicyAPI|https://spicyapi.ai/|https://docs.spicyapi.ai/docs/api-reference|key|paid|Pay-as-you-go API for 220+ image, video, audio and chat models, including LoRA-tuned editions and models without a platform content filter, all under one OpenAI-compatible key. An MCP server and Agent Skill let coding agents browse models, confirm the price and run jobs. Billed from a prepaid US dollar balance with no subscription.
+model-hosting-inference|llm-d|https://llm-d.ai/|https://github.com/llm-d/llm-d|none|free|Open-source Kubernetes-native stack for distributed LLM inference on vLLM and other engines, with cache-aware routing.
 domains-dns|StableDomains|https://stabledomains.net/agents|https://stabledomains.net/mcp|key|paid|Agent-first domain registrar whose MCP server and REST API let AI agents search, price, register and renew domains and manage DNS on their own. Payment is in USDC or USDT on seven chains, per call over x402 on Base, or from a prepaid balance, with OAuth 2.1 or API key sign-in.
 mcp-servers|Pipedream MCP|https://mcp.pipedream.com/|https://pipedream.com/docs/connect/mcp/|oauth|freemium|Hosted MCP servers for 3,000+ apps with more than 10,000 pre-built tools and fully managed OAuth through Pipedream Connect. Free for your own use; developers can add it to their own agents to act for their users, free in development mode.
 mcp-sdks-dev-tools|Cloudflare Remote MCP Hosting|https://developers.cloudflare.com/agents/model-context-protocol/|https://developers.cloudflare.com/agents/model-context-protocol/guides/remote-mcp-server/|oauth|freemium|Build and deploy your own remote MCP server on Cloudflare Workers over Streamable HTTP, from a template for an open server or one behind OAuth sign-in with the Workers OAuth Provider. The Workers Free plan includes 100,000 requests a day.
 mcp-sdks-dev-tools|mcptoon|https://github.com/activeing123/mcptoon|https://github.com/activeing123/mcptoon|none|free|Zero-dependency Python CLI that runs all your configured MCP servers and agent skills behind one gateway endpoint, keeping tool schemas out of context to save tokens.
 search-apis|Desearch|https://www.desearch.ai/|https://www.desearch.ai/docs/guide|key|paid|Search API for AI agents that searches the web and X with source links, extracts clean content from any URL and adds people and company search, all under one API key. Its MCP server runs remotely or locally through npx. Pay as you go, with $5 in starter credits once a card is added.
+search-apis|DeepSeek Search & Fetch API|https://api-docs.deepseek.com/guides/search/|https://api-docs.deepseek.com/api/search/|key|paid|DeepSeek's web Search API returns ranked results and the Fetch API returns page content, for agents and RAG.
 accounting-tax|Melso Fiscal MCP|https://melso.ai/en/mcp|https://docs.melso.ai/mcp/overview|oauth|paid|Hosted MCP server for Melso, a Spanish tax and accounting service for freelancers, that lets agents read tax records, organise invoices and expenses and check the Spanish tax calendar, limited to the records the customer authorizes. Approvals and filing stay in Melso with its tax professionals. Part of a paid Melso plan.
+accounting-tax|Financial Cents|https://financial-cents.com/|https://financial-cents.com/mcp/|oauth|paid|Practice management for accounting firms with an MCP server for checking work, clients and deadlines from AI assistants.
 seo-tools|FlashCrafter Growth Briefs MCP|https://briefs.flashcrafter.ai/chatgpt|https://briefs.flashcrafter.ai/chatgpt|oauth|freemium|Remote MCP server and ChatGPT app for FlashCrafter, a marketing platform for local service businesses, that lets agents explain a business's Growth Brief and saved reports on local search visibility, competitors and reputation, then save a plan. Needs a FlashCrafter account with access to the business; the first Growth Brief is free.
 mcp-servers|AI Deprecations|https://aideprecations.neocities.org/|https://aideprecations.neocities.org/llms.txt|none|free|Free MCP server and API for AI model deprecation and shutdown dates across OpenAI, Anthropic, Google Gemini and Vertex, Azure OpenAI, AWS Bedrock, Mistral and Cohere, with replacements, the official source for every record, a change feed and webhook alerts.
 mcp-servers|Kilobat CLI|https://github.com/seifip/kilobat-cli|https://kilobat.app/agents/|none|free|macOS command-line tool and local stdio MCP server with 43 tools for network diagnostics: which apps use the network, Wi-Fi signal and channels, latency, DNS, speed tests, why a host won't connect and metered hotspot budgets, plus keeping the Mac awake while long agent jobs run. Read-only tools run freely; tools that change settings ask first. Free and open source under GPL-3.0; needs macOS 14 or later.
@@ -3962,11 +4005,13 @@ sports-data|Sports Odds MCP|https://github.com/GeminiGeorge22/sports-odds-mcp|ht
 mac-ai-agent-apps|Floatboat|https://deepseek-agent.com/|https://deepseek-agent.com/download|none|freemium|Desktop agent app for Mac and Windows that runs DeepSeek models on your local files, browser tasks and scheduled automations, and can fire prep, run and follow-up agents from calendar events. Made by Floatboat, an independent team not affiliated with DeepSeek.
 mcp-servers|ShareOfAsk|https://www.shareofask.com/|https://github.com/ShareOfAsk/shareofask-mcp|oauth|paid|Hosted remote MCP server that tracks how AI assistants mention your brand, your competitors and the sources they cite, over Streamable HTTP with OAuth. Plans from $49 a month.
 web-scraping-apis|Irmu|https://irmu.com/|https://irmu.com/docs/mcp|key|freemium|Web data APIs for scraping, JavaScript rendering, screenshots and AI-structured JSON extraction, available over REST and a hosted MCP server with OAuth or API key. Free credits, paid plans from $19 a month.
+web-scraping-apis|Decodo Web Data API|https://decodo.com/web-data-api|https://decodo.com/blog/introducing-web-data-api|key|freemium|One API for agents to scrape pages, map and crawl sites and get search results, with a free starter plan.
 mcp-servers|Agentik|https://www.agentik.cc/|https://www.agentik.cc/docs|oauth|freemium|Hosted MCP connection that gives Claude, ChatGPT, Codex and Cursor access to 3,500+ tools from 165 providers through one prepaid balance, with each call billed at the provider's price, the cost shown before the call and no provider keys needed. Starts with $2 of free credit.
 mcp-servers|More Good Reviews|https://moregoodreviews.com/|https://docs.moregoodreviews.com/platform/mcp-server|oauth|paid|Hosted MCP server for local service businesses that manages customers, timed email and SMS review requests, Google and Facebook review sync and replies, locations, tags and sources, over Streamable HTTP with OAuth. Plans from $59 per location a month, with a 7-day free trial.
 llm-apis|CodeI Lab|https://www.codeilab.com/|https://www.codeilab.com/|key|paid|Independent OpenAI- and Claude-compatible API gateway for coding agents, with discounted usage billed by plan and one-command setup for Claude Code, Codex CLI or OpenCode. Not affiliated with OpenAI.
 llm-apis|RouteMux|https://routemux.com/|https://routemux.com/|key|paid|AI gateway with one API key for many model providers, failover across redundant routes, and pay-as-you-go pricing that bills only successful requests.
 llm-apis|Code By AI|https://www.codebyai.net/|https://www.codebyai.net/docs|key|paid|One API key and endpoint for Claude, GPT/Codex and Gemini models, compatible with Claude Code, Codex CLI and Gemini CLI, billed per token with no subscription.
+llm-apis|BetterToken|https://bettertoken.ai/|https://docs.bettertoken.ai/|key|paid|OpenAI- and Anthropic-compatible multi-model API gateway for text, image and video, with pay-as-you-go and optional monthly plans.
 mcp-servers|Date Calculator MCP|https://onlinealarmkur.com/date/en/|https://mcp.onlinealarmkur.com/|none|free|Hosted MCP server for date differences, working-day counts, date shifts and public-holiday lookups by country or region.
 legal-data|LawAsked|https://lawasked.com/|https://lawasked.com/|none|free|Answers legal questions in plain language for 12 countries and cites the official statute sections each answer relies on.
 mcp-servers|KeepBal|https://keepbal.com/|https://keepbal.com/mcp|key|freemium|One API key and prepaid wallet for thousands of agent tools and models over MCP and OpenAPI, with free pricing inspection and pay-only-for-successful-runs billing.
@@ -3979,4 +4024,38 @@ video-editing|OpenMontage Drama Studio|https://openmontage.dtok.io/|https://gith
 video-editing|Valmera|https://valmera.io/|https://valmera.io/mcp|oauth|paid|Hosted AI video editor with a remote MCP server for Claude, ChatGPT, Cursor and Codex, so agents can cut silences and filler words, add word-timed captions, reframe to 9:16, render previews and export MP4s from your uploaded footage.
 video-editing|Reclip|https://www.reclip.io/|https://www.reclip.io/docs/quickstart|key|paid|About 30 video, audio and image tools, including AI clipping, captions, voiceovers and upscaling, through a public beta REST API, a hosted MCP server and an installable agent skill. Jobs run asynchronously and are billed in credits.
 mcp-servers|Reporters.io|https://reporters.io/|https://reporters.io/mcp|key|freemium|Journalist and media outlet database with a REST API, an MCP server for Claude Code, Cursor and Codex, and an agent skill, for finding reporters by beat, outlet or region with linked article references. API and MCP access need a Professional plan.
+mcp-servers|Suno MCP|https://suno.com/mcp|https://suno.com/mcp|oauth|freemium|Official Suno MCP server that connects a Suno account to ChatGPT, Claude and other assistants to create music from chat.
+mcp-servers|ClicData MCP|https://www.clicdata.com/platform/mcp-server/|https://help.clicdata.com/faq/custom-mcp-url|oauth|paid|MCP server that lets AI assistants query governed ClicData business data and build charts and dashboards.
 browser-automation|Cloudbrowser|https://cloudbrowser.tv/|https://cloudbrowser.tv/docs|key|freemium|Persistent cloud Chrome browsers for AI agents, with saved login state, fork, pause and resume, live view and CDP access through a REST API and Go CLI. Free plan with 1 browser-hour a month; paid plans from $20 a month.
+prediction-markets|Polymarket API|https://docs.polymarket.com/|https://docs.polymarket.com/|key|free|Public market, price and order book data for Polymarket prediction markets, plus authenticated order placement through the CLOB API.
+prediction-markets|Kalshi API|https://docs.kalshi.com/|https://docs.kalshi.com/|key|free|REST, WebSocket and FIX APIs for Kalshi, a US CFTC-regulated event contracts exchange: markets, prices, order books and trading.
+prediction-markets|Manifold API|https://docs.manifold.markets/api|https://docs.manifold.markets/api|key|free|Read markets, bets and users from Manifold's play-money prediction markets, and place bets or create markets with an API key.
+prediction-markets|Metaculus API|https://www.metaculus.com/api/|https://www.metaculus.com/api/|key|free|Forecasting questions, community predictions and resolution data from the Metaculus forecasting platform.
+prediction-markets|PredictIt Market Data|https://www.predictit.org/api/marketdata/all/|https://www.predictit.org/|none|free|Public JSON feed of current PredictIt political prediction markets and contract prices.
+satellite-imagery|Google Earth Engine|https://earthengine.google.com/|https://developers.google.com/earth-engine|oauth|freemium|Planetary-scale catalog of satellite imagery and geospatial datasets with a cloud API for analysis in JavaScript or Python.
+satellite-imagery|Microsoft Planetary Computer|https://planetarycomputer.microsoft.com/|https://planetarycomputer.microsoft.com/docs/overview/about/|none|free|Petabytes of open Earth observation data (Sentinel, Landsat and more) searchable through a public STAC API.
+satellite-imagery|Copernicus Data Space Ecosystem|https://dataspace.copernicus.eu/|https://documentation.dataspace.copernicus.eu/|key|freemium|Official access to Sentinel satellite data with catalog, download, processing and STAC APIs from the EU Copernicus programme.
+satellite-imagery|Sentinel Hub|https://www.sentinel-hub.com/|https://docs.sentinel-hub.com/|oauth|paid|Processing API for Sentinel, Landsat and commercial satellite imagery: request rendered images or statistics for any area and time.
+satellite-imagery|Planet APIs|https://developers.planet.com/|https://docs.planet.com/|key|paid|APIs to search, order and stream Planet's daily commercial satellite imagery and derived analytics.
+satellite-imagery|UP42|https://up42.com/|https://docs.up42.com/|key|paid|Marketplace and API for ordering and processing commercial satellite and aerial imagery from many providers.
+satellite-imagery|NASA Earthdata|https://www.earthdata.nasa.gov/|https://cmr.earthdata.nasa.gov/search/site/docs/search/api.html|key|free|NASA's Earth science data hub; the CMR search API finds satellite datasets and granules across NASA archives.
+satellite-imagery|Earth Search (Element 84)|https://element84.com/earth-search/|https://earth-search.aws.element84.com/v1|none|free|Public STAC API indexing open satellite imagery on AWS, including Sentinel-2 and Landsat collections.
+satellite-imagery|USGS EarthExplorer|https://earthexplorer.usgs.gov/|https://m2m.cr.usgs.gov/|key|free|USGS portal and machine-to-machine API for searching and downloading Landsat and other satellite and aerial imagery.
+scripture-religious-texts|API.Bible|https://scripture.api.bible/|https://scripture.api.bible/livedocs|key|free|Bible text API from American Bible Society with thousands of Bible versions in many languages.
+scripture-religious-texts|bible-api.com|https://bible-api.com/|https://bible-api.com/|none|free|Simple free JSON API for public-domain Bible translations by verse reference.
+scripture-religious-texts|ESV API|https://api.esv.org/|https://api.esv.org/docs/|key|free|Crossway's API for English Standard Version Bible text, search and audio, for non-commercial use.
+scripture-religious-texts|Quran Foundation API|https://api-docs.quran.foundation/|https://api-docs.quran.foundation/|oauth|free|APIs behind Quran.com for Quran text, translations, tafsir and recitation audio.
+scripture-religious-texts|AlQuran Cloud API|https://alquran.cloud/api|https://alquran.cloud/api|none|free|Free REST API for Quran text, editions, translations and audio.
+scripture-religious-texts|Sefaria API|https://developers.sefaria.org/|https://developers.sefaria.org/|none|free|Open API for Sefaria's library of Jewish texts, with linked translations and commentary.
+ai-browsers|ChatGPT Atlas|https://chatgpt.com/atlas|https://chatgpt.com/atlas|unknown|freemium|OpenAI's web browser with ChatGPT built in, including an agent mode that can browse and act on pages for you.
+ai-browsers|Dia|https://www.diabrowser.com/|https://www.diabrowser.com/|unknown|freemium|AI browser from The Browser Company with a built-in assistant that works with your open tabs.
+ai-browsers|Opera Neon|https://www.operaneon.com/|https://www.operaneon.com/|unknown|paid|Opera's agentic browser that can chat, carry out tasks on websites and build things for you.
+ai-browsers|Fellou|https://fellou.ai/|https://fellou.ai/|unknown|freemium|Agentic browser that runs multi-step web tasks and deep research on your behalf.
+ai-browsers|BrowserOS|https://github.com/browseros-ai/BrowserOS|https://www.browseros.com/|none|free|Open-source Chromium-based agentic browser that runs AI agents locally, with support for your own models.
+affiliate-marketing|Refersion|https://www.refersion.com/|https://www.refersion.com/|key|paid|Affiliate tracking and payouts for e-commerce brands, with an API and an MCP server for managing programs from AI assistants.
+affiliate-marketing|impact.com API|https://integrations.impact.com/|https://integrations.impact.com/|key|paid|APIs for impact.com's partnership platform: partners, campaigns, conversions and payouts.
+affiliate-marketing|PartnerStack API|https://docs.partnerstack.com/|https://docs.partnerstack.com/|key|paid|API for PartnerStack's B2B partner and affiliate programs: partners, customers, transactions and rewards.
+affiliate-marketing|Rewardful API|https://developers.rewardful.com/|https://developers.rewardful.com/|key|paid|Affiliate and referral program software for SaaS on Stripe, with a REST API for affiliates, referrals and commissions.
+affiliate-marketing|FirstPromoter API|https://docs.firstpromoter.com/|https://docs.firstpromoter.com/|key|paid|Affiliate and referral tracking for SaaS with an API for promoters, referrals and commissions.
+affiliate-marketing|Tapfiliate API|https://tapfiliate.com/docs/rest/|https://tapfiliate.com/docs/rest/|key|paid|Affiliate tracking platform with a REST API for affiliates, conversions and commissions.
+affiliate-marketing|Everflow API|https://developers.everflow.io/|https://developers.everflow.io/|key|paid|Partner marketing and affiliate tracking platform with network, affiliate and advertiser APIs.

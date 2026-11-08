@@ -119,6 +119,35 @@
       "dueAt": "2026-11-04T12:00:00-08:00",
       "link": "https://swarmnest.ai/directory/search-apis/",
       "text": "Find a search API for your agent: Brave, Tavily, Serper, SerpApi, Linkup, Kagi, SearXNG and more, compared by pricing and auth.\n\nhttps://swarmnest.ai/directory/search-apis/"
+    },
+    {
+      "date": "2026-11-05",
+      "source": "plan post 14 (Project Memory Kit; schedule day 12, pulled forward one day)",
+      "bufferPostId": "6aecb68060a369bcd77cef1e",
+      "status": "sent",
+      "dueAt": "2026-11-05T12:00:00-08:00",
+      "link": "https://swarmnest.ai/marketplace/project-memory-kit/",
+      "text": "Coding agents work best with a tight project memory file. The Project Memory Kit scans your repo, renders the file from stack starters (Next.js, Django, Go, Rust and more) and lints it for bloat, stale commands and secrets.\n\nhttps://swarmnest.ai/marketplace/project-memory-kit/",
+      "note": "Logged retroactively on Nov 6 from Buffer; Nov 5 run scheduled it but the JSON write was missing. Wording avoided AGENTS.md/CLAUDE.md because X auto-links .md names.",
+      "xUrl": "https://x.com/Swarmnest_ai/status/2118433354408140909"
+    },
+    {
+      "date": "2026-11-06",
+      "source": "plan post 10 (Claude Code Skills; schedule day 14, pulled forward; day 12's post 14 already used Nov 5)",
+      "bufferPostId": "6aee09149214322f689ca974",
+      "status": "scheduled",
+      "dueAt": "2026-11-06T12:00:00-08:00",
+      "link": "https://swarmnest.ai/agent-skills/platform/claude-code/",
+      "text": "400+ skills, plugins, rules and templates that declare Claude Code support, each with safety labels and a link to the source.\n\nhttps://swarmnest.ai/agent-skills/platform/claude-code/"
+    },
+    {
+      "date": "2026-11-07",
+      "source": "fresh (Consumer AI Apps; all 14 plan posts already used)",
+      "bufferPostId": "6aef5b649214322f6805fb66",
+      "status": "scheduled",
+      "dueAt": "2026-11-07T12:00:00-08:00",
+      "link": "https://swarmnest.ai/consumer-ai-apps/",
+      "text": "AI apps for people, not just agents. Browse 280 chat assistants, writing helpers, image and video generators, study tools and more, kept separate from the agent directory.\n\nhttps://swarmnest.ai/consumer-ai-apps/"
     }
   ],
   "planPostsUsed": [
@@ -131,8 +160,10 @@
     7,
     8,
     9,
+    10,
     11,
     12,
-    13
+    13,
+    14
   ]
 }
