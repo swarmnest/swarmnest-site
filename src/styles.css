@@ -184,7 +184,7 @@ a.badge.hv-tag{text-decoration:none;min-height:24px;display:inline-flex;align-it
 .llogo-init{font-size:calc(var(--logo-size,40px)*0.36);font-weight:700;letter-spacing:.02em;line-height:1;color:hsl(var(--logo-hue,38) 70% 62%);user-select:none}
 .llogo-lg{border-radius:12px}
 .card-head{display:flex;gap:12px;align-items:flex-start;margin:0 0 4px}
-.card-head h3{margin:0;flex:1;min-width:0}
+.card-head h3,.card-head h2{margin:0;flex:1;min-width:0}
 .card.with-logo p{margin-top:2px}
 .listing-h{display:flex;gap:16px;align-items:flex-start;margin:1.2rem 0 .5rem}
 .listing-h .llogo{margin-top:.2rem}

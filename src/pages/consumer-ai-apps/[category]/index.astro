@@ -14,6 +14,6 @@ const ld=[{'@context':'https://schema.org','@type':'BreadcrumbList',itemListElem
 <Crumbs items={[['Home','/'],['Consumer AI Apps','/consumer-ai-apps/'],[c.name]]} />
 <h1>{c.name}</h1>
 <p class="lead">{c.blurb} These are consumer apps for people, not agent tools.</p>
-<div class="grid">{list.map(a=>(a.dir?<a class="card with-logo" href={a.dir}><span class="card-head"><ListingLogo name={a.name} slug={a.slug} url={a.url} size={36} /><h3>{a.name}</h3></span><p>{a.description}</p><span class="badge">Also In Directory</span> <span class="small">View Full Listing →</span></a>:<a class="card with-logo" href={a.url} rel="nofollow noopener" target="_blank"><span class="card-head"><ListingLogo name={a.name} slug={a.slug} url={a.url} size={36} /><h3>{a.name}</h3></span><p>{a.description}</p><span class="badge">Consumer App</span></a>))}</div>
+<div class="grid">{list.map(a=>(a.dir?<a class="card with-logo" href={a.dir}><span class="card-head"><ListingLogo name={a.name} slug={a.slug} url={a.url} size={36} /><h2>{a.name}</h2></span><p>{a.description}</p><span class="badge">Also In Directory</span> <span class="small">View Full Listing →</span></a>:<a class="card with-logo" href={a.url} rel="nofollow noopener" target="_blank"><span class="card-head"><ListingLogo name={a.name} slug={a.slug} url={a.url} size={36} /><h2>{a.name}</h2></span><p>{a.description}</p><span class="badge">Consumer App</span></a>))}</div>
 <p class="small"><a href="/consumer-ai-apps/">All Consumer AI Apps</a> · <a href="/directory/">Agent Tools Directory</a></p>
 </Base>

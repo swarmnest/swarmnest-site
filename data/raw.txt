@@ -3224,7 +3224,7 @@ ai-tool-directories|Cursor MCP Directory|https://cursor.directory/mcp|https://cu
 ai-tool-directories|mcpservers.org|https://mcpservers.org/|https://mcpservers.org/|none|free|Curated MCP server list.
 ai-tool-directories|Anthropic Connectors Directory|https://claude.com/connectors|https://support.anthropic.com/|none|free|Connectors for Claude.
 ai-tool-directories|Zapier MCP|https://zapier.com/mcp|https://docs.zapier.com/mcp/home|key|freemium|MCP access to thousands of apps.
-dictionaries-language|Collins Dictionary API|https://www.collinsdictionary.com/api/v1|https://api.collinsdictionary.com/api/v1/documentation/html/|key|paid|Collins dictionary data.
+dictionaries-language|Collins Dictionary API|https://www.collinsdictionary.com/collins-api/|https://api.collinsdictionary.com/api/v1/documentation/html/|key|paid|Collins dictionary data.
 dictionaries-language|Wordnik API|https://developer.wordnik.com/|https://developer.wordnik.com/docs|key|freemium|Words, definitions and examples.
 dictionaries-language|Linguee API|https://www.linguee.com/|https://github.com/imankulov/linguee-api|none|free|Unofficial translation dictionary API.
 dictionaries-language|PanLex|https://panlex.org/|https://dev.panlex.org/api/|none|free|Lexical translation database for thousands of languages.
