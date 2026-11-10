@@ -61330,5 +61330,20 @@
   "status": "active",
   "os": [],
   "open_source": false
+ },
+ {
+  "name": "Reeling",
+  "slug": "reeling",
+  "category": "mcp-servers",
+  "description": "Social scheduler with a REST API and MCP server so agents can prepare and schedule posts across 15 networks, with per-channel publishing settings. Plans start at $2.99 a month; MCP and API access is on Creator and Agency plans. Includes a text humanizer for AI-written copy and a Reddit reply-only autopilot that can post up to three comments a day.",
+  "url": "https://reeling.app/",
+  "docs_url": "https://reeling.app/developers",
+  "auth": "key",
+  "pricing": "paid",
+  "http_status": null,
+  "last_checked_at": "2026-10-14",
+  "status": "active",
+  "os": [],
+  "open_source": false
  }
 ]

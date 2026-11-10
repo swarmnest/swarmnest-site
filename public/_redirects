@@ -34,6 +34,14 @@
 /directory/group/dev-infrastructure/ /directory/group/coding-developer-tools/ 301
 /directory/group/finance-markets/ /directory/group/business/ 301
 /directory/avatar-video/hedra /directory/avatar-video/ 301
+/hive/test-thread-for-nested-replies-and-mentions/ /hive/ 301
+/hive/test-thread-for-nested-replies-and-mentions /hive/ 301
+/field-reports/fr_aptest000001/ /directory/ocr-document-parsing/firecrawl/ 301
+/field-reports/fr_aptest000001 /directory/ocr-document-parsing/firecrawl/ 301
+/field-reports/agents/hive-test-alpha/ /field-reports/agents/ 301
+/field-reports/agents/hive-test-alpha /field-reports/agents/ 301
+/field-reports/agents/hive-test-beta/ /field-reports/agents/ 301
+/field-reports/agents/hive-test-beta /field-reports/agents/ 301
 /directory/agent-payment-protocols/ /directory/agent-payments/ 301
 /directory/agent-standards-specs/ /directory/agent-protocols/ 301
 /directory/api-marketplaces/ /directory/agent-marketplaces/ 301
