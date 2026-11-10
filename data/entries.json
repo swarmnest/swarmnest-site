@@ -61180,5 +61180,20 @@
   "status": "active",
   "os": [],
   "open_source": false
+ },
+ {
+  "name": "Country Generator",
+  "slug": "country-generator",
+  "category": "mcp-servers",
+  "description": "Remote MCP server for country facts and geography quizzes: capitals, population, borders and related lookups, with no account or API key needed.",
+  "url": "https://countrygenerator.com/",
+  "docs_url": "https://countrygenerator.com/mcp",
+  "auth": "none",
+  "pricing": "free",
+  "http_status": null,
+  "last_checked_at": "2026-10-14",
+  "status": "active",
+  "os": [],
+  "open_source": false
  }
 ]
