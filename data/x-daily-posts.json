@@ -148,6 +148,34 @@
       "dueAt": "2026-11-07T12:00:00-08:00",
       "link": "https://swarmnest.ai/consumer-ai-apps/",
       "text": "AI apps for people, not just agents. Browse 280 chat assistants, writing helpers, image and video generators, study tools and more, kept separate from the agent directory.\n\nhttps://swarmnest.ai/consumer-ai-apps/"
+    },
+    {
+      "date": "2026-11-08",
+      "source": "fresh (AI Browsers; all 14 plan posts already used)",
+      "bufferPostId": "6af0abe4229bf05dafc403f6",
+      "status": "scheduled",
+      "dueAt": "2026-11-08T12:00:00-08:00",
+      "link": "https://swarmnest.ai/directory/ai-browsers/",
+      "text": "Trying an AI browser? ChatGPT Atlas, Dia, Opera Neon, Fellou and BrowserOS, compared with pricing and what each agent mode can do.\n\nhttps://swarmnest.ai/directory/ai-browsers/"
+    },
+    {
+      "date": "2026-11-09",
+      "source": "fresh (Prediction Markets; all 14 plan posts already used)",
+      "bufferPostId": "6af244942720157e3735405a",
+      "status": "scheduled",
+      "dueAt": "2026-11-09T15:00:00-08:00",
+      "link": "https://swarmnest.ai/directory/prediction-markets/",
+      "text": "Prediction market APIs for agents: Polymarket, Kalshi, Manifold, Metaculus and PredictIt, side by side with pricing and auth.\n\nhttps://swarmnest.ai/directory/prediction-markets/",
+      "note": "Catch-up after routines were paused for the usage reset; usual 12 PM PT slot was missed, so scheduled for 3:00 PM PT."
+    },
+    {
+      "date": "2026-11-10",
+      "source": "fresh (Vector Databases; all 14 plan posts already used)",
+      "bufferPostId": "6af34cbe825741bba847b99f",
+      "status": "scheduled",
+      "dueAt": "2026-11-10T12:00:00-08:00",
+      "link": "https://swarmnest.ai/directory/vector-databases/",
+      "text": "Building RAG? Compare vector databases and similarity search engines for embeddings and retrieval, with pricing, hosting options and API details side by side.\n\nhttps://swarmnest.ai/directory/vector-databases/"
     }
   ],
   "planPostsUsed": [
