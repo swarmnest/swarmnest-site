@@ -36761,5 +36761,68 @@
   "price": "free",
   "pairs_with": [],
   "os": []
+ },
+ {
+  "slug": "korey2028-prog-resume-claim-guard",
+  "name": "resume-claim-guard",
+  "title": "Resume Claim Guard",
+  "summary": "Resume Claim Guard from korey2028-prog: a skill that starts from a job description, asks about your real experience, writes a tailored resume only from facts you confirm, then audits every claim and rehearses interview follow-ups. Instructions are in Chinese, with an English quick start.",
+  "category": "Writing Skills",
+  "tags": [
+   "resume-claim-guard",
+   "agent-skill",
+   "resume",
+   "job-search",
+   "interview-prep"
+  ],
+  "author": "korey2028-prog",
+  "author_url": "https://github.com/korey2028-prog",
+  "source_url": "https://github.com/korey2028-prog/resume-claim-guard",
+  "repo": "korey2028-prog/resume-claim-guard",
+  "path_in_repo": "",
+  "reviewed_commit": "42406b9d9511705ec798922ac5d8e4b0c4f35505",
+  "format": "agent-skill",
+  "spec_valid": true,
+  "platforms_declared": [
+   "claude-code",
+   "codex",
+   "chatgpt"
+  ],
+  "platforms_tested": [],
+  "runtime_needs": [],
+  "install": [
+   {
+    "platform": "claude-code",
+    "method": "copy-folder",
+    "steps": "git clone https://github.com/korey2028-prog/resume-claim-guard ~/.claude/skills/resume-claim-guard"
+   },
+   {
+    "platform": "codex",
+    "method": "copy-folder",
+    "steps": "git clone https://github.com/korey2028-prog/resume-claim-guard ~/.codex/skills/resume-claim-guard"
+   },
+   {
+    "platform": "chatgpt",
+    "method": "copy-paste",
+    "steps": "Paste PROMPT.md from the repository into a chat, or set it up as a GPT following platforms/chatgpt-gpt.md."
+   }
+  ],
+  "license": "MIT",
+  "redistributable": true,
+  "has_scripts": true,
+  "uses_network": false,
+  "needs_credentials": false,
+  "safety_labels": [
+   "Includes Scripts"
+  ],
+  "review_status": "Third-Party",
+  "scan_date": "2026-11-11",
+  "scan_notes": "SKILL.md at the repository root with reference files, templates and examples. One Python file, scripts/validate.py, a standard-library self-check of the repository's frontmatter, links and example files; it makes no network calls and the skill does not need it.",
+  "status": "active",
+  "http_status": 200,
+  "last_verified": "2026-11-11",
+  "price": "free",
+  "pairs_with": [],
+  "os": []
  }
 ]

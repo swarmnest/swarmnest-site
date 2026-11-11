@@ -13,6 +13,7 @@ export const ALLOW = [
   /JSON ?Placeholder/gi, /Lorem (Picsum|Flickr)/gi, /OAuth 2\.1 Draft/gi, /draft-ietf-[\w-]+/gi, /Internet-Draft/gi,
   /\bdraft(s|ed|ing)? (a polite|a reply|an |polite |replies|reply|posts?|emails?|invites?|only|for (human )?(approval|review))/gi, /\b(drafts?|draft replies) (only|for approval|you want|and unpublished|and sharing)/gi,
   /\b(Draft|Drafts) (a |an |search-friendly |posts |replies )/g, /(publish|migrate|keep) (any |the )?drafts?/gi, /\bdraft (reply|replies|post|posts|email|emails|invite|article|articles)\b/gi,
+  /\ban agent can draft\b/gi, // product description: "an agent can draft and schedule posts"
   /present drafts/gi, /drafting\b/gi, /draft the invite/gi, /then a draft with/gi, /for this draft\./gi, /short thread draft/gi, /your first draft with Trint/gi, /(outlines|drafts), (drafts|meta descriptions|ranked)/gi,
   /reveal internal notes/gi, // support-agent template guardrail (a customer instruction)
   /placeholder (text|images?|data|photos?|api)/gi, /\{\{?[A-Z_]+\}?\} placeholders?/g,
