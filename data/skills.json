@@ -36824,5 +36824,70 @@
   "price": "free",
   "pairs_with": [],
   "os": []
+ },
+ {
+  "slug": "notifycx-notify-email",
+  "name": "notify-email",
+  "title": "Notify Email",
+  "summary": "Notify Email from notifycx: a skill that inspects your project, decides whether Notify fits, then adds transactional email such as password resets, magic links, verification codes and receipts through the Notify HTTP API, the notifycx SDK or the notifycx-mcp server. Also packaged as a plugin for Claude Code, Cursor and Codex.",
+  "category": "Software Engineering Skills",
+  "tags": [
+   "notifycx",
+   "agent-skill",
+   "email",
+   "transactional-email"
+  ],
+  "author": "notifycx",
+  "author_url": "https://github.com/notifycx",
+  "source_url": "https://github.com/notifycx/notify-skills/tree/main/skills/notify-email",
+  "repo": "notifycx/notify-skills",
+  "path_in_repo": "skills/notify-email",
+  "reviewed_commit": "3c42577508c86f430f7dccde8439d79284f2d8e4",
+  "format": "agent-skill",
+  "spec_valid": true,
+  "platforms_declared": [
+   "claude-code",
+   "codex",
+   "cursor"
+  ],
+  "platforms_tested": [],
+  "runtime_needs": [
+   "none"
+  ],
+  "install": [
+   {
+    "platform": "claude-code",
+    "method": "copy-folder",
+    "steps": "Copy the skill folder into .claude/skills/notify-email/ in your project, or ~/.claude/skills/notify-email/ for all projects. The repository also installs as a Claude Code plugin."
+   },
+   {
+    "platform": "codex",
+    "method": "copy-folder",
+    "steps": "Copy the skill folder into .agents/skills/notify-email/ in your repo, or ~/.agents/skills/notify-email/ for personal use."
+   },
+   {
+    "platform": "cursor",
+    "method": "copy-folder",
+    "steps": "Copy the skill folder into .cursor/skills/notify-email/ (Cursor also reads .agents/skills/ and .claude/skills/)."
+   }
+  ],
+  "license": "MIT",
+  "redistributable": true,
+  "has_scripts": false,
+  "uses_network": false,
+  "needs_credentials": true,
+  "safety_labels": [
+   "Instructions Only",
+   "Needs Credentials"
+  ],
+  "review_status": "Third-Party",
+  "scan_date": "2026-11-12",
+  "scan_notes": "A single SKILL.md in skills/notify-email with no scripts or executable code. The repository adds plugin manifests, an MCP config for notifycx-mcp and an evals file. Sending email needs a Notify API key.",
+  "status": "active",
+  "http_status": 200,
+  "last_verified": "2026-11-12",
+  "price": "free",
+  "pairs_with": [],
+  "os": []
  }
 ]
