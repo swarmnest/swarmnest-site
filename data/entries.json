@@ -61555,5 +61555,35 @@
   "status": "active",
   "os": [],
   "open_source": false
+ },
+ {
+  "name": "Kahrbon",
+  "slug": "kahrbon",
+  "category": "meeting-notes-ai",
+  "description": "Microsoft Teams meeting notes with speaker-labeled transcripts, drafted minutes, a decisions register and owned action items synced to tasks, alongside lobby visitor check-in and host alerts in one workplace platform. 15-day free trial with no card; plans are quoted by sales.",
+  "url": "https://kahrbon.com/",
+  "docs_url": "https://kahrbon.com/",
+  "auth": "unknown",
+  "pricing": "paid",
+  "http_status": null,
+  "last_checked_at": "2026-10-14",
+  "status": "active",
+  "os": [],
+  "open_source": false
+ },
+ {
+  "name": "Molyin",
+  "slug": "molyin",
+  "category": "mcp-servers",
+  "description": "AI studio for video, image and music generation with models such as Seedance, Nano Banana and Suno on one credit balance, plus a hosted MCP server that brings every model into ChatGPT, Claude, Cursor or Grok after a one-time sign-in. Bonus credits on first connect, then paid credits.",
+  "url": "https://molyin.com/",
+  "docs_url": "https://molyin.com/mcp",
+  "auth": "oauth",
+  "pricing": "freemium",
+  "http_status": null,
+  "last_checked_at": "2026-10-14",
+  "status": "active",
+  "os": [],
+  "open_source": false
  }
 ]
