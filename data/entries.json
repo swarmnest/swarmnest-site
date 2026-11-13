@@ -61540,5 +61540,20 @@
   "status": "active",
   "os": [],
   "open_source": false
+ },
+ {
+  "name": "LimitQuant API",
+  "slug": "limitquant-api",
+  "category": "crypto-market-data",
+  "description": "Research-only JSON API of daily trading-signal tickets for Bitcoin, Ethereum and Solana, for use in dashboards and alerts. Public endpoints return a stable schema with direction and price levels locked; a paid key unlocks the full fields. No trade execution.",
+  "url": "https://www.limitquant.com/",
+  "docs_url": "https://www.limitquant.com/api/",
+  "auth": "key",
+  "pricing": "paid",
+  "http_status": null,
+  "last_checked_at": "2026-10-14",
+  "status": "active",
+  "os": [],
+  "open_source": false
  }
 ]
