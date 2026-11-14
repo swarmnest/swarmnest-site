@@ -451,6 +451,7 @@
 200 https://core.telegram.org/bots/api#stickers
 200 https://coresignal.com/
 200 https://couchdb.apache.org/
+200 https://countrygenerator.com/
 200 https://craftmypdf.com/
 200 https://crawlbase.com/
 200 https://crawlee.dev/
@@ -1102,6 +1103,7 @@
 200 https://github.com/agent-network-protocol/AgentNetworkProtocol
 200 https://github.com/agntcy/oasf
 200 https://github.com/AGWA/git-crypt
+200 https://github.com/ahujasid/mcp-for-blender
 200 https://github.com/ai-boost/awesome-prompts
 200 https://github.com/AI4Bharat/IndicTrans2
 200 https://github.com/AILab-CVC/YOLO-World
@@ -1448,6 +1450,7 @@
 200 https://github.com/mozilla/readability
 200 https://github.com/mozilla/translations
 200 https://github.com/mozilla/TTS
+200 https://github.com/mpsm/mcp-cpp
 200 https://github.com/mudler/LocalAI
 200 https://github.com/multimodal-art-projection/YuE
 200 https://github.com/MuseumofModernArt/collection
@@ -2447,7 +2450,6 @@
 200 https://radar.com/
 200 https://radarr.video/
 200 https://radicle.xyz/
-200 https://radimrehurek.com/gensim/
 200 https://railway.com/
 200 https://raindrop.io/
 200 https://randomfox.ca/
@@ -3124,7 +3126,6 @@
 200 https://www.coingecko.com/en/api
 200 https://www.coinglass.com/
 200 https://www.collectiveaccess.org/
-403 https://www.collinsdictionary.com/api/v1
 200 https://www.collletttivo.it/
 200 https://www.colossyan.com/
 200 https://www.comeet.com/
@@ -3616,7 +3617,6 @@
 200 https://www.paperspace.com/
 200 https://www.parsehub.com/
 200 https://www.passio.ai/
-200 https://www.passio.ai/nutrition-ai
 200 https://www.patronus.ai/
 200 https://www.paymanai.com/
 200 https://www.payoneer.com/
@@ -3681,7 +3681,6 @@
 200 https://www.quickbase.com/
 200 https://www.quicknode.com/
 200 https://www.qwant.com/
-200 https://www.qwant.com/api
 200 https://www.rabbitmq.com/
 200 https://www.ragic.com/
 200 https://www.rancher.com/

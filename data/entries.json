@@ -61190,8 +61190,8 @@
   "docs_url": "https://countrygenerator.com/mcp",
   "auth": "none",
   "pricing": "free",
-  "http_status": null,
-  "last_checked_at": "2026-10-14",
+  "http_status": 200,
+  "last_checked_at": "2026-11-13",
   "status": "active",
   "os": [],
   "open_source": false
@@ -61585,5 +61585,35 @@
   "status": "active",
   "os": [],
   "open_source": false
+ },
+ {
+  "name": "MCP for Blender",
+  "slug": "mcp-for-blender",
+  "category": "mcp-servers",
+  "description": "Open-source MCP server (formerly blender-mcp) that lets agents such as Claude, Cursor or Codex build and edit scenes in a running copy of Blender, including objects, materials and Blender Python. Install with uvx mcp-for-blender; a community project by ahujasid, not affiliated with the Blender Foundation.",
+  "url": "https://github.com/ahujasid/mcp-for-blender",
+  "docs_url": "https://www.mcp-for-blender.com/docs/",
+  "auth": "none",
+  "pricing": "free",
+  "http_status": 200,
+  "last_checked_at": "2026-11-13",
+  "status": "active",
+  "os": [],
+  "open_source": true
+ },
+ {
+  "name": "mcp-cpp",
+  "slug": "mcp-cpp",
+  "category": "mcp-servers",
+  "description": "MCP server that gives agents semantic C and C++ code intelligence through clangd, including symbol search and inheritance and call-hierarchy analysis, for CMake or Meson projects that have a compile_commands.json. Install the mcp-cpp-server crate; clangd 11 or later is required.",
+  "url": "https://github.com/mpsm/mcp-cpp",
+  "docs_url": "https://github.com/mpsm/mcp-cpp",
+  "auth": "none",
+  "pricing": "free",
+  "http_status": 200,
+  "last_checked_at": "2026-11-13",
+  "status": "active",
+  "os": [],
+  "open_source": true
  }
 ]
